@@ -37,6 +37,16 @@
     <xwiki.jacoco.instructionRatio>0.75</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>org.bytedeco.javacpp-presets</groupId>
+      <artifactId>tesseract</artifactId>
+      <version>3.04.01-1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco.javacpp-presets</groupId>
+      <artifactId>tesseract-platform</artifactId>
+      <version>3.04.01-1.3</version>
+    </dependency>
     <!-- Test Dependencies -->
     <dependency>
       <groupId>org.xwiki.commons</groupId>
@@ -45,4 +55,28 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <!-- Fetch english training data from tesseract-ocr repositories in order to perform tests in the module -->
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.3.0</version>
+        <executions>
+          <execution>
+            <!-- the wget goal actually binds itself to this phase by default -->
+            <phase>process-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>https://github.com/piersy/BasicTesseractExample/raw/master/tessdata/ENG.traineddata</url>
+              <outputFileName>eng.traineddata</outputFileName>
+              <outputDirectory>target/tessdata</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
