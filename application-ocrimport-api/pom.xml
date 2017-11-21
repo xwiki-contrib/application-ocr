@@ -72,7 +72,7 @@
             <configuration>
               <url>https://github.com/piersy/BasicTesseractExample/raw/master/tessdata/ENG.traineddata</url>
               <outputFileName>eng.traineddata</outputFileName>
-              <outputDirectory>target/tessdata</outputDirectory>
+              <outputDirectory>${project.build.directory}/tessdata</outputDirectory>
             </configuration>
           </execution>
         </executions>

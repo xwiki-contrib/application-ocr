@@ -22,6 +22,8 @@ package org.xwiki.contrib.ocrimport;
 import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.javacpp.lept.PIX;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.bytedeco.javacpp.lept.pixDestroy;
@@ -40,15 +42,27 @@ public class TesseractLibraryTest
 
     private static final String LANG = "eng";
 
-    @Test
-    public void testSampleDocumentPNG() throws Exception
+    private TessBaseAPI api;
+
+    @Before
+    public void setUp() throws Exception
     {
-        TessBaseAPI api = new TessBaseAPI();
+        api = new TessBaseAPI();
 
         if (api.Init(DATA_PATH, LANG) != 0) {
             throw new InstantiationException("Unable to instantiate Tesseract API.");
         }
+    }
 
+    @After
+    public void tearDown() throws Exception
+    {
+        api.End();
+    }
+
+    @Test
+    public void testSampleDocumentPNG() throws Exception
+    {
         PIX image = pixRead("src/test/resources/samples/sampleText.png");
 
         api.SetImage(image);
@@ -57,7 +71,6 @@ public class TesseractLibraryTest
         String string = outText.getString();
         assertTrue(!string.isEmpty());
 
-        api.End();
         outText.deallocate();
         pixDestroy(image);
     }
