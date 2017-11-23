@@ -1,0 +1,4 @@
+org.xwiki.contrib.ocrimport.internal.DefaultTessBaseAPIProvider
+org.xwiki.contrib.ocrimport.internal.DefaultXDOMImageDocumentBuilder
+org.xwiki.contrib.ocrimport.internal.DefaultOCRImportManager
+org.xwiki.contrib.ocrimport.script.OCRImporterScriptService
