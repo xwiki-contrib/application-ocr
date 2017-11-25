@@ -66,6 +66,11 @@ public class OCRImportInputFilterProperties implements FilterStreamProperties
      */
     private String fileType;
 
+    /**
+     * @see #getDocumentAuthor()
+     */
+    private EntityReference documentAuthor;
+
     @Override
     public boolean isVerbose()
     {
@@ -130,5 +135,23 @@ public class OCRImportInputFilterProperties implements FilterStreamProperties
     public void setFileType(String fileType)
     {
         this.fileType = fileType;
+    }
+
+    /**
+     * @return the author that should be used for creating the document
+     */
+    @PropertyName("Document author")
+    @PropertyDescription("The author that should be used for creating the document")
+    public EntityReference getDocumentAuthor()
+    {
+        return this.documentAuthor;
+    }
+
+    /**
+     * @param documentAuthor the author used for creating the document
+     */
+    public void setDocumentAuthor(EntityReference documentAuthor)
+    {
+        this.documentAuthor = documentAuthor;
     }
 }

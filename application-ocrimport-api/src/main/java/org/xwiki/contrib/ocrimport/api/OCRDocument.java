@@ -44,6 +44,14 @@ public class OCRDocument
     }
 
     /**
+     * @return the raw content extracted from the document source
+     */
+    public String getPlainContent()
+    {
+        return api.GetUTF8Text().getString();
+    }
+
+    /**
      * Dispose of the API.
      */
     public void dispose()

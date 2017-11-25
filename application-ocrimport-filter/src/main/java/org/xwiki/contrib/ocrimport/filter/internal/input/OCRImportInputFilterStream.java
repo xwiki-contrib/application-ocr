@@ -22,15 +22,23 @@ package org.xwiki.contrib.ocrimport.filter.internal.input;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.ocrimport.api.OCRDocument;
+import org.xwiki.contrib.ocrimport.api.OCRImportException;
+import org.xwiki.contrib.ocrimport.api.OCRImportManager;
 import org.xwiki.contrib.ocrimport.filter.OCRImportInputFilterProperties;
 import org.xwiki.contrib.ocrimport.filter.internal.OCRImportFilter;
+import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
+import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
  * Define the OCR importer input filter stream.
@@ -44,10 +52,37 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStream;
 public class OCRImportInputFilterStream
         extends AbstractBeanInputFilterStream<OCRImportInputFilterProperties, OCRImportFilter>
 {
+    @Inject
+    private OCRImportManager manager;
+
+    @Inject
+    @Named("local")
+    private EntityReferenceSerializer entityReferenceSerializer;
+
     @Override
     protected void read(Object filter, OCRImportFilter proxyFilter) throws FilterException
     {
+        if (isImage(this.properties.getFileType())) {
+            try {
+                OCRDocument document = manager.parseImage(this.properties.getInputSource().getInputStream());
 
+                // TODO: Allow the user to change the document title
+                // TODO: Support localized documents
+                String documentName = "ImportedDocument";
+                proxyFilter.beginWikiDocument(documentName, generateEventParameters(document));
+                proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
+
+                document.dispose();
+            } catch (IOException e) {
+                throw new FilterException(
+                        String.format("Unable to read source : [{}]", ExceptionUtils.getRootCauseMessage(e)));
+            } catch (OCRImportException e) {
+                throw new FilterException(
+                        String.format("Unable to import the file : [{}]", ExceptionUtils.getRootCauseMessage(e)));
+            }
+        } else {
+            throw new FilterException("Unsupported file type.");
+        }
     }
 
     @Override
@@ -57,14 +92,32 @@ public class OCRImportInputFilterStream
     }
 
     /**
-     * Determine if the given file name has an extension of a supported image type.
+     * Uses the given {@link OCRDocument} to generate {@link FilterEventParameters} that are compatible with
+     * {@link WikiDocumentFilter#beginWikiDocument(String, FilterEventParameters)}.
      *
-     * @param fileName the file name to use
-     * @return true if the file has a supported image type extension
+     * @param document the document to use
+     * @return the {@link FilterEventParameters}
      */
-    private boolean isImage(String fileName)
+    private FilterEventParameters generateEventParameters(OCRDocument document)
     {
-        Pattern p = Pattern.compile(".*\\.(jpg|png)");
-        return p.matcher(fileName).matches();
+        FilterEventParameters parameters = new FilterEventParameters();
+        parameters.put(WikiDocumentFilter.PARAMETER_CONTENT_AUTHOR,
+                entityReferenceSerializer.serialize(this.properties.getDocumentAuthor()));
+        parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, document.getPlainContent());
+        parameters.put(WikiDocumentFilter.PARAMETER_PARENT, this.properties.getParentDocument());
+
+        return parameters;
+    }
+
+    /**
+     * Determine if the given file type is a supported image type.
+     *
+     * @param fileType the file type to use
+     * @return true if the file type corresponds to a supported image type
+     */
+    private boolean isImage(String fileType)
+    {
+        Pattern p = Pattern.compile("(jpg|png)");
+        return p.matcher(fileType).matches();
     }
 }
