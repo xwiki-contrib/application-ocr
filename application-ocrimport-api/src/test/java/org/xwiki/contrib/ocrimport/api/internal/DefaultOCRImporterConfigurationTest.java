@@ -17,55 +17,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.internal;
+package org.xwiki.contrib.ocrimport.api.internal;
 
-import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.xwiki.contrib.ocrimport.OCRImporterConfiguration;
+import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
+import org.xwiki.text.StringUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link DefaultTessBaseAPIProvider}.
+ * Unit tests for {@link DefaultOCRImporterConfiguration}.
  *
  * @version $Id$
  * @since 1.0
  */
-public class DefaultTessBaseAPIProviderTest
+public class DefaultOCRImporterConfigurationTest
 {
     @Rule
-    public final MockitoComponentMockingRule<DefaultTessBaseAPIProvider> mocker =
-            new MockitoComponentMockingRule<>(DefaultTessBaseAPIProvider.class);
+    public final MockitoComponentMockingRule<DefaultOCRImporterConfiguration> mocker =
+            new MockitoComponentMockingRule<>(DefaultOCRImporterConfiguration.class);
 
-    private OCRImporterConfiguration ocrImporterConfiguration;
+    private ConfigurationSource configurationSource;
 
     @Before
     public void setUp() throws Exception
     {
-        ocrImporterConfiguration = mocker.registerMockComponent(OCRImporterConfiguration.class);
-        when(ocrImporterConfiguration.dataPath()).thenReturn("./target/");
+        configurationSource = mocker.registerMockComponent(ConfigurationSource.class);
     }
 
     @Test
-    public void get() throws Exception
+    public void defaultLangage() throws Exception
     {
-        when(ocrImporterConfiguration.defaultLangage()).thenReturn("eng");
-        TessBaseAPI api = mocker.getComponentUnderTest().get();
-
-        assertEquals("./target/tessdata/", api.GetDatapath().getString());
-        assertEquals("eng", api.GetInitLanguagesAsString().getString());
+        when(configurationSource.getProperty("ocrimporter.defaultLangage", "eng")).thenReturn("ron");
+        assertEquals("ron", mocker.getComponentUnderTest().defaultLangage());
     }
 
     @Test
-    public void getWithLangage() throws Exception
+    public void dataPath() throws Exception
     {
-        TessBaseAPI api = mocker.getComponentUnderTest().get("eng");
-
-        assertEquals("./target/tessdata/", api.GetDatapath().getString());
-        assertEquals("eng", api.GetInitLanguagesAsString().getString());
+        when(configurationSource.getProperty("ocrimporter.dataPath", StringUtils.EMPTY))
+                .thenReturn("myfolder");
+        assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
     }
 }

@@ -17,16 +17,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.internal;
+package org.xwiki.contrib.ocrimport.api.internal;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.OCRImporterConfiguration;
-import org.xwiki.contrib.ocrimport.OCRImporterException;
-import org.xwiki.contrib.ocrimport.TessBaseAPIProvider;
+import org.xwiki.contrib.ocrimport.api.OCRImporterConfiguration;
+import org.xwiki.contrib.ocrimport.api.OCRImporterException;
+import org.xwiki.contrib.ocrimport.api.TessBaseAPIProvider;
 
 /**
  * This is the default implementation of {@link TessBaseAPIProvider}.

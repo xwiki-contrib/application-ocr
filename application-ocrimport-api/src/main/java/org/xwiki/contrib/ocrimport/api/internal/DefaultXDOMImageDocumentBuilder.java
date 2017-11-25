@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.internal;
+package org.xwiki.contrib.ocrimport.api.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +31,9 @@ import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.javacpp.lept.PIX;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.OCRImporterException;
-import org.xwiki.contrib.ocrimport.XDOMDocument;
-import org.xwiki.contrib.ocrimport.XDOMDocumentBuilder;
+import org.xwiki.contrib.ocrimport.api.OCRImporterException;
+import org.xwiki.contrib.ocrimport.api.XDOMDocument;
+import org.xwiki.contrib.ocrimport.api.XDOMDocumentBuilder;
 import org.xwiki.rendering.block.RawBlock;
 import org.xwiki.rendering.internal.parser.XDOMBuilder;
 import org.xwiki.rendering.syntax.Syntax;

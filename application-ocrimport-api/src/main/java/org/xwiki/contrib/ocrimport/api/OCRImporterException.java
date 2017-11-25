@@ -17,28 +17,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport;
-
-import org.xwiki.component.annotation.Role;
-import org.xwiki.stability.Unstable;
+package org.xwiki.contrib.ocrimport.api;
 
 /**
- * Get the configuration options concerning the OCR Importer Application.
+ * Exception specific to the OCR importer extension.
  *
  * @version $Id$
  * @since 1.0
  */
-@Role
-@Unstable
-public interface OCRImporterConfiguration
+public class OCRImporterException extends Exception
 {
     /**
-     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
+     * Construct a OCRImporterException.
+     *
+     * @param message the detail message
      */
-    String defaultLangage();
+    public OCRImporterException(String message)
+    {
+        super(message);
+    }
 
     /**
-     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
+     * Construct a OCRImporterException.
+     *
+     * @param message the detail message
+     * @param cause the cause
      */
-    String dataPath();
+    public OCRImporterException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
 }

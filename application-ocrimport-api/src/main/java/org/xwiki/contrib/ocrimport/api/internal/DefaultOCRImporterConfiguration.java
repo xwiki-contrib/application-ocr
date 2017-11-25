@@ -17,31 +17,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport;
+package org.xwiki.contrib.ocrimport.api.internal;
 
-import java.io.InputStream;
+import javax.inject.Inject;
 
-import org.bytedeco.javacpp.tesseract.TessBaseAPI;
-import org.xwiki.component.annotation.Role;
-import org.xwiki.stability.Unstable;
+import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.contrib.ocrimport.api.OCRImporterConfiguration;
+import org.xwiki.text.StringUtils;
 
 /**
- * Component responsible for building {@link XDOMDocument} from image or PDF files using the Tesseract library.
+ * This is the default implementation of {@link OCRImporterConfiguration}.
  *
  * @version $Id$
  * @since 1.0
  */
-@Role
-@Unstable
-public interface XDOMDocumentBuilder
+public class DefaultOCRImporterConfiguration implements OCRImporterConfiguration
 {
-    /**
-     * Builds a {@link XDOMDocument} corresponding to the given office document.
-     *
-     * @param fileStream {@link InputStream} corresponding to the file to import
-     * @param api the {@link TessBaseAPI} to use during the importation
-     * @return an {@link XDOMDocument} corresponding to the given file
-     * @throws OCRImporterException if an error occurs while performing the import operation
-     */
-    XDOMDocument build(InputStream fileStream, TessBaseAPI api) throws OCRImporterException;
+    private static final String CONFIGURATION_PREFIX = "ocrimporter.";
+
+    @Inject
+    private ConfigurationSource configurationSource;
+
+    @Override
+    public String defaultLangage()
+    {
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "defaultLangage", "eng");
+    }
+
+    @Override
+    public String dataPath()
+    {
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", StringUtils.EMPTY);
+    }
 }

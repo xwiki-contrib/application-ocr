@@ -17,40 +17,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport;
+package org.xwiki.contrib.ocrimport.api;
 
-import org.xwiki.rendering.block.XDOM;
+import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Represents an OCR document being imported.
+ * Get the configuration options concerning the OCR Importer Application.
  *
  * @version $Id$
  * @since 1.0
  */
+@Role
 @Unstable
-public class XDOMDocument
+public interface OCRImporterConfiguration
 {
     /**
-     * A {@link XDOM} tree representing the document content.
+     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
      */
-    private XDOM xdom;
+    String defaultLangage();
 
     /**
-     * Constructs a new {@link XDOMDocument}.
-     *
-     * @param xdom the content of the document
+     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
      */
-    public XDOMDocument(XDOM xdom)
-    {
-        this.xdom = xdom;
-    }
-
-    /**
-     * @return the {@link XDOM} content of the document
-     */
-    public XDOM getDocumentContent()
-    {
-        return this.xdom;
-    }
+    String dataPath();
 }

@@ -17,34 +17,40 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport;
+package org.xwiki.contrib.ocrimport.api;
+
+import org.xwiki.rendering.block.XDOM;
+import org.xwiki.stability.Unstable;
 
 /**
- * Exception specific to the OCR importer extension.
+ * Represents an OCR document being imported.
  *
  * @version $Id$
  * @since 1.0
  */
-public class OCRImporterException extends Exception
+@Unstable
+public class XDOMDocument
 {
     /**
-     * Construct a OCRImporterException.
-     *
-     * @param message the detail message
+     * A {@link XDOM} tree representing the document content.
      */
-    public OCRImporterException(String message)
+    private XDOM xdom;
+
+    /**
+     * Constructs a new {@link XDOMDocument}.
+     *
+     * @param xdom the content of the document
+     */
+    public XDOMDocument(XDOM xdom)
     {
-        super(message);
+        this.xdom = xdom;
     }
 
     /**
-     * Construct a OCRImporterException.
-     *
-     * @param message the detail message
-     * @param cause the cause
+     * @return the {@link XDOM} content of the document
      */
-    public OCRImporterException(String message, Throwable cause)
+    public XDOM getDocumentContent()
     {
-        super(message, cause);
+        return this.xdom;
     }
 }

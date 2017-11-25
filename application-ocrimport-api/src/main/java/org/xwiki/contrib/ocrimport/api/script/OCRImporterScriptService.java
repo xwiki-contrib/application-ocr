@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.script;
+package org.xwiki.contrib.ocrimport.api.script;
 
 import java.io.InputStream;
 
@@ -26,9 +26,9 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.OCRImporterException;
-import org.xwiki.contrib.ocrimport.OCRImporterManager;
-import org.xwiki.contrib.ocrimport.XDOMDocument;
+import org.xwiki.contrib.ocrimport.api.OCRImporterException;
+import org.xwiki.contrib.ocrimport.api.OCRImporterManager;
+import org.xwiki.contrib.ocrimport.api.XDOMDocument;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.script.service.ScriptService;
 
