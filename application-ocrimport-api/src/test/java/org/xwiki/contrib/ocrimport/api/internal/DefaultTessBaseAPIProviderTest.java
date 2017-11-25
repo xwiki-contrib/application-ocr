@@ -23,7 +23,7 @@ import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.xwiki.contrib.ocrimport.api.OCRImporterConfiguration;
+import org.xwiki.contrib.ocrimport.api.OCRImportConfiguration;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
 
 import static org.junit.Assert.assertEquals;
@@ -41,19 +41,19 @@ public class DefaultTessBaseAPIProviderTest
     public final MockitoComponentMockingRule<DefaultTessBaseAPIProvider> mocker =
             new MockitoComponentMockingRule<>(DefaultTessBaseAPIProvider.class);
 
-    private OCRImporterConfiguration ocrImporterConfiguration;
+    private OCRImportConfiguration ocrImportConfiguration;
 
     @Before
     public void setUp() throws Exception
     {
-        ocrImporterConfiguration = mocker.registerMockComponent(OCRImporterConfiguration.class);
-        when(ocrImporterConfiguration.dataPath()).thenReturn("./target/");
+        ocrImportConfiguration = mocker.registerMockComponent(OCRImportConfiguration.class);
+        when(ocrImportConfiguration.dataPath()).thenReturn("./target/");
     }
 
     @Test
     public void get() throws Exception
     {
-        when(ocrImporterConfiguration.defaultLangage()).thenReturn("eng");
+        when(ocrImportConfiguration.defaultLangage()).thenReturn("eng");
         TessBaseAPI api = mocker.getComponentUnderTest().get();
 
         assertEquals("./target/tessdata/", api.GetDatapath().getString());

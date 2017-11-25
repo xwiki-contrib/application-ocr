@@ -1,4 +1,2 @@
-DefaultTessBaseAPIProvider
-DefaultXDOMImageDocumentBuilder
-DefaultOCRImportManager
-OCRImporterScriptService
+org.xwiki.contrib.ocrimport.api.internal.DefaultTessBaseAPIProvider
+org.xwiki.contrib.ocrimport.api.internal.DefaultOCRImportManager

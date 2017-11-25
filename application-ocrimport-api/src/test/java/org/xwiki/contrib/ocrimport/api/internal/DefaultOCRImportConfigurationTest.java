@@ -30,16 +30,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link DefaultOCRImporterConfiguration}.
+ * Unit tests for {@link DefaultOCRImportConfiguration}.
  *
  * @version $Id$
  * @since 1.0
  */
-public class DefaultOCRImporterConfigurationTest
+public class DefaultOCRImportConfigurationTest
 {
     @Rule
-    public final MockitoComponentMockingRule<DefaultOCRImporterConfiguration> mocker =
-            new MockitoComponentMockingRule<>(DefaultOCRImporterConfiguration.class);
+    public final MockitoComponentMockingRule<DefaultOCRImportConfiguration> mocker =
+            new MockitoComponentMockingRule<>(DefaultOCRImportConfiguration.class);
 
     private ConfigurationSource configurationSource;
 
@@ -52,14 +52,14 @@ public class DefaultOCRImporterConfigurationTest
     @Test
     public void defaultLangage() throws Exception
     {
-        when(configurationSource.getProperty("ocrimporter.defaultLangage", "eng")).thenReturn("ron");
+        when(configurationSource.getProperty("ocrimport.defaultLangage", "eng")).thenReturn("ron");
         assertEquals("ron", mocker.getComponentUnderTest().defaultLangage());
     }
 
     @Test
     public void dataPath() throws Exception
     {
-        when(configurationSource.getProperty("ocrimporter.dataPath", StringUtils.EMPTY))
+        when(configurationSource.getProperty("ocrimport.dataPath", StringUtils.EMPTY))
                 .thenReturn("myfolder");
         assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
     }

@@ -24,8 +24,8 @@ import javax.inject.Singleton;
 
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.api.OCRImporterConfiguration;
-import org.xwiki.contrib.ocrimport.api.OCRImporterException;
+import org.xwiki.contrib.ocrimport.api.OCRImportException;
+import org.xwiki.contrib.ocrimport.api.OCRImportConfiguration;
 import org.xwiki.contrib.ocrimport.api.TessBaseAPIProvider;
 
 /**
@@ -39,27 +39,27 @@ import org.xwiki.contrib.ocrimport.api.TessBaseAPIProvider;
 public class DefaultTessBaseAPIProvider implements TessBaseAPIProvider
 {
     @Inject
-    private OCRImporterConfiguration ocrImporterConfiguration;
+    private OCRImportConfiguration ocrImportConfiguration;
 
     @Override
-    public TessBaseAPI get() throws OCRImporterException
+    public TessBaseAPI get() throws OCRImportException
     {
-        return get(ocrImporterConfiguration.defaultLangage(), ocrImporterConfiguration.dataPath());
+        return get(ocrImportConfiguration.defaultLangage(), ocrImportConfiguration.dataPath());
     }
 
     @Override
-    public TessBaseAPI get(String language) throws OCRImporterException
+    public TessBaseAPI get(String language) throws OCRImportException
     {
-        return get(language, ocrImporterConfiguration.dataPath());
+        return get(language, ocrImportConfiguration.dataPath());
     }
 
     @Override
-    public TessBaseAPI get(String language, String dataPath) throws OCRImporterException
+    public TessBaseAPI get(String language, String dataPath) throws OCRImportException
     {
         TessBaseAPI api = new TessBaseAPI();
 
         if (api.Init(dataPath, language) != 0) {
-            throw new OCRImporterException("Unable to instantiate Tesseract API.");
+            throw new OCRImportException("Unable to instantiate Tesseract API.");
         }
 
         return api;

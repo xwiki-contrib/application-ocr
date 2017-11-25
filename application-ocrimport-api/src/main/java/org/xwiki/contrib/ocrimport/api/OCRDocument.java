@@ -19,29 +19,35 @@
  */
 package org.xwiki.contrib.ocrimport.api;
 
-import java.io.InputStream;
-
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
-import org.xwiki.component.annotation.Role;
-import org.xwiki.stability.Unstable;
 
 /**
- * Component responsible for building {@link XDOMDocument} from image or PDF files using the Tesseract library.
+ * Describe a file parsed using OCR.
+ * Please note that once an {@link OCRDocument} isn't meant to be used anymore, {@link #dispose()} should be called.
  *
  * @version $Id$
  * @since 1.0
  */
-@Role
-@Unstable
-public interface XDOMDocumentBuilder
+public class OCRDocument
 {
+    private TessBaseAPI api;
+
     /**
-     * Builds a {@link XDOMDocument} corresponding to the given office document.
+     * Builds a new {@link OCRDocument} using the given {@link TessBaseAPI}. This API should have already parsed
+     * the file used by this document.
      *
-     * @param fileStream {@link InputStream} corresponding to the file to import
-     * @param api the {@link TessBaseAPI} to use during the importation
-     * @return an {@link XDOMDocument} corresponding to the given file
-     * @throws OCRImporterException if an error occurs while performing the import operation
+     * @param api the {@link TessBaseAPI} to use
      */
-    XDOMDocument build(InputStream fileStream, TessBaseAPI api) throws OCRImporterException;
+    public OCRDocument(TessBaseAPI api)
+    {
+        this.api = api;
+    }
+
+    /**
+     * Dispose of the API.
+     */
+    public void dispose()
+    {
+        api.End();
+    }
 }

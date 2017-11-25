@@ -19,26 +19,27 @@
  */
 package org.xwiki.contrib.ocrimport.api;
 
+import java.io.InputStream;
+
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Get the configuration options concerning the OCR Importer Application.
+ * Handle the different steps for importing a new document in the wiki using the Tesseract OCR library.
  *
  * @version $Id$
  * @since 1.0
  */
 @Role
 @Unstable
-public interface OCRImporterConfiguration
+public interface OCRImportManager
 {
     /**
-     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
+     * Parse the given image file and return its contents.
+     *
+     * @param fileStream the file to parse
+     * @return the generated document
+     * @throws OCRImportException if an error occurs during the importation
      */
-    String defaultLangage();
-
-    /**
-     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
-     */
-    String dataPath();
+    OCRDocument parseImage(InputStream fileStream) throws OCRImportException;
 }

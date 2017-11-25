@@ -17,36 +17,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.api.internal;
+package org.xwiki.contrib.ocrimport.api;
 
-import javax.inject.Inject;
-
-import org.xwiki.configuration.ConfigurationSource;
-import org.xwiki.contrib.ocrimport.api.OCRImporterConfiguration;
-import org.xwiki.text.StringUtils;
+import org.xwiki.component.annotation.Role;
+import org.xwiki.stability.Unstable;
 
 /**
- * This is the default implementation of {@link OCRImporterConfiguration}.
+ * Get the configuration options concerning the OCR Importer Application.
  *
  * @version $Id$
  * @since 1.0
  */
-public class DefaultOCRImporterConfiguration implements OCRImporterConfiguration
+@Role
+@Unstable
+public interface OCRImportConfiguration
 {
-    private static final String CONFIGURATION_PREFIX = "ocrimporter.";
+    /**
+     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
+     */
+    String defaultLangage();
 
-    @Inject
-    private ConfigurationSource configurationSource;
-
-    @Override
-    public String defaultLangage()
-    {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "defaultLangage", "eng");
-    }
-
-    @Override
-    public String dataPath()
-    {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", StringUtils.EMPTY);
-    }
+    /**
+     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
+     */
+    String dataPath();
 }

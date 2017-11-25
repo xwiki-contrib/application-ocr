@@ -25,25 +25,25 @@ package org.xwiki.contrib.ocrimport.api;
  * @version $Id$
  * @since 1.0
  */
-public class OCRImporterException extends Exception
+public class OCRImportException extends Exception
 {
     /**
-     * Construct a OCRImporterException.
+     * Construct a OCRImportException.
      *
      * @param message the detail message
      */
-    public OCRImporterException(String message)
+    public OCRImportException(String message)
     {
         super(message);
     }
 
     /**
-     * Construct a OCRImporterException.
+     * Construct a OCRImportException.
      *
      * @param message the detail message
      * @param cause the cause
      */
-    public OCRImporterException(String message, Throwable cause)
+    public OCRImportException(String message, Throwable cause)
     {
         super(message, cause);
     }

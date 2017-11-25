@@ -19,91 +19,53 @@
  */
 package org.xwiki.contrib.ocrimport.api.internal;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.compress.utils.IOUtils;
+import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.api.OCRImporterException;
-import org.xwiki.contrib.ocrimport.api.OCRImporterManager;
+import org.xwiki.contrib.ocrimport.api.OCRDocument;
+import org.xwiki.contrib.ocrimport.api.OCRImportException;
+import org.xwiki.contrib.ocrimport.api.OCRImportManager;
 import org.xwiki.contrib.ocrimport.api.TessBaseAPIProvider;
-import org.xwiki.contrib.ocrimport.api.XDOMDocument;
-import org.xwiki.contrib.ocrimport.api.XDOMDocumentBuilder;
-import org.xwiki.model.reference.DocumentReference;
+
+import static org.bytedeco.javacpp.lept.pixDestroy;
+import static org.bytedeco.javacpp.lept.pixReadMem;
 
 /**
- * This is the default implementation for {@link OCRImporterManager}.
+ * This is the default implementation for {@link OCRImportManager}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
 @Singleton
-public class DefaultOCRImportManager implements OCRImporterManager
+public class DefaultOCRImportManager implements OCRImportManager
 {
-    @Inject
-    @Named("image")
-    private XDOMDocumentBuilder imageBuilder;
-
     @Inject
     private TessBaseAPIProvider apiProvider;
 
     @Override
-    public XDOMDocument importDocument(InputStream fileStream, String fileName)
-            throws OCRImporterException
+    public OCRDocument parseImage(InputStream fileStream) throws OCRImportException
     {
-        XDOMDocument resultDocument;
-
+        byte[] fileBytes;
+        lept.PIX image = null;
         TessBaseAPI api = apiProvider.get();
 
         try {
-            if (isImage(fileName)) {
-                resultDocument = imageBuilder.build(fileStream, api);
-            /*} else if (isPDF(fileName)) {
-                // TODO: Implement PDF import
-                resultDocument = null;*/
-            } else {
-                throw new OCRImporterException("Incompatible document file type");
-            }
+            fileBytes = IOUtils.toByteArray(fileStream);
+            image = pixReadMem(fileBytes, fileBytes.length);
+        } catch (IOException e) {
+            throw new OCRImportException(String.format("Unable to process input stream : [%s]", e));
         } finally {
-            api.End();
+            pixDestroy(image);
         }
 
-        return resultDocument;
-    }
-
-    @Override
-    public void saveDocument(XDOMDocument document, DocumentReference targetReference, String syntaxId, String title,
-            boolean append) throws OCRImporterException
-    {
-
-    }
-
-    /**
-     * Determine if the given file name has a .pdf extension.
-     *
-     * @param fileName the file name to use
-     * @return true if the file name has the .pdf extension
-     */
-    private boolean isPDF(String fileName)
-    {
-        Pattern p = Pattern.compile(".*\\.pdf");
-        return p.matcher(fileName).matches();
-    }
-
-    /**
-     * Determine if the given file name has an extension of a supported image type.
-     *
-     * @param fileName the file name to use
-     * @return true if the file has a supported image type extension
-     */
-    private boolean isImage(String fileName)
-    {
-        Pattern p = Pattern.compile(".*\\.(jpg|png)");
-        return p.matcher(fileName).matches();
+        return new OCRDocument(api);
     }
 }

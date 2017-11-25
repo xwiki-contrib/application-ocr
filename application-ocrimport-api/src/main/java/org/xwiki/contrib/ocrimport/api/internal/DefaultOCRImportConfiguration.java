@@ -17,40 +17,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocrimport.api;
+package org.xwiki.contrib.ocrimport.api.internal;
 
-import org.xwiki.rendering.block.XDOM;
-import org.xwiki.stability.Unstable;
+import javax.inject.Inject;
+
+import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.contrib.ocrimport.api.OCRImportConfiguration;
+import org.xwiki.text.StringUtils;
 
 /**
- * Represents an OCR document being imported.
+ * This is the default implementation of {@link OCRImportConfiguration}.
  *
  * @version $Id$
  * @since 1.0
  */
-@Unstable
-public class XDOMDocument
+public class DefaultOCRImportConfiguration implements OCRImportConfiguration
 {
-    /**
-     * A {@link XDOM} tree representing the document content.
-     */
-    private XDOM xdom;
+    private static final String CONFIGURATION_PREFIX = "ocrimport.";
 
-    /**
-     * Constructs a new {@link XDOMDocument}.
-     *
-     * @param xdom the content of the document
-     */
-    public XDOMDocument(XDOM xdom)
+    @Inject
+    private ConfigurationSource configurationSource;
+
+    @Override
+    public String defaultLangage()
     {
-        this.xdom = xdom;
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "defaultLangage", "eng");
     }
 
-    /**
-     * @return the {@link XDOM} content of the document
-     */
-    public XDOM getDocumentContent()
+    @Override
+    public String dataPath()
     {
-        return this.xdom;
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", StringUtils.EMPTY);
     }
 }

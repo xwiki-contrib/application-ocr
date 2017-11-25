@@ -37,18 +37,18 @@ public interface TessBaseAPIProvider
      * Get an instantiated {@link TessBaseAPI} using the default language and the default data path.
      *
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRImporterException if the instantiation failed
+     * @throws OCRImportException if the instantiation failed
      */
-    TessBaseAPI get() throws OCRImporterException;
+    TessBaseAPI get() throws OCRImportException;
 
     /**
      * Same as {@link #get()}, but with specifying the language that will be used by the {@link TessBaseAPI}.
      *
      * @param language the language that should be used by the {@link TessBaseAPI}
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRImporterException if the instantiation failed
+     * @throws OCRImportException if the instantiation failed
      */
-    TessBaseAPI get(String language) throws OCRImporterException;
+    TessBaseAPI get(String language) throws OCRImportException;
 
     /**
      * Same as {@link #get()}, but with specifying the language and the data path that will be used by the
@@ -57,7 +57,7 @@ public interface TessBaseAPIProvider
      * @param language the language that should be used by the {@link TessBaseAPI}
      * @param dataPath the path containing the {@link TessBaseAPI} data files
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRImporterException if the instantiation failed
+     * @throws OCRImportException if the instantiation failed
      */
-    TessBaseAPI get(String language, String dataPath) throws OCRImporterException;
+    TessBaseAPI get(String language, String dataPath) throws OCRImportException;
 }
