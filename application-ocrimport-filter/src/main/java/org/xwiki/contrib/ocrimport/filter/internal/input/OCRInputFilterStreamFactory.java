@@ -23,8 +23,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocrimport.filter.OCRImportInputFilterProperties;
-import org.xwiki.contrib.ocrimport.filter.internal.OCRImportFilter;
+import org.xwiki.contrib.ocrimport.filter.OCRInputFilterProperties;
+import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
 
 /**
@@ -34,17 +34,17 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
  * @since 1.0
  */
 @Component
-@Named(OCRImportInputFilterProperties.FILTER_STREAM_TYPE_STRING)
+@Named(OCRInputFilterProperties.FILTER_STREAM_TYPE_STRING)
 @Singleton
-public class OCRImportInputFilterStreamFactory
-        extends AbstractBeanInputFilterStreamFactory<OCRImportInputFilterProperties, OCRImportFilter>
+public class OCRInputFilterStreamFactory
+        extends AbstractBeanInputFilterStreamFactory<OCRInputFilterProperties, WikiDocumentFilter>
 {
     /**
-     * Creates a new {@link OCRImportInputFilterStreamFactory}.
+     * Creates a new {@link OCRInputFilterStreamFactory}.
      */
-    public OCRImportInputFilterStreamFactory()
+    public OCRInputFilterStreamFactory()
     {
-        super(OCRImportInputFilterProperties.FILTER_STREAM_TYPE);
+        super(OCRInputFilterProperties.FILTER_STREAM_TYPE);
 
         setName("OCR binary input stream");
         setDescription("Generate wiki events from a given graphical file using optical character recognition");

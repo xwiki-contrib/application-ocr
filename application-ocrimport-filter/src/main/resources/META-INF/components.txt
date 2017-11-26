@@ -1,2 +1,2 @@
-org.xwiki.contrib.ocrimport.filter.internal.input.OCRImportInputFilterStreamFactory
-org.xwiki.contrib.ocrimport.filter.internal.input.OCRImportInputFilterStream
+org.xwiki.contrib.ocrimport.filter.internal.input.OCRInputFilterStreamFactory
+org.xwiki.contrib.ocrimport.filter.internal.input.OCRInputFilterStream

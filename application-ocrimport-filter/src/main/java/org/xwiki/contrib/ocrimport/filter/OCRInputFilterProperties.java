@@ -19,21 +19,21 @@
  */
 package org.xwiki.contrib.ocrimport.filter;
 
+import org.xwiki.contrib.ocrimport.filter.internal.input.OCRInputFilterStream;
 import org.xwiki.filter.FilterStreamProperties;
 import org.xwiki.filter.input.InputStreamInputSource;
 import org.xwiki.filter.type.FilterStreamType;
 import org.xwiki.filter.type.SystemType;
-import org.xwiki.model.reference.EntityReference;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyName;
 
 /**
- * Define the properties used by {@link org.xwiki.contrib.ocrimport.filter.internal.input.OCRImportInputFilterStream}.
+ * Define the properties used by {@link OCRInputFilterStream}.
  *
  * @version $Id$
  * @since 1.0
  */
-public class OCRImportInputFilterProperties implements FilterStreamProperties
+public class OCRInputFilterProperties implements FilterStreamProperties
 {
     /**
      * The OCR importer format.
@@ -57,19 +57,9 @@ public class OCRImportInputFilterProperties implements FilterStreamProperties
     private InputStreamInputSource inputSource;
 
     /**
-     * @see #getParentDocument()
-     */
-    private EntityReference parentDocument;
-
-    /**
      * @see #getFileType()
      */
     private String fileType;
-
-    /**
-     * @see #getDocumentAuthor()
-     */
-    private EntityReference documentAuthor;
 
     @Override
     public boolean isVerbose()
@@ -102,24 +92,6 @@ public class OCRImportInputFilterProperties implements FilterStreamProperties
     }
 
     /**
-     * @return an {@link EntityReference} to the parent document of the document that will be created
-     */
-    @PropertyName("Parent document")
-    @PropertyDescription("A reference to the parent document")
-    public EntityReference getParentDocument()
-    {
-        return this.parentDocument;
-    }
-
-    /**
-     * @param parentDocument the parent document of the document that is imported
-     */
-    public void setParentDocument(EntityReference parentDocument)
-    {
-        this.parentDocument = parentDocument;
-    }
-
-    /**
      * @return the type (.pdf, .png, ...) of the file that will be imported
      */
     @PropertyName("File type")
@@ -135,23 +107,5 @@ public class OCRImportInputFilterProperties implements FilterStreamProperties
     public void setFileType(String fileType)
     {
         this.fileType = fileType;
-    }
-
-    /**
-     * @return the author that should be used for creating the document
-     */
-    @PropertyName("Document author")
-    @PropertyDescription("The author that should be used for creating the document")
-    public EntityReference getDocumentAuthor()
-    {
-        return this.documentAuthor;
-    }
-
-    /**
-     * @param documentAuthor the author used for creating the document
-     */
-    public void setDocumentAuthor(EntityReference documentAuthor)
-    {
-        this.documentAuthor = documentAuthor;
     }
 }
