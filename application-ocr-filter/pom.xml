@@ -24,34 +24,38 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>parent-platform</artifactId>
-    <version>8.4-8</version>
+    <artifactId>application-ocr</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>application-ocr</artifactId>
+  <artifactId>application-ocr-filter</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - Parent POM</name>
-  <packaging>pom</packaging>
-  <description>Creates documents from images or scanned PDFs using optical character recognition</description>
-  <scm>
-    <connection>scm:git:git://github.com/xwiki-contrib/application-ocr.git</connection>
-    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-ocr.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/application-ocr</url>
-    <tag>HEAD</tag>
-  </scm>
-  <developers>
-    <developer>
-      <id>aubincleme</id>
-      <name>Clément Aubin</name>
-    </developer>
-  </developers>
-  <properties>
-    <xwiki.extension.category>api</xwiki.extension.category>
-    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
-    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
-    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/OCR</xwiki.issueManagement.url>
-  </properties>
-  <modules>
-    <module>application-ocr-api</module>
-    <module>application-ocr-filter</module>
-  </modules>
+  <name>Optical Character Recognition Application - File input filter</name>
+  <packaging>jar</packaging>
+  <description>Filter stream extension to parse a file containing text</description>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-ocr-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-filter-api</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-filter-event-model</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-tool-test-component</artifactId>
+      <version>${commons.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
