@@ -21,7 +21,7 @@ package org.xwiki.contrib.ocr.filter;
 
 import org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStream;
 import org.xwiki.filter.FilterStreamProperties;
-import org.xwiki.filter.input.InputStreamInputSource;
+import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.type.FilterStreamType;
 import org.xwiki.filter.type.SystemType;
 import org.xwiki.properties.annotation.PropertyDescription;
@@ -39,12 +39,12 @@ public class OCRInputFilterProperties implements FilterStreamProperties
      * The OCR importer format.
      */
     public static final FilterStreamType FILTER_STREAM_TYPE =
-            new FilterStreamType(SystemType.FILTER, "binary");
+            new FilterStreamType(SystemType.unserialize("ocr"), "binary");
 
     /**
      * The OCR importer format, as a string.
      */
-    public static final String FILTER_STREAM_TYPE_STRING = "ocrimporter+binary";
+    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary";
 
     /**
      * @see #isVerbose()
@@ -52,9 +52,9 @@ public class OCRInputFilterProperties implements FilterStreamProperties
     private boolean verbose = true;
 
     /**
-     * @see #getInputSource()
+     * @see #getSource()
      */
-    private InputStreamInputSource inputSource;
+    private InputSource source;
 
     /**
      * @see #getFileType()
@@ -74,21 +74,21 @@ public class OCRInputFilterProperties implements FilterStreamProperties
     }
 
     /**
-     * @return the {@link InputStreamInputSource} that contains the content imported using OCR
+     * @return the {@link InputSource} that contains used
      */
-    @PropertyName("Input source")
-    @PropertyDescription("Indicates the source that will be imported using OCR")
-    public InputStreamInputSource getInputSource()
+    @PropertyName("Source")
+    @PropertyDescription("Indicates the source that will be used")
+    public InputSource getSource()
     {
-        return this.inputSource;
+        return this.source;
     }
 
     /**
-     * @param inputSource the {@link InputStreamInputSource} that contains the content to import using OCR
+     * @param source the {@link InputSource} that contains the content used
      */
-    public void setInputSource(InputStreamInputSource inputSource)
+    public void setSource(InputSource source)
     {
-        this.inputSource = inputSource;
+        this.source = source;
     }
 
     /**

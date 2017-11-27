@@ -36,6 +36,7 @@ import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
+import org.xwiki.filter.input.InputStreamInputSource;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
@@ -62,7 +63,10 @@ public class OCRInputFilterStream
     {
         if (isImage(this.properties.getFileType())) {
             try {
-                OCRDocument document = manager.parseImage(this.properties.getInputSource().getInputStream());
+                // TODO: Allow multiple streams
+                // TODO: Check before casting to InputStreamInputSource
+                OCRDocument document = manager.parseImage(
+                        ((InputStreamInputSource) this.properties.getSource()).getInputStream());
 
                 // TODO: Allow the user to change the document title
                 // TODO: Support localized documents
@@ -73,10 +77,10 @@ public class OCRInputFilterStream
                 document.dispose();
             } catch (IOException e) {
                 throw new FilterException(
-                        String.format("Unable to read source : [{}]", e));
+                        String.format("Unable to read source : [%s]", e));
             } catch (OCRException e) {
                 throw new FilterException(
-                        String.format("Unable to import the file : [{}]", e));
+                        String.format("Unable to import the file : [%s]", e));
             }
         } else {
             throw new FilterException("Unsupported file type.");
@@ -86,7 +90,7 @@ public class OCRInputFilterStream
     @Override
     public void close() throws IOException
     {
-        this.properties.getInputSource().close();
+        this.properties.getSource().close();
     }
 
     /**

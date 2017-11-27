@@ -60,6 +60,7 @@ public class DefaultOCRManager implements OCRManager
         try {
             fileBytes = IOUtils.toByteArray(fileStream);
             image = pixReadMem(fileBytes, fileBytes.length);
+            api.SetImage(image);
         } catch (IOException e) {
             throw new OCRException(String.format("Unable to process input stream : [%s]", e));
         } finally {
