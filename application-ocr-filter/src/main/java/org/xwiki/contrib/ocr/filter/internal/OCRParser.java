@@ -17,12 +17,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.filter;
+package org.xwiki.contrib.ocr.filter.internal;
 
-import org.xwiki.component.annotation.Role;
-import org.xwiki.contrib.ocr.api.OCRDocument;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import org.bytedeco.javacpp.lept;
+import org.bytedeco.javacpp.tesseract.TessBaseAPI;
+import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.stability.Unstable;
+import org.xwiki.contrib.ocr.api.TessBaseAPIProvider;
+
+import static org.bytedeco.javacpp.lept.pixDestroy;
+import static org.bytedeco.javacpp.lept.pixReadMem;
 
 /**
  * Handle the different steps for parsing a file using the Tesseract OCR library.
@@ -30,10 +37,13 @@ import org.xwiki.stability.Unstable;
  * @version $Id$
  * @since 1.0
  */
-@Role
-@Unstable
-public interface OCRParser
+@Component(roles = OCRParser.class)
+@Singleton
+public class OCRParser
 {
+    @Inject
+    private TessBaseAPIProvider apiProvider;
+
     /**
      * Parse the given image file and return its contents.
      *
@@ -41,5 +51,18 @@ public interface OCRParser
      * @return the generated document
      * @throws OCRException if an error occurs during the importation
      */
-    OCRDocument parseImage(byte[] fileBytes) throws OCRException;
+    public OCRDocument parseImage(byte[] fileBytes) throws OCRException
+    {
+        lept.PIX image = null;
+        TessBaseAPI api = apiProvider.get();
+
+        try {
+            image = pixReadMem(fileBytes, fileBytes.length);
+            api.SetImage(image);
+        } finally {
+            pixDestroy(image);
+        }
+
+        return new OCRDocument(api);
+    }
 }

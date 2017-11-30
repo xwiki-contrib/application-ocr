@@ -19,46 +19,43 @@
  */
 package org.xwiki.contrib.ocr.filter.internal;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
-import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.api.TessBaseAPIProvider;
-import org.xwiki.contrib.ocr.api.OCRDocument;
-import org.xwiki.contrib.ocr.filter.OCRParser;
-
-import static org.bytedeco.javacpp.lept.pixDestroy;
-import static org.bytedeco.javacpp.lept.pixReadMem;
 
 /**
- * This is the default implementation for {@link OCRParser}.
+ * Describe a file parsed using OCR.
+ * Please note that once an {@link OCRDocument} isn't meant to be used anymore, {@link #dispose()} should be called.
  *
  * @version $Id$
  * @since 1.0
  */
-@Component
-@Singleton
-public class DefaultOCRParser implements OCRParser
+public class OCRDocument
 {
-    @Inject
-    private TessBaseAPIProvider apiProvider;
+    private TessBaseAPI api;
 
-    @Override
-    public OCRDocument parseImage(byte[] fileBytes) throws OCRException
+    /**
+     * Builds a new {@link OCRDocument} using the given {@link TessBaseAPI}. This API should have already parsed
+     * the file used by this document.
+     *
+     * @param api the {@link TessBaseAPI} to use
+     */
+    public OCRDocument(TessBaseAPI api)
     {
-        lept.PIX image = null;
-        TessBaseAPI api = apiProvider.get();
+        this.api = api;
+    }
 
-        try {
-            image = pixReadMem(fileBytes, fileBytes.length);
-            api.SetImage(image);
-        } finally {
-            pixDestroy(image);
-        }
+    /**
+     * @return the raw content extracted from the document source
+     */
+    public String getPlainContent()
+    {
+        return api.GetUTF8Text().getString();
+    }
 
-        return new OCRDocument(api);
+    /**
+     * Dispose of the API.
+     */
+    public void dispose()
+    {
+        api.End();
     }
 }

@@ -25,18 +25,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.tika.Tika;
-import org.apache.tika.detect.DefaultDetector;
-import org.apache.tika.detect.Detector;
-import org.apache.tika.mime.MediaType;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
-import org.xwiki.contrib.ocr.api.OCRDocument;
+import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.filter.OCRParser;
 import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
+import org.xwiki.contrib.ocr.filter.internal.OCRMediaTypeChecker;
+import org.xwiki.contrib.ocr.filter.internal.OCRParser;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
@@ -69,13 +66,11 @@ public class OCRInputFilterStream
             // TODO: Support multiple streams
             logVerbose("Extracting source ...");
             byte[] source = extractSource(this.properties.getSource());
-            logVerbose("Checking source content type ...");
-            MediaType streamType = extractContentType(source);
-            // TODO: Support multiple file types
-            MediaType pngType = MediaType.parse("image/png");
+            logVerbose("Checking source media type ...");
+            OCRMediaTypeChecker mediaTypeChecker = new OCRMediaTypeChecker(source);
 
-            if (streamType.equals(pngType)) {
-                logVerbose("Found supported input type : [{}]", streamType);
+            if (mediaTypeChecker.isImage()) {
+                logVerbose("Found supported input type : [{}]", mediaTypeChecker.getMediaType());
                 OCRDocument document = manager.parseImage(source);
 
                 // TODO: Allow the user to change the document title
@@ -117,37 +112,6 @@ public class OCRInputFilterStream
         } else {
             throw new FilterException("Unsupported input source.");
         }
-    }
-
-    /**
-     * Extract the content type of the given stream. If a file name is given, it will be used in order to ease the
-     * guessing process of the stream type.
-     *
-     * @param source the file for which the type should be guessed
-     * @param fileName the file name
-     * @return the {@link MediaType} of the stream. If no type could be guessed, returns {@link MediaType#OCTET_STREAM}
-     * @throws IOException if an error occurs
-     */
-    public MediaType extractContentType(byte[] source, String fileName) throws IOException
-    {
-        Detector detector = new DefaultDetector();
-        Tika tika = new Tika(detector);
-
-        MediaType mediaType = MediaType.parse(tika.detect(source, fileName));
-
-        return mediaType;
-    }
-
-    /**
-     * Just as {@link #extractContentType(byte[], String)}, extract the content type of the given stream.
-     *
-     * @param source the file for which the type should be guessed
-     * @return the {@link MediaType} of the stream. If no type could be guessed, returns {@link MediaType#OCTET_STREAM}
-     * @throws IOException if an error occurs
-     */
-    public MediaType extractContentType(byte[] source) throws IOException
-    {
-        return extractContentType(source, null);
     }
 
     /**
