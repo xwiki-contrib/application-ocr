@@ -17,20 +17,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.api;
+package org.xwiki.contrib.ocr.filter;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.contrib.ocr.api.OCRDocument;
+import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.stability.Unstable;
 
 /**
- * Handle the different steps for importing a new document in the wiki using the Tesseract OCR library.
+ * Handle the different steps for parsing a file using the Tesseract OCR library.
  *
  * @version $Id$
  * @since 1.0
  */
 @Role
 @Unstable
-public interface OCRManager
+public interface OCRParser
 {
     /**
      * Parse the given image file and return its contents.

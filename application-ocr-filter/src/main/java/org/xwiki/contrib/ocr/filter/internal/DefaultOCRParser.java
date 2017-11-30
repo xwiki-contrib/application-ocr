@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.api.internal;
+package org.xwiki.contrib.ocr.filter.internal;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,22 +26,22 @@ import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.api.OCRManager;
 import org.xwiki.contrib.ocr.api.TessBaseAPIProvider;
 import org.xwiki.contrib.ocr.api.OCRDocument;
+import org.xwiki.contrib.ocr.filter.OCRParser;
 
 import static org.bytedeco.javacpp.lept.pixDestroy;
 import static org.bytedeco.javacpp.lept.pixReadMem;
 
 /**
- * This is the default implementation for {@link OCRManager}.
+ * This is the default implementation for {@link OCRParser}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
 @Singleton
-public class DefaultOCRManager implements OCRManager
+public class DefaultOCRParser implements OCRParser
 {
     @Inject
     private TessBaseAPIProvider apiProvider;

@@ -35,7 +35,7 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.api.OCRManager;
+import org.xwiki.contrib.ocr.filter.OCRParser;
 import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
@@ -57,7 +57,7 @@ public class OCRInputFilterStream
         extends AbstractBeanInputFilterStream<OCRInputFilterProperties, WikiDocumentFilter>
 {
     @Inject
-    private OCRManager manager;
+    private OCRParser manager;
 
     @Inject
     private Logger logger;

@@ -1,2 +1,3 @@
 org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStreamFactory
 org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStream
+org.xwiki.contrib.ocr.filter.internal.DefaultOCRParser

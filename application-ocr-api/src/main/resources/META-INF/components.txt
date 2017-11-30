@@ -1,3 +1,2 @@
 org.xwiki.contrib.ocr.api.internal.DefaultTessBaseAPIProvider
-org.xwiki.contrib.ocr.api.internal.DefaultOCRManager
 org.xwiki.contrib.ocr.api.internal.DefaultOCRConfiguration
