@@ -19,13 +19,9 @@
  */
 package org.xwiki.contrib.ocr.api.internal;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.apache.commons.compress.utils.IOUtils;
 import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
@@ -51,18 +47,14 @@ public class DefaultOCRManager implements OCRManager
     private TessBaseAPIProvider apiProvider;
 
     @Override
-    public OCRDocument parseImage(InputStream fileStream) throws OCRException
+    public OCRDocument parseImage(byte[] fileBytes) throws OCRException
     {
-        byte[] fileBytes;
         lept.PIX image = null;
         TessBaseAPI api = apiProvider.get();
 
         try {
-            fileBytes = IOUtils.toByteArray(fileStream);
             image = pixReadMem(fileBytes, fileBytes.length);
             api.SetImage(image);
-        } catch (IOException e) {
-            throw new OCRException(String.format("Unable to process input stream : [%s]", e));
         } finally {
             pixDestroy(image);
         }

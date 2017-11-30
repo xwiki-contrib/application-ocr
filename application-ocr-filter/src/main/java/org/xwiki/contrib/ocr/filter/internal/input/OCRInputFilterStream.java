@@ -20,11 +20,16 @@
 package org.xwiki.contrib.ocr.filter.internal.input;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.tika.Tika;
+import org.apache.tika.detect.DefaultDetector;
+import org.apache.tika.detect.Detector;
+import org.apache.tika.mime.MediaType;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
@@ -36,8 +41,8 @@ import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
+import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
  * Define the OCR importer input filter stream.
@@ -55,35 +60,38 @@ public class OCRInputFilterStream
     private OCRManager manager;
 
     @Inject
-    @Named("local")
-    private EntityReferenceSerializer entityReferenceSerializer;
+    private Logger logger;
 
     @Override
     protected void read(Object filter, WikiDocumentFilter proxyFilter) throws FilterException
     {
-        if (isImage(this.properties.getFileType())) {
-            try {
-                // TODO: Allow multiple streams
-                // TODO: Check before casting to InputStreamInputSource
-                OCRDocument document = manager.parseImage(
-                        ((InputStreamInputSource) this.properties.getSource()).getInputStream());
+        try {
+            // TODO: Support multiple streams
+            logVerbose("Extracting source ...");
+            byte[] source = extractSource(this.properties.getSource());
+            logVerbose("Checking source content type ...");
+            MediaType streamType = extractContentType(source);
+            // TODO: Support multiple file types
+            MediaType pngType = MediaType.parse("image/png");
+
+            if (streamType.equals(pngType)) {
+                logVerbose("Found supported input type : [{}]", streamType);
+                OCRDocument document = manager.parseImage(source);
 
                 // TODO: Allow the user to change the document title
                 // TODO: Support localized documents
-                String documentName = "ImportedDocument";
+                String documentName = this.properties.getName();
                 proxyFilter.beginWikiDocument(documentName, generateEventParameters(document));
                 proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
 
                 document.dispose();
-            } catch (IOException e) {
-                throw new FilterException(
-                        String.format("Unable to read source : [%s]", e));
-            } catch (OCRException e) {
-                throw new FilterException(
-                        String.format("Unable to import the file : [%s]", e));
+            } else {
+                throw new FilterException("Unsupported file type.");
             }
-        } else {
-            throw new FilterException("Unsupported file type.");
+        } catch (IOException e) {
+            throw new FilterException("Unable to read source.", e);
+        } catch (OCRException e) {
+            throw new FilterException("Unable to import the file.", e);
         }
     }
 
@@ -91,6 +99,55 @@ public class OCRInputFilterStream
     public void close() throws IOException
     {
         this.properties.getSource().close();
+    }
+
+    /**
+     * Check if the given {@link InputSource} is supported and, if so, extract it as a byte array to be used by the
+     * parsing library.
+     *
+     * @param source the {@link InputSource} to use
+     * @return the source content
+     * @throws FilterException if the {@link InputSource} is not supported
+     * @throws IOException if the retrieval of the source content failed
+     */
+    private byte[] extractSource(InputSource source) throws FilterException, IOException
+    {
+        if (source instanceof InputStreamInputSource) {
+            return IOUtils.toByteArray(((InputStreamInputSource) source).getInputStream());
+        } else {
+            throw new FilterException("Unsupported input source.");
+        }
+    }
+
+    /**
+     * Extract the content type of the given stream. If a file name is given, it will be used in order to ease the
+     * guessing process of the stream type.
+     *
+     * @param source the file for which the type should be guessed
+     * @param fileName the file name
+     * @return the {@link MediaType} of the stream. If no type could be guessed, returns {@link MediaType#OCTET_STREAM}
+     * @throws IOException if an error occurs
+     */
+    public MediaType extractContentType(byte[] source, String fileName) throws IOException
+    {
+        Detector detector = new DefaultDetector();
+        Tika tika = new Tika(detector);
+
+        MediaType mediaType = MediaType.parse(tika.detect(source, fileName));
+
+        return mediaType;
+    }
+
+    /**
+     * Just as {@link #extractContentType(byte[], String)}, extract the content type of the given stream.
+     *
+     * @param source the file for which the type should be guessed
+     * @return the {@link MediaType} of the stream. If no type could be guessed, returns {@link MediaType#OCTET_STREAM}
+     * @throws IOException if an error occurs
+     */
+    public MediaType extractContentType(byte[] source) throws IOException
+    {
+        return extractContentType(source, null);
     }
 
     /**
@@ -108,14 +165,16 @@ public class OCRInputFilterStream
     }
 
     /**
-     * Determine if the given file type is a supported image type.
+     * Uses {@link #logger} to log information about the state of the filtering process
+     * if {@link OCRInputFilterProperties#isVerbose()} is true.
      *
-     * @param fileType the file type to use
-     * @return true if the file type corresponds to a supported image type
+     * @param message the message to log
+     * @param parameters the parameters of the message
      */
-    private boolean isImage(String fileType)
+    private void logVerbose(String message, Object... parameters)
     {
-        Pattern p = Pattern.compile("(jpg|png)");
-        return p.matcher(fileType).matches();
+        if (this.properties.isVerbose()) {
+            this.logger.info(message, parameters);
+        }
     }
 }

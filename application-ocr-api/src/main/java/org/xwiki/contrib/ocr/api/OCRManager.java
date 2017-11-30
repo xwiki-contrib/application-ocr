@@ -19,8 +19,6 @@
  */
 package org.xwiki.contrib.ocr.api;
 
-import java.io.InputStream;
-
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
@@ -37,9 +35,9 @@ public interface OCRManager
     /**
      * Parse the given image file and return its contents.
      *
-     * @param fileStream the file to parse
+     * @param fileBytes the file to parse
      * @return the generated document
      * @throws OCRException if an error occurs during the importation
      */
-    OCRDocument parseImage(InputStream fileStream) throws OCRException;
+    OCRDocument parseImage(byte[] fileBytes) throws OCRException;
 }

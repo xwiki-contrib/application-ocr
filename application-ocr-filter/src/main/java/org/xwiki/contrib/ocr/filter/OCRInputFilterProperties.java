@@ -57,9 +57,9 @@ public class OCRInputFilterProperties implements FilterStreamProperties
     private InputSource source;
 
     /**
-     * @see #getFileType()
+     * @see #getName()
      */
-    private String fileType;
+    private String name;
 
     @Override
     public boolean isVerbose()
@@ -92,20 +92,20 @@ public class OCRInputFilterProperties implements FilterStreamProperties
     }
 
     /**
-     * @return the type (.pdf, .png, ...) of the file that will be imported
+     * @return the name of the document that will be created
      */
-    @PropertyName("File type")
-    @PropertyDescription("The type of the file that will be imported")
-    public String getFileType()
+    @PropertyName("Name")
+    @PropertyDescription("The name of the document that will be created")
+    public String getName()
     {
-        return this.fileType;
+        return this.name;
     }
 
     /**
-     * @param fileType the type of file that will be imported
+     * @param name the name of the document that will be created
      */
-    public void setFileType(String fileType)
+    public void setName(String name)
     {
-        this.fileType = fileType;
+        this.name = name;
     }
 }
