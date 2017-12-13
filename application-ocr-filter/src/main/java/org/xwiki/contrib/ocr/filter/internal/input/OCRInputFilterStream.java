@@ -19,16 +19,20 @@
  */
 package org.xwiki.contrib.ocr.filter.internal.input;
 
+import java.awt.Image;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.io.IOUtils;
+import org.codehaus.plexus.util.IOUtil;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.ocr.filter.internal.ImageRenderer;
 import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
@@ -65,21 +69,23 @@ public class OCRInputFilterStream
         try {
             // TODO: Support multiple streams
             logVerbose("Extracting source ...");
-            byte[] source = extractSource(this.properties.getSource());
+            InputStream source = extractSource(this.properties.getSource());
+
             logVerbose("Checking source media type ...");
             OCRMediaTypeChecker mediaTypeChecker = new OCRMediaTypeChecker(source);
 
             if (mediaTypeChecker.isImage()) {
                 logVerbose("Found supported input type : [{}]", mediaTypeChecker.getMediaType());
-                OCRDocument document = manager.parseImage(source);
+                OCRDocument document = manager.parseImage(IOUtil.toByteArray(source));
 
-                // TODO: Allow the user to change the document title
                 // TODO: Support localized documents
                 String documentName = this.properties.getName();
                 proxyFilter.beginWikiDocument(documentName, generateEventParameters(document));
                 proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
 
                 document.dispose();
+            } else if (mediaTypeChecker.isPDF()) {
+                List<Image> images = ImageRenderer.renderPDF(source);
             } else {
                 throw new FilterException("Unsupported file type.");
             }
@@ -105,10 +111,10 @@ public class OCRInputFilterStream
      * @throws FilterException if the {@link InputSource} is not supported
      * @throws IOException if the retrieval of the source content failed
      */
-    private byte[] extractSource(InputSource source) throws FilterException, IOException
+    private InputStream extractSource(InputSource source) throws FilterException, IOException
     {
         if (source instanceof InputStreamInputSource) {
-            return IOUtils.toByteArray(((InputStreamInputSource) source).getInputStream());
+            return ((InputStreamInputSource) source).getInputStream();
         } else {
             throw new FilterException("Unsupported input source.");
         }

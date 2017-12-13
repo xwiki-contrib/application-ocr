@@ -19,6 +19,13 @@
  */
 package org.xwiki.contrib.ocr.filter.internal;
 
+import java.awt.Image;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -45,24 +52,68 @@ public class OCRParser
     private TessBaseAPIProvider apiProvider;
 
     /**
-     * Parse the given image file and return its contents.
+     * Parse the given image (as a byte array) and return its contents.
      *
-     * @param fileBytes the file to parse
+     * @param image the image to parse
      * @return the generated document
      * @throws OCRException if an error occurs during the importation
      */
-    public OCRDocument parseImage(byte[] fileBytes) throws OCRException
+    public OCRDocument parseImage(byte[] image) throws OCRException
     {
-        lept.PIX image = null;
+        lept.PIX leptImage = null;
         TessBaseAPI api = apiProvider.get();
 
         try {
-            image = pixReadMem(fileBytes, fileBytes.length);
-            api.SetImage(image);
+            leptImage = pixReadMem(image, image.length);
+            api.SetImage(leptImage);
         } finally {
-            pixDestroy(image);
+            pixDestroy(leptImage);
         }
 
         return new OCRDocument(api);
+    }
+
+    /**
+     * Parse the given image file and return its contents.
+     *
+     * @param image the image to parse
+     * @return the generated document
+     * @throws OCRException if an error occurs during the importation
+     */
+    public OCRDocument parseImage(Image image) throws OCRException
+    {
+        return parseImage(toByteArray(image));
+    }
+
+    /**
+     * Converts a given {@link Image} to a byte array.
+     *
+     * @param image the image to convert
+     * @return the associated byte array
+     * @throws OCRException if the conversion failed
+     */
+    private byte[] toByteArray(Image image) throws OCRException
+    {
+        BufferedImage bufferedImage;
+        if (image instanceof BufferedImage) {
+            bufferedImage = (BufferedImage) image;
+        } else {
+            bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
+                    BufferedImage.TYPE_INT_ARGB);
+            Graphics2D graphics = bufferedImage.createGraphics();
+            graphics.drawImage(image, 0, 0, null);
+            graphics.dispose();
+        }
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            byteArrayOutputStream.flush();
+        } catch (IOException e) {
+            throw new OCRException("Failed to convert the given image to byte array.", e);
+        }
+
+        return byteArrayOutputStream.toByteArray();
     }
 }

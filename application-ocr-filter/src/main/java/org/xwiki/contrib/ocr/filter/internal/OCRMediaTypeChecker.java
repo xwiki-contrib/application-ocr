@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.ocr.filter.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,10 +58,6 @@ public class OCRMediaTypeChecker
      */
     private static final MediaType PDF_MEDIA_TYPE = MediaType.parse("application/pdf");
 
-    private byte[] file;
-
-    private String fileName;
-
     private MediaType fileMediaType;
 
     /**
@@ -69,15 +67,16 @@ public class OCRMediaTypeChecker
      * @param fileName a file name, used as a hint to guess the content type
      * @throws OCRException if the given file has a format that is not supported by the application
      */
-    public OCRMediaTypeChecker(byte[] file, String fileName) throws OCRException
+    public OCRMediaTypeChecker(InputStream file, String fileName) throws OCRException
     {
-        this.file = file;
-        this.fileName = fileName;
-
         Detector detector = new DefaultDetector();
         Tika tika = new Tika(detector);
 
-        this.fileMediaType = MediaType.parse(tika.detect(file, fileName));
+        try {
+            this.fileMediaType = MediaType.parse(tika.detect(file, fileName));
+        } catch (IOException e) {
+            throw new OCRException("Unable to parse file media type.", e);
+        }
 
         if (!(isImage() || isPDF())) {
             throw new OCRException(String.format("The file media type [%s] is not supported.", this.fileMediaType));
@@ -90,7 +89,7 @@ public class OCRMediaTypeChecker
      * @param file the file to check
      * @throws OCRException if the given file has a format that is not supported by the application
      */
-    public OCRMediaTypeChecker(byte[] file) throws OCRException
+    public OCRMediaTypeChecker(InputStream file) throws OCRException
     {
         this(file, null);
     }
