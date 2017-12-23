@@ -1,3 +1,5 @@
-org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStreamFactory
-org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStream
+org.xwiki.contrib.ocr.filter.internal.input.XWikiSyntaxFilterStream
+org.xwiki.contrib.ocr.filter.internal.input.XWikiSyntaxFilterStreamFactory
+org.xwiki.contrib.ocr.filter.internal.input.PlainFilterStream
+org.xwiki.contrib.ocr.filter.internal.input.PlainFilterStreamFactory
 org.xwiki.contrib.ocr.filter.internal.OCRParser

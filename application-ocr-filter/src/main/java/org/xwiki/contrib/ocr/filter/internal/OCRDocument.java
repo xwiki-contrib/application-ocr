@@ -52,6 +52,14 @@ public class OCRDocument
     }
 
     /**
+     * @return the content of the document as hOCR syntax.
+     */
+    public String getHOCRContent()
+    {
+        return api.GetHOCRText(0).getString();
+    }
+
+    /**
      * Dispose of the API.
      */
     public void dispose()

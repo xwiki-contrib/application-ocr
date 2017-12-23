@@ -26,6 +26,8 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
+import org.xwiki.filter.type.FilterStreamType;
+import org.xwiki.filter.type.SystemType;
 
 /**
  * Create OCR import input filters.
@@ -34,19 +36,30 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
  * @since 1.0
  */
 @Component
-@Named(OCRInputFilterProperties.FILTER_STREAM_TYPE_STRING)
+@Named(XWikiSyntaxFilterStreamFactory.FILTER_STREAM_TYPE_STRING)
 @Singleton
-public class OCRInputFilterStreamFactory
+public class XWikiSyntaxFilterStreamFactory
         extends AbstractBeanInputFilterStreamFactory<OCRInputFilterProperties, WikiDocumentFilter>
 {
     /**
-     * Creates a new {@link OCRInputFilterStreamFactory}.
+     * The OCR importer format.
      */
-    public OCRInputFilterStreamFactory()
-    {
-        super(OCRInputFilterProperties.FILTER_STREAM_TYPE);
+    public static final FilterStreamType FILTER_STREAM_TYPE =
+            new FilterStreamType(SystemType.unserialize("ocr+binary"), "xwiki", "2.1");
 
-        setName("OCR binary input stream");
+    /**
+     * The OCR importer format, as a string.
+     */
+    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary+xwiki";
+
+    /**
+     * Creates a new {@link XWikiSyntaxFilterStreamFactory}.
+     */
+    public XWikiSyntaxFilterStreamFactory()
+    {
+        super(XWikiSyntaxFilterStreamFactory.FILTER_STREAM_TYPE);
+
+        setName("OCR XWiki Syntax input stream");
         setDescription("Generate wiki events from a given graphical file using optical character recognition");
     }
 }

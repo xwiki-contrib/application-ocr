@@ -29,13 +29,18 @@
   </parent>
   <artifactId>application-ocr-filter</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - File input filter</name>
+  <name>Optical Character Recognition Application - Filters</name>
   <packaging>jar</packaging>
-  <description>Filter stream extension to parse a file containing text</description>
+  <description>Filter stream extension to parse a graphical file containing text</description>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-ocr-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-ocr-syntax-hocr</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -43,6 +48,11 @@
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-filter-api</artifactId>
       <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-syntax-xwiki21</artifactId>
+      <version>${rendering.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>

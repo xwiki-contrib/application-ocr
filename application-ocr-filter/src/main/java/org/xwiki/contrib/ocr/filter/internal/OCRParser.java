@@ -92,18 +92,9 @@ public class OCRParser
      * @return the associated byte array
      * @throws OCRException if the conversion failed
      */
-    private byte[] toByteArray(Image image) throws OCRException
+    private static byte[] toByteArray(Image image) throws OCRException
     {
-        BufferedImage bufferedImage;
-        if (image instanceof BufferedImage) {
-            bufferedImage = (BufferedImage) image;
-        } else {
-            bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
-                    BufferedImage.TYPE_INT_ARGB);
-            Graphics2D graphics = bufferedImage.createGraphics();
-            graphics.drawImage(image, 0, 0, null);
-            graphics.dispose();
-        }
+        BufferedImage bufferedImage = toBufferedImage(image);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -115,5 +106,32 @@ public class OCRParser
         }
 
         return byteArrayOutputStream.toByteArray();
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage.
+     * Credits to https://code.google.com/archive/p/game-engine-for-java/.
+     *
+     * @param image The Image to be converted
+     * @return The converted BufferedImage
+     */
+    private static BufferedImage toBufferedImage(Image image)
+    {
+        if (image instanceof BufferedImage)
+        {
+            return (BufferedImage) image;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
+                image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bufferedImage.createGraphics();
+        bGr.drawImage(image, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bufferedImage;
     }
 }

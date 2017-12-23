@@ -20,41 +20,37 @@
 package org.xwiki.contrib.ocr.filter.internal.input;
 
 import java.awt.Image;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.slf4j.Logger;
-import org.xwiki.component.annotation.Component;
-import org.xwiki.component.annotation.InstantiationStrategy;
-import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
 import org.xwiki.contrib.ocr.filter.internal.ImageRenderer;
 import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
 import org.xwiki.contrib.ocr.filter.internal.OCRMediaTypeChecker;
 import org.xwiki.contrib.ocr.filter.internal.OCRParser;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
+import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
 
 /**
- * Define the OCR importer input filter stream.
+ * Define generic methods for an OCR input filter stream. Input filter streams derived from this abstract are
+ * creating WikiDocument events containing a content specific to the filter.
  *
  * @version $Id$
  * @since 1.0
  */
-@Component
-@Named(OCRInputFilterProperties.FILTER_STREAM_TYPE_STRING)
-@InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
-public class OCRInputFilterStream
+public abstract class AbstractOCRInputFilterStream
         extends AbstractBeanInputFilterStream<OCRInputFilterProperties, WikiDocumentFilter>
 {
     @Inject
@@ -66,6 +62,8 @@ public class OCRInputFilterStream
     @Override
     protected void read(Object filter, WikiDocumentFilter proxyFilter) throws FilterException
     {
+        OCRDocument document;
+
         try {
             // TODO: Support multiple streams
             logVerbose("Extracting source ...");
@@ -75,8 +73,10 @@ public class OCRInputFilterStream
             OCRMediaTypeChecker mediaTypeChecker = new OCRMediaTypeChecker(source);
 
             if (mediaTypeChecker.isImage()) {
+                source = extractSource(this.properties.getSource());
+
                 logVerbose("Found supported input type : [{}]", mediaTypeChecker.getMediaType());
-                OCRDocument document = manager.parseImage(IOUtil.toByteArray(source));
+                document = manager.parseImage(IOUtil.toByteArray(source));
 
                 // TODO: Support localized documents
                 String documentName = this.properties.getName();
@@ -85,7 +85,14 @@ public class OCRInputFilterStream
 
                 document.dispose();
             } else if (mediaTypeChecker.isPDF()) {
+                source.close();
+                source = extractSource(this.properties.getSource());
+
                 List<Image> images = ImageRenderer.renderPDF(source);
+
+                for (Image image : images) {
+                    document = manager.parseImage(image);
+                }
             } else {
                 throw new FilterException("Unsupported file type.");
             }
@@ -113,6 +120,9 @@ public class OCRInputFilterStream
      */
     private InputStream extractSource(InputSource source) throws FilterException, IOException
     {
+        if (source instanceof FileInputSource) {
+            return new FileInputStream(((FileInputSource) source).getFile());
+        }
         if (source instanceof InputStreamInputSource) {
             return ((InputStreamInputSource) source).getInputStream();
         } else {
@@ -126,13 +136,9 @@ public class OCRInputFilterStream
      *
      * @param document the document to use
      * @return the {@link FilterEventParameters}
+     * @throws OCRException if an error happens
      */
-    private FilterEventParameters generateEventParameters(OCRDocument document)
-    {
-        FilterEventParameters parameters = new FilterEventParameters();
-        parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, document.getPlainContent());
-        return parameters;
-    }
+    protected abstract FilterEventParameters generateEventParameters(OCRDocument document) throws OCRException;
 
     /**
      * Uses {@link #logger} to log information about the state of the filtering process
@@ -141,7 +147,7 @@ public class OCRInputFilterStream
      * @param message the message to log
      * @param parameters the parameters of the message
      */
-    private void logVerbose(String message, Object... parameters)
+    protected void logVerbose(String message, Object... parameters)
     {
         if (this.properties.isVerbose()) {
             this.logger.info(message, parameters);

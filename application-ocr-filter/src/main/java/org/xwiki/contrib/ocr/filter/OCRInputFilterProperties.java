@@ -19,33 +19,19 @@
  */
 package org.xwiki.contrib.ocr.filter;
 
-import org.xwiki.contrib.ocr.filter.internal.input.OCRInputFilterStream;
 import org.xwiki.filter.FilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
-import org.xwiki.filter.type.FilterStreamType;
-import org.xwiki.filter.type.SystemType;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyName;
 
 /**
- * Define the properties used by {@link OCRInputFilterStream}.
+ * Define the properties used by {@link org.xwiki.contrib.ocr.filter.internal.input.AbstractOCRInputFilterStream}.
  *
  * @version $Id$
  * @since 1.0
  */
 public class OCRInputFilterProperties implements FilterStreamProperties
 {
-    /**
-     * The OCR importer format.
-     */
-    public static final FilterStreamType FILTER_STREAM_TYPE =
-            new FilterStreamType(SystemType.unserialize("ocr"), "binary");
-
-    /**
-     * The OCR importer format, as a string.
-     */
-    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary";
-
     /**
      * @see #isVerbose()
      */
