@@ -24,35 +24,23 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>parent-platform</artifactId>
-    <version>8.4-8</version>
+    <artifactId>application-ocr-syntax</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>application-ocr</artifactId>
+  <artifactId>application-ocr-syntax-hocr</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - Parent POM</name>
-  <packaging>pom</packaging>
-  <description>Creates documents from images or scanned PDFs using optical character recognition</description>
-  <scm>
-    <connection>scm:git:git://github.com/xwiki-contrib/application-ocr.git</connection>
-    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-ocr.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/application-ocr</url>
-    <tag>HEAD</tag>
-  </scm>
-  <developers>
-    <developer>
-      <id>aubincleme</id>
-      <name>Clément Aubin</name>
-    </developer>
-  </developers>
-  <properties>
-    <xwiki.extension.category>api</xwiki.extension.category>
-    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
-    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
-    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/OCR</xwiki.issueManagement.url>
-  </properties>
-  <modules>
-    <module>application-ocr-api</module>
-    <module>application-ocr-filter</module>
-    <module>application-ocr-syntax</module>
-  </modules>
+  <name>Optical Character Recognition Application - Syntax - hOCR</name>
+  <packaging>jar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-xml</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-api</artifactId>
+      <version>${rendering.version}</version>
+    </dependency>
+  </dependencies>
 </project>

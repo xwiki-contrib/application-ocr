@@ -1,0 +1,1 @@
+org.xwiki.contrib.ocr.syntax.hocr.internal.parser.HOCRStreamParser
