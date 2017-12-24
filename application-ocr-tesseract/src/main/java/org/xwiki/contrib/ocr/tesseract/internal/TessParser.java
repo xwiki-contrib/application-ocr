@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.filter.internal;
+package org.xwiki.contrib.ocr.tesseract.internal;
 
 import java.awt.Image;
 import java.awt.Graphics2D;
@@ -26,14 +26,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
-import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.api.TessBaseAPIProvider;
 
 import static org.bytedeco.javacpp.lept.pixDestroy;
 import static org.bytedeco.javacpp.lept.pixReadMem;
@@ -44,24 +40,27 @@ import static org.bytedeco.javacpp.lept.pixReadMem;
  * @version $Id$
  * @since 1.0
  */
-@Component(roles = OCRParser.class)
-@Singleton
-public class OCRParser
+public final class TessParser
 {
-    @Inject
-    private TessBaseAPIProvider apiProvider;
+    /**
+     * Empty constructor.
+     */
+    private TessParser()
+    {
+
+    }
 
     /**
-     * Parse the given image (as a byte array) and return its contents.
+     * Parse the given image (as a byte array) and return its contents as a {@link TessDocumentPage}.
      *
+     * @param api the API to use
      * @param image the image to parse
      * @return the generated document
      * @throws OCRException if an error occurs during the importation
      */
-    public OCRDocument parseImage(byte[] image) throws OCRException
+    public static TessDocumentPage parseImage(TessBaseAPI api, byte[] image) throws OCRException
     {
         lept.PIX leptImage = null;
-        TessBaseAPI api = apiProvider.get();
 
         try {
             leptImage = pixReadMem(image, image.length);
@@ -70,19 +69,20 @@ public class OCRParser
             pixDestroy(leptImage);
         }
 
-        return new OCRDocument(api);
+        return new TessDocumentPage(api);
     }
 
     /**
      * Parse the given image file and return its contents.
      *
+     * @param api the API to use
      * @param image the image to parse
      * @return the generated document
      * @throws OCRException if an error occurs during the importation
      */
-    public OCRDocument parseImage(Image image) throws OCRException
+    public static TessDocumentPage parseImage(TessBaseAPI api, Image image) throws OCRException
     {
-        return parseImage(toByteArray(image));
+        return parseImage(api, toByteArray(image));
     }
 
     /**
@@ -117,8 +117,7 @@ public class OCRParser
      */
     private static BufferedImage toBufferedImage(Image image)
     {
-        if (image instanceof BufferedImage)
-        {
+        if (image instanceof BufferedImage) {
             return (BufferedImage) image;
         }
 

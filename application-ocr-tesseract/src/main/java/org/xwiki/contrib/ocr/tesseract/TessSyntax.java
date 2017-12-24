@@ -17,53 +17,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.filter.internal;
+package org.xwiki.contrib.ocr.tesseract;
 
-import org.bytedeco.javacpp.tesseract.TessBaseAPI;
+import java.util.Arrays;
+import java.util.List;
+
+import org.xwiki.rendering.syntax.Syntax;
+import org.xwiki.rendering.syntax.SyntaxType;
 
 /**
- * Describe a file parsed using OCR.
- * Please note that once an {@link OCRDocument} isn't meant to be used anymore, {@link #dispose()} should be called.
+ * Declare a list of output syntaxes supported by Tesseract.
  *
  * @version $Id$
  * @since 1.0
  */
-public class OCRDocument
+public final class TessSyntax
 {
-    private TessBaseAPI api;
+    /**
+     * Plain text.
+     */
+    public static final Syntax PLAIN_1_0 = Syntax.PLAIN_1_0;
 
     /**
-     * Builds a new {@link OCRDocument} using the given {@link TessBaseAPI}. This API should have already parsed
-     * the file used by this document.
-     *
-     * @param api the {@link TessBaseAPI} to use
+     * hOCR markup.
      */
-    public OCRDocument(TessBaseAPI api)
+    public static final Syntax HOCR_1_2 = new Syntax(new SyntaxType("hocr", "hOCR"), "1.2");
+
+    /**
+     * Builds a new {@link TessSyntax}.
+     */
+    private TessSyntax()
     {
-        this.api = api;
+
     }
 
     /**
-     * @return the raw content extracted from the document source
+     * @return a list of every supported syntax by Tesseract documents.
      */
-    public String getPlainContent()
+    public static List<Syntax> getAllSupportedSyntaxes()
     {
-        return api.GetUTF8Text().getString();
-    }
-
-    /**
-     * @return the content of the document as hOCR syntax.
-     */
-    public String getHOCRContent()
-    {
-        return api.GetHOCRText(0).getString();
-    }
-
-    /**
-     * Dispose of the API.
-     */
-    public void dispose()
-    {
-        api.End();
+        return Arrays.asList(PLAIN_1_0, HOCR_1_2);
     }
 }
