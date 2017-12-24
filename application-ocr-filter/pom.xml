@@ -32,10 +32,13 @@
   <name>Optical Character Recognition Application - Filters</name>
   <packaging>jar</packaging>
   <description>Filter stream extension to parse a graphical file containing text</description>
+  <properties>
+    <xwiki.jacoco.instructionRatio>0.00</xwiki.jacoco.instructionRatio>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-ocr-api</artifactId>
+      <artifactId>application-ocr-tesseract</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

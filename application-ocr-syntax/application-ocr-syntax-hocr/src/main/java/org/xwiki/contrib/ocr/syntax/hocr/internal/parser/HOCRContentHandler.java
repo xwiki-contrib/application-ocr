@@ -27,7 +27,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.MetaData;
-import org.xwiki.rendering.syntax.Syntax;
 
 /**
  * This handler is responsible for transmitting hOCR content into wiki documents.
@@ -43,7 +42,20 @@ public class HOCRContentHandler implements ContentHandler
      */
     private static final String PARAGRAPH = "p";
 
+    /**
+     * A span element.
+     */
+    private static final String SPAN = "span";
+
+    /**
+     * A class attribute.
+     */
+    private static final String CLASS = "class";
+
     private Listener listener;
+
+    private boolean inOCRLine;
+    private int lineDepth;
 
     /**
      * Constructs a new {@link HOCRContentHandler}.
@@ -53,6 +65,8 @@ public class HOCRContentHandler implements ContentHandler
     public HOCRContentHandler(Listener listener)
     {
         this.listener = listener;
+        this.inOCRLine = false;
+        this.lineDepth = 0;
     }
 
     @Override
@@ -88,23 +102,39 @@ public class HOCRContentHandler implements ContentHandler
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
     {
-        if (qName.equals(PARAGRAPH)) {
+        if (qName.equals(PARAGRAPH) && "ocr_par".equals(attributes.getValue(CLASS))) {
             listener.beginParagraph(Collections.EMPTY_MAP);
+        } else if (qName.equals(SPAN) && "ocr_line".equals(attributes.getValue(CLASS))) {
+            inOCRLine = true;
+        }
+
+        if (inOCRLine) {
+            lineDepth++;
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException
     {
+        if (inOCRLine) {
+            lineDepth--;
+        }
+
         if (qName.equals(PARAGRAPH)) {
             listener.endParagraph(Collections.EMPTY_MAP);
+        } else if (qName.equals(SPAN) && lineDepth == 0) {
+            inOCRLine = false;
         }
     }
 
     @Override
     public void characters(char[] chars, int start, int length) throws SAXException
     {
-        listener.onRawText(new String(chars, start, length), Syntax.PLAIN_1_0);
+        // We don't allow content that contains new lines. New lines are defined with new paragraphs only.
+        String content = new String(chars, start, length);
+        if (content.indexOf('\n') == -1) {
+            listener.onWord(content);
+        }
     }
 
     @Override

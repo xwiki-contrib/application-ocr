@@ -26,15 +26,17 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.codehaus.plexus.util.IOUtil;
+import org.apache.pdfbox.io.IOUtils;
 import org.slf4j.Logger;
+import org.xwiki.contrib.ocr.api.OCRDocument;
+import org.xwiki.contrib.ocr.api.OCRDocumentBuilder;
+import org.xwiki.contrib.ocr.api.OCRDocumentBuilderProvider;
 import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
-import org.xwiki.contrib.ocr.filter.internal.ImageRenderer;
-import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
+import org.xwiki.contrib.ocr.filter.internal.PDFToImageRenderer;
 import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.contrib.ocr.filter.internal.OCRMediaTypeChecker;
-import org.xwiki.contrib.ocr.filter.internal.OCRParser;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
@@ -54,7 +56,8 @@ public abstract class AbstractOCRInputFilterStream
         extends AbstractBeanInputFilterStream<OCRInputFilterProperties, WikiDocumentFilter>
 {
     @Inject
-    private OCRParser manager;
+    @Named("tesseract")
+    private OCRDocumentBuilderProvider builderProvider;
 
     @Inject
     private Logger logger;
@@ -62,44 +65,56 @@ public abstract class AbstractOCRInputFilterStream
     @Override
     protected void read(Object filter, WikiDocumentFilter proxyFilter) throws FilterException
     {
-        OCRDocument document;
+        OCRDocumentBuilder builder = null;
 
         try {
+            builder = builderProvider.getBuilder();
+
             // TODO: Support multiple streams
             logVerbose("Extracting source ...");
             InputStream source = extractSource(this.properties.getSource());
 
             logVerbose("Checking source media type ...");
             OCRMediaTypeChecker mediaTypeChecker = new OCRMediaTypeChecker(source);
+            logVerbose("Found supported input type : [{}]", mediaTypeChecker.getMediaType());
+
+            // Reset the InputStream so that bytes read by the media type checker can be read again in the rest of
+            // the process
+            source.close();
+            source = extractSource(this.properties.getSource());
 
             if (mediaTypeChecker.isImage()) {
-                source = extractSource(this.properties.getSource());
-
-                logVerbose("Found supported input type : [{}]", mediaTypeChecker.getMediaType());
-                document = manager.parseImage(IOUtil.toByteArray(source));
-
-                // TODO: Support localized documents
-                String documentName = this.properties.getName();
-                proxyFilter.beginWikiDocument(documentName, generateEventParameters(document));
-                proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
-
-                document.dispose();
+                builder.appendPage(IOUtils.toByteArray(source));
             } else if (mediaTypeChecker.isPDF()) {
-                source.close();
                 source = extractSource(this.properties.getSource());
+                List<Image> images = PDFToImageRenderer.renderPDF(source);
 
-                List<Image> images = ImageRenderer.renderPDF(source);
-
-                for (Image image : images) {
-                    document = manager.parseImage(image);
+                for (int i = 0; i < images.size(); i++) {
+                    logVerbose("Analyzing PDF page {} out of {} ...", i + 1, images.size());
+                    builder.appendPage(images.get(i));
                 }
             } else {
                 throw new FilterException("Unsupported file type.");
             }
+
+            // TODO: Support localized documents
+            String documentName = this.properties.getName();
+            proxyFilter.beginWikiDocument(documentName, generateEventParameters(builder.getDocument()));
+            proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
+
+            builder.dispose();
         } catch (IOException e) {
             throw new FilterException("Unable to read source.", e);
         } catch (OCRException e) {
             throw new FilterException("Unable to import the file.", e);
+        } finally {
+            try {
+                if (builder != null) {
+                    builder.dispose();
+                }
+            } catch (OCRException e) {
+                throw new FilterException("Unable to deallocate the document builder.", e);
+            }
         }
     }
 

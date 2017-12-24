@@ -29,8 +29,9 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
+import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
+import org.xwiki.contrib.ocr.tesseract.TessSyntax;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.rendering.parser.ParseException;
@@ -77,7 +78,7 @@ public class XWikiSyntaxFilterStream extends AbstractOCRInputFilterStream
 
             logVerbose("Converting content from [{}] to [{}] ...",
                     parser.getSyntax().toIdString(), Syntax.XWIKI_2_1.toIdString());
-            parser.parse(new StringReader(document.getHOCRContent()), renderer);
+            parser.parse(new StringReader(document.getContentAs(TessSyntax.HOCR_1_2)), renderer);
 
             return renderer.getPrinter().toString();
         } catch (ParseException | InitializationException e) {

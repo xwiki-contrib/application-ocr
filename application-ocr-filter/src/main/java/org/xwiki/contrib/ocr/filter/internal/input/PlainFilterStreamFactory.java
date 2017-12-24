@@ -50,7 +50,7 @@ public class PlainFilterStreamFactory
     /**
      * The OCR importer format, as a string.
      */
-    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary+plain";
+    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary+plain/1.0";
 
     /**
      * Creates a new {@link PlainFilterStreamFactory}.

@@ -50,7 +50,7 @@ public class XWikiSyntaxFilterStreamFactory
     /**
      * The OCR importer format, as a string.
      */
-    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary+xwiki";
+    public static final String FILTER_STREAM_TYPE_STRING = "ocr+binary+xwiki/2.1";
 
     /**
      * Creates a new {@link XWikiSyntaxFilterStreamFactory}.

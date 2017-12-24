@@ -37,9 +37,9 @@ import org.xwiki.contrib.ocr.api.OCRException;
  * @version $Id$
  * @since 1.0
  */
-public final class ImageRenderer
+public final class PDFToImageRenderer
 {
-    private ImageRenderer() { }
+    private PDFToImageRenderer() { }
 
     /**
      * Renders the given {@link InputStream} into a list of {@link Image} (one image per document page) using the
@@ -63,6 +63,7 @@ public final class ImageRenderer
             int pageCounter = 0;
             for (PDPage page : document.getPages()) {
                 images.add(pdfRenderer.renderImageWithDPI(pageCounter, dpi, ImageType.RGB));
+                pageCounter++;
             }
 
             document.close();
@@ -83,6 +84,6 @@ public final class ImageRenderer
      */
     public static List<Image> renderPDF(InputStream file) throws OCRException
     {
-        return ImageRenderer.renderPDF(file, null);
+        return PDFToImageRenderer.renderPDF(file, null);
     }
 }

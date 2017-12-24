@@ -24,8 +24,9 @@ import javax.inject.Named;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.filter.internal.OCRDocument;
+import org.xwiki.contrib.ocr.tesseract.TessSyntax;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 
@@ -45,7 +46,7 @@ public class PlainFilterStream extends AbstractOCRInputFilterStream
     protected FilterEventParameters generateEventParameters(OCRDocument document) throws OCRException
     {
         FilterEventParameters parameters = new FilterEventParameters();
-        parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, document.getPlainContent());
+        parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, document.getContentAs(TessSyntax.PLAIN_1_0));
         return parameters;
     }
 }
