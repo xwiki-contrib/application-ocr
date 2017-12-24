@@ -33,21 +33,10 @@
   <packaging>jar</packaging>
   <description>API module for the OCR Application</description>
   <properties>
+    <xwiki.jacoco.instructionRatio>0.65</xwiki.jacoco.instructionRatio>
     <xwiki.extension.features>org.xwiki.contrib:application-ocr</xwiki.extension.features>
-    <xwiki.jacoco.instructionRatio>0.20</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.bytedeco.javacpp-presets</groupId>
-      <artifactId>tesseract</artifactId>
-      <version>3.04.01-1.3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bytedeco.javacpp-presets</groupId>
-      <artifactId>tesseract-platform</artifactId>
-      <version>3.04.01-1.3</version>
-    </dependency>
-
     <!-- XWiki dependencies -->
     <dependency>
       <groupId>org.xwiki.commons</groupId>
@@ -68,28 +57,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <!-- Fetch english training data from tesseract-ocr repositories in order to perform tests in the module -->
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <version>1.3.0</version>
-        <executions>
-          <execution>
-            <!-- the wget goal actually binds itself to this phase by default -->
-            <phase>process-resources</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://github.com/piersy/BasicTesseractExample/raw/master/tessdata/ENG.traineddata</url>
-              <outputFileName>eng.traineddata</outputFileName>
-              <outputDirectory>${project.build.directory}/tessdata</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>
