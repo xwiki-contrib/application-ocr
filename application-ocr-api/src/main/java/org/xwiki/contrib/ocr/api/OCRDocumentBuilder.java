@@ -22,6 +22,7 @@ package org.xwiki.contrib.ocr.api;
 import java.awt.Image;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.stability.Unstable;
 
 /**
  * Provide a set of methods in order to parse a set of {@link java.awt.Image} into a {@link OCRDocument}.
@@ -30,6 +31,7 @@ import org.xwiki.component.annotation.Role;
  * @since 1.0
  */
 @Role
+@Unstable
 public interface OCRDocumentBuilder
 {
     /**

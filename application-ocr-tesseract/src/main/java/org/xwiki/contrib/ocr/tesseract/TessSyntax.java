@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.syntax.SyntaxType;
+import org.xwiki.stability.Unstable;
 
 /**
  * Declare a list of output syntaxes supported by Tesseract.
@@ -31,6 +32,7 @@ import org.xwiki.rendering.syntax.SyntaxType;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public final class TessSyntax
 {
     /**

@@ -22,6 +22,7 @@ package org.xwiki.contrib.ocr.api;
 import java.util.List;
 
 import org.xwiki.rendering.syntax.Syntax;
+import org.xwiki.stability.Unstable;
 
 /**
  * We consider a page to be an image that went through OCR. This page can be bound to a document or not.
@@ -29,6 +30,7 @@ import org.xwiki.rendering.syntax.Syntax;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public interface OCRDocumentPage
 {
     /**

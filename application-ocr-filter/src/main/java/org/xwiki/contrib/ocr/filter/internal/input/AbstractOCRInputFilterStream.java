@@ -84,6 +84,7 @@ public abstract class AbstractOCRInputFilterStream
             source = extractSource(this.properties.getSource());
 
             if (mediaTypeChecker.isImage()) {
+                logVerbose("Analyzing image ...");
                 builder.appendPage(IOUtils.toByteArray(source));
             } else if (mediaTypeChecker.isPDF()) {
                 source = extractSource(this.properties.getSource());
@@ -99,6 +100,7 @@ public abstract class AbstractOCRInputFilterStream
 
             // TODO: Support localized documents
             String documentName = this.properties.getName();
+            logVerbose("Saving document [{}] ...", documentName);
             proxyFilter.beginWikiDocument(documentName, generateEventParameters(builder.getDocument()));
             proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
 

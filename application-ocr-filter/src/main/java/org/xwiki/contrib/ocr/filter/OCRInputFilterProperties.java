@@ -23,6 +23,7 @@ import org.xwiki.filter.FilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyName;
+import org.xwiki.stability.Unstable;
 
 /**
  * Define the properties used by {@link org.xwiki.contrib.ocr.filter.internal.input.AbstractOCRInputFilterStream}.
@@ -30,6 +31,7 @@ import org.xwiki.properties.annotation.PropertyName;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public class OCRInputFilterProperties implements FilterStreamProperties
 {
     /**

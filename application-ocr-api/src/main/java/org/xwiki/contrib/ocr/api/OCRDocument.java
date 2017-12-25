@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import org.xwiki.rendering.syntax.Syntax;
+import org.xwiki.stability.Unstable;
 
 /**
  * Define a document parsed using OCR.
@@ -30,6 +31,7 @@ import org.xwiki.rendering.syntax.Syntax;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public interface OCRDocument
 {
     /**

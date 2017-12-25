@@ -20,6 +20,7 @@
 package org.xwiki.contrib.ocr.api;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.stability.Unstable;
 
 /**
  * Provides {@link OCRDocumentBuilder} for a specific OCR library.
@@ -28,6 +29,7 @@ import org.xwiki.component.annotation.Role;
  * @since 1.0
  */
 @Role
+@Unstable
 public interface OCRDocumentBuilderProvider
 {
     /**
