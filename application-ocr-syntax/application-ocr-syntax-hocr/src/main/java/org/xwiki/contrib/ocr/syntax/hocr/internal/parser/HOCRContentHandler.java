@@ -22,9 +22,8 @@ package org.xwiki.contrib.ocr.syntax.hocr.internal.parser;
 import java.util.Collections;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.MetaData;
 
@@ -35,7 +34,7 @@ import org.xwiki.rendering.listener.MetaData;
  * @version $Id$
  * @since 1.0
  */
-public class HOCRContentHandler implements ContentHandler
+public class ContentHandler extends AbstractContentHandler
 {
     /**
      * A paragraph element.
@@ -53,26 +52,22 @@ public class HOCRContentHandler implements ContentHandler
     private static final String CLASS = "class";
 
     private Listener listener;
+    private XMLReader reader;
 
     private boolean inOCRLine;
     private int lineDepth;
 
     /**
-     * Constructs a new {@link HOCRContentHandler}.
+     * Constructs a new {@link ContentHandler}.
      *
      * @param listener the listener used for passing document events during the parsing.
      */
-    public HOCRContentHandler(Listener listener)
+    public ContentHandler(XMLReader reader, Listener listener)
     {
+        this.reader = reader;
         this.listener = listener;
         this.inOCRLine = false;
         this.lineDepth = 0;
-    }
-
-    @Override
-    public void setDocumentLocator(Locator locator)
-    {
-
     }
 
     @Override
@@ -85,18 +80,6 @@ public class HOCRContentHandler implements ContentHandler
     public void endDocument() throws SAXException
     {
         listener.endDocument(MetaData.EMPTY);
-    }
-
-    @Override
-    public void startPrefixMapping(String s, String s1) throws SAXException
-    {
-
-    }
-
-    @Override
-    public void endPrefixMapping(String s) throws SAXException
-    {
-
     }
 
     @Override
@@ -135,23 +118,5 @@ public class HOCRContentHandler implements ContentHandler
         if (content.indexOf('\n') == -1) {
             listener.onWord(content);
         }
-    }
-
-    @Override
-    public void ignorableWhitespace(char[] chars, int i, int i1) throws SAXException
-    {
-
-    }
-
-    @Override
-    public void processingInstruction(String s, String s1) throws SAXException
-    {
-
-    }
-
-    @Override
-    public void skippedEntity(String s) throws SAXException
-    {
-
     }
 }

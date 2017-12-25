@@ -29,67 +29,10 @@
   </parent>
   <artifactId>application-ocr-tesseract</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - Tesseract API</name>
-  <packaging>jar</packaging>
-  <description>Tesseract specific APIs</description>
-  <properties>
-    <xwiki.jacoco.instructionRatio>0.08</xwiki.jacoco.instructionRatio>
-    <tesseract.version>3.04.01-1.3</tesseract.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.bytedeco.javacpp-presets</groupId>
-      <artifactId>tesseract</artifactId>
-      <version>${tesseract.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bytedeco.javacpp-presets</groupId>
-      <artifactId>tesseract-platform</artifactId>
-      <version>${tesseract.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-ocr-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.xwiki.rendering</groupId>
-      <artifactId>xwiki-rendering-api</artifactId>
-      <version>${rendering.version}</version>
-    </dependency>
-
-    <!-- Test Dependencies -->
-    <dependency>
-      <groupId>org.xwiki.commons</groupId>
-      <artifactId>xwiki-commons-tool-test-component</artifactId>
-      <version>${commons.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <!-- Fetch english training data from tesseract-ocr repositories in order to perform tests in the module -->
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <version>1.3.0</version>
-        <executions>
-          <execution>
-            <!-- the wget goal actually binds itself to this phase by default -->
-            <phase>process-resources</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://github.com/piersy/BasicTesseractExample/raw/master/tessdata/ENG.traineddata</url>
-              <outputFileName>eng.traineddata</outputFileName>
-              <outputDirectory>${project.build.directory}/tessdata</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+  <name>Optical Character Recognition Application - Tesseract - Parent POM</name>
+  <packaging>pom</packaging>
+  <description>Creates documents from images or scanned PDFs using optical character recognition</description>
+  <modules>
+    <module>application-ocr-tesseract-api</module>
+  </modules>
 </project>
