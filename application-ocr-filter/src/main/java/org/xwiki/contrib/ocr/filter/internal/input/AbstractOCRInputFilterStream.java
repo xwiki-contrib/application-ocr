@@ -115,7 +115,7 @@ public abstract class AbstractOCRInputFilterStream
                     builder.dispose();
                 }
             } catch (OCRException e) {
-                throw new FilterException("Unable to deallocate the document builder.", e);
+                throw new FilterException("Unable to dispose the document builder.", e);
             }
         }
     }

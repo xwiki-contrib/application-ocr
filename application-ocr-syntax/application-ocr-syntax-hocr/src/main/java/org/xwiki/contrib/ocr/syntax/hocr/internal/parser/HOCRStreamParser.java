@@ -65,10 +65,10 @@ public class HOCRStreamParser implements StreamParser
         try {
             XMLReader reader = xmlReaderFactory.createXMLReader();
 
-            reader.setContentHandler(new HOCRContentHandler(listener));
+            reader.setContentHandler(new HOCRContentHandler(reader, listener));
             reader.parse(new InputSource(source));
         } catch (SAXException e) {
-            throw new ParseException("Failed to instantiate XML Reader.", e);
+            throw new ParseException("Failed to parse the XML.", e);
         } catch (IOException e) {
             throw new ParseException("Failed to read the content source.", e);
         } catch (ParserConfigurationException e) {

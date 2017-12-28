@@ -88,12 +88,22 @@ public class TessDocument implements OCRDocument
         StringBuilder builder = new StringBuilder();
         ListIterator<OCRDocumentPage> it = pages.listIterator();
 
+        // The exported pages will not form a single root element ; we therefore have to build it "manually"
+        // in order to generate a valid XML.
+        if (syntax.equals(TessSyntax.HOCR_1_2)) {
+            builder.append("<div class=\"ocr_document\">");
+        }
+
         while (it.hasNext()) {
             builder.append(it.next().getContentAs(syntax));
 
             if (separator != null) {
                 builder.append(separator.apply(it.previousIndex(), pages.size()));
             }
+        }
+
+        if (syntax.equals(TessSyntax.HOCR_1_2)) {
+            builder.append("</div>");
         }
 
         return builder.toString();

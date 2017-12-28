@@ -19,60 +19,42 @@
  */
 package org.xwiki.contrib.ocr.syntax.hocr.internal.parser;
 
-import java.util.Collections;
-
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.MetaData;
 
 /**
- * This handler is responsible for transmitting hOCR content into wiki documents.
- * Note that during the conversion, a significant part of the hOCR information will be lost.
+ * Handler for hOCR lines.
  *
  * @version $Id$
  * @since 1.0
  */
-public class HOCRContentHandler extends AbstractContentHandler
+public class HOCRLineContentHandler extends AbstractChildContentHandler
 {
-    private Listener listener;
-    private XMLReader reader;
-
-    private HOCRParContentHandler parContentHandler;
-
+    private HOCRWordContentHandler wordContentHandler;
 
     /**
-     * Constructs a new {@link HOCRContentHandler}.
+     * @see AbstractChildContentHandler#AbstractChildContentHandler(XMLReader, ContentHandler, Listener)
      *
-     * @param reader the {@link XMLReader} that will be used for the parsing
-     * @param listener the listener used for passing document events during the parsing
+     * @param reader the XML reader that will be used during the parsing
+     * @param contentHandler the parent content handler
+     * @param listener the listener used for passing document events during the parsing.
      */
-    public HOCRContentHandler(XMLReader reader, Listener listener)
+    public HOCRLineContentHandler(XMLReader reader, ContentHandler contentHandler, Listener listener)
     {
-        this.reader = reader;
-        this.listener = listener;
-        this.parContentHandler = new HOCRParContentHandler(reader, this, listener);
-    }
-
-    @Override
-    public void startDocument() throws SAXException
-    {
-        listener.beginDocument(MetaData.EMPTY);
-    }
-
-    @Override
-    public void endDocument() throws SAXException
-    {
-        listener.endDocument(MetaData.EMPTY);
+        super(reader, contentHandler, listener);
+        wordContentHandler = new HOCRWordContentHandler(reader, this, listener);
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
     {
-        if ("ocr_par".equals(attributes.getValue(CLASS))) {
-            listener.beginParagraph(Collections.EMPTY_MAP);
-            reader.setContentHandler(parContentHandler);
+        super.startElement(uri, localName, qName, attributes);
+
+        if ("ocrx_word".equals(attributes.getValue(CLASS))) {
+            reader.setContentHandler(wordContentHandler);
         }
     }
 }
