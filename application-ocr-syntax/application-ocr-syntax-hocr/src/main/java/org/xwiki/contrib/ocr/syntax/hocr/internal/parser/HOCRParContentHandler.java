@@ -63,6 +63,7 @@ public class HOCRParContentHandler extends AbstractChildContentHandler
     @Override
     protected void onParentHandlerSwitch()
     {
+        listener.onNewLine();
         listener.endParagraph(Collections.EMPTY_MAP);
     }
 }

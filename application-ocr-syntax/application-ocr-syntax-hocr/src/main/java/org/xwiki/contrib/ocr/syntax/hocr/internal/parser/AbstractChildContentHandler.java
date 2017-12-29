@@ -76,6 +76,14 @@ public abstract class AbstractChildContentHandler extends AbstractContentHandler
         depth = 1;
     }
 
+    /**
+     * Decrease the depth counter of the current content handler.
+     */
+    public void decreaseDepth()
+    {
+        depth--;
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException
     {
@@ -86,8 +94,13 @@ public abstract class AbstractChildContentHandler extends AbstractContentHandler
     public void endElement(String uri, String localName, String qName) throws SAXException
     {
         depth--;
-        if (depth == 0) {
+        if (depth <= 0) {
             resetDepth();
+
+            if (parentContentHandler instanceof AbstractChildContentHandler) {
+                ((AbstractChildContentHandler) parentContentHandler).decreaseDepth();
+            }
+
             onParentHandlerSwitch();
             reader.setContentHandler(parentContentHandler);
         }

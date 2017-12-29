@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.MetaData;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.syntax.Syntax;
@@ -66,7 +67,10 @@ public class HOCRStreamParser implements StreamParser
             XMLReader reader = xmlReaderFactory.createXMLReader();
 
             reader.setContentHandler(new HOCRContentHandler(reader, listener));
+
+            listener.beginDocument(MetaData.EMPTY);
             reader.parse(new InputSource(source));
+            listener.endDocument(MetaData.EMPTY);
         } catch (SAXException e) {
             throw new ParseException("Failed to parse the XML.", e);
         } catch (IOException e) {

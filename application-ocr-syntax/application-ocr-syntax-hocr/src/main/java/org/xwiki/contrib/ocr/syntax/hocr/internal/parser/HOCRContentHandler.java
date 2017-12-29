@@ -25,7 +25,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.MetaData;
 
 /**
  * This handler is responsible for transmitting hOCR content into wiki documents.
@@ -53,18 +52,6 @@ public class HOCRContentHandler extends AbstractContentHandler
         this.reader = reader;
         this.listener = listener;
         this.parContentHandler = new HOCRParContentHandler(reader, this, listener);
-    }
-
-    @Override
-    public void startDocument() throws SAXException
-    {
-        listener.beginDocument(MetaData.EMPTY);
-    }
-
-    @Override
-    public void endDocument() throws SAXException
-    {
-        listener.endDocument(MetaData.EMPTY);
     }
 
     @Override

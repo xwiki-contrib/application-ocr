@@ -48,5 +48,6 @@ public class HOCRWordContentHandler extends AbstractChildContentHandler
     public void characters(char[] chars, int start, int length) throws SAXException
     {
         listener.onWord(new String(chars, start, length));
+        listener.onSpace();
     }
 }
