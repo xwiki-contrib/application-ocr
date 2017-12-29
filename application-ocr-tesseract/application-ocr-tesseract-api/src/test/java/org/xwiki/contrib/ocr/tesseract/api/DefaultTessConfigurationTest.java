@@ -25,9 +25,9 @@ import org.junit.Test;
 import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.contrib.ocr.tesseract.api.internal.DefaultTessConfiguration;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
-import org.xwiki.text.StringUtils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
 
 /**
@@ -60,8 +60,15 @@ public class DefaultTessConfigurationTest
     @Test
     public void dataPath() throws Exception
     {
-        when(configurationSource.getProperty("tesseract.dataPath", StringUtils.EMPTY))
+        when(configurationSource.getProperty("tesseract.dataPath", "./data/"))
                 .thenReturn("myfolder");
         assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
+    }
+
+    @Test
+    public void allowAutoDownload() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.allowAutoDownload", true)).thenReturn(false);
+        assertFalse(mocker.getComponentUnderTest().allowAutoDownload());
     }
 }

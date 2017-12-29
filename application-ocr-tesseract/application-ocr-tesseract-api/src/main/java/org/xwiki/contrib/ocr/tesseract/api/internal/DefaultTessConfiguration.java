@@ -25,7 +25,6 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
-import org.xwiki.text.StringUtils;
 
 /**
  * This is the default implementation of {@link TessConfiguration}.
@@ -51,6 +50,12 @@ public class DefaultTessConfiguration implements TessConfiguration
     @Override
     public String dataPath()
     {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", StringUtils.EMPTY);
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", "./data/");
+    }
+
+    @Override
+    public boolean allowAutoDownload()
+    {
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "allowAutoDownload", true);
     }
 }

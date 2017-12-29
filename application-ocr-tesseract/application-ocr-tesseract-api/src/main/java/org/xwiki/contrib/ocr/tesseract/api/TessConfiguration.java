@@ -41,4 +41,12 @@ public interface TessConfiguration
      * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
      */
     String dataPath();
+
+    /**
+     * @return true if Tesseract data files should be automatically downloaded when performing an import.
+     *
+     * Note that if this option is disabled, the download of data files should still be possible in the
+     * administration section of the wiki.
+     */
+    boolean allowAutoDownload();
 }
