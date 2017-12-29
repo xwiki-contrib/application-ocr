@@ -31,7 +31,7 @@ import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.tesseract.TessSyntax;
+import org.xwiki.contrib.ocr.tesseract.api.TessSyntax;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.rendering.parser.ParseException;

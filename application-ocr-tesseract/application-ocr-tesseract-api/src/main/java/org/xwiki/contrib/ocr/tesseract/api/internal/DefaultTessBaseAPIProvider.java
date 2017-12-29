@@ -17,40 +17,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.api.internal;
+package org.xwiki.contrib.ocr.tesseract.api.internal;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.configuration.ConfigurationSource;
-import org.xwiki.contrib.ocr.api.OCRConfiguration;
-import org.xwiki.text.StringUtils;
+import org.xwiki.contrib.ocr.api.OCRException;
+import org.xwiki.contrib.ocr.tesseract.api.TessBaseAPIProvider;
+import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 
 /**
- * This is the default implementation of {@link OCRConfiguration}.
+ * This is the default implementation of {@link TessBaseAPIProvider}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
 @Singleton
-public class DefaultOCRConfiguration implements OCRConfiguration
+public class DefaultTessBaseAPIProvider implements TessBaseAPIProvider
 {
-    private static final String CONFIGURATION_PREFIX = "ocr.";
-
     @Inject
-    private ConfigurationSource configurationSource;
+    private TessConfiguration ocrConfiguration;
 
     @Override
-    public String defaultLangage()
+    public TessBaseAPI get() throws OCRException
     {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "defaultLangage", "eng");
+        return get(ocrConfiguration.defaultLangage(), ocrConfiguration.dataPath());
     }
 
     @Override
-    public String dataPath()
+    public TessBaseAPI get(String language) throws OCRException
     {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", StringUtils.EMPTY);
+        return get(language, ocrConfiguration.dataPath());
+    }
+
+    @Override
+    public TessBaseAPI get(String language, String dataPath) throws OCRException
+    {
+        TessBaseAPI api = new TessBaseAPI();
+
+        if (api.Init(dataPath, language) != 0) {
+            throw new OCRException("Unable to instantiate Tesseract API.");
+        }
+
+        return api;
     }
 }

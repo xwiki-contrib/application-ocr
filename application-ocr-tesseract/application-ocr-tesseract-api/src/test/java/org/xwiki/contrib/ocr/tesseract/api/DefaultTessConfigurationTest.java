@@ -17,55 +17,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.internal;
+package org.xwiki.contrib.ocr.tesseract.api;
 
-import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.xwiki.contrib.ocr.api.OCRConfiguration;
+import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.contrib.ocr.tesseract.api.internal.DefaultTessConfiguration;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
+import org.xwiki.text.StringUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link DefaultTessBaseAPIProvider}.
+ * Unit tests for {@link DefaultTessConfiguration}.
  *
  * @version $Id$
  * @since 1.0
  */
-public class DefaultTessBaseAPIProviderTest
+public class DefaultTessConfigurationTest
 {
     @Rule
-    public final MockitoComponentMockingRule<DefaultTessBaseAPIProvider> mocker =
-            new MockitoComponentMockingRule<>(DefaultTessBaseAPIProvider.class);
+    public final MockitoComponentMockingRule<DefaultTessConfiguration> mocker =
+            new MockitoComponentMockingRule<>(DefaultTessConfiguration.class);
 
-    private OCRConfiguration ocrConfiguration;
+    private ConfigurationSource configurationSource;
 
     @Before
     public void setUp() throws Exception
     {
-        ocrConfiguration = mocker.registerMockComponent(OCRConfiguration.class);
-        when(ocrConfiguration.dataPath()).thenReturn("./target/");
+        configurationSource = mocker.registerMockComponent(ConfigurationSource.class);
     }
 
     @Test
-    public void get() throws Exception
+    public void defaultLangage() throws Exception
     {
-        when(ocrConfiguration.defaultLangage()).thenReturn("eng");
-        TessBaseAPI api = mocker.getComponentUnderTest().get();
-
-        assertEquals("./target/tessdata/", api.GetDatapath().getString());
-        assertEquals("eng", api.GetInitLanguagesAsString().getString());
+        when(configurationSource.getProperty("tesseract.defaultLangage", "eng")).thenReturn("ron");
+        assertEquals("ron", mocker.getComponentUnderTest().defaultLangage());
     }
 
     @Test
-    public void getWithLangage() throws Exception
+    public void dataPath() throws Exception
     {
-        TessBaseAPI api = mocker.getComponentUnderTest().get("eng");
-
-        assertEquals("./target/tessdata/", api.GetDatapath().getString());
-        assertEquals("eng", api.GetInitLanguagesAsString().getString());
+        when(configurationSource.getProperty("tesseract.dataPath", StringUtils.EMPTY))
+                .thenReturn("myfolder");
+        assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
     }
 }

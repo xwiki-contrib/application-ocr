@@ -17,28 +17,47 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.api;
+package org.xwiki.contrib.ocr.tesseract.api;
 
-import org.xwiki.component.annotation.Role;
+import java.util.Arrays;
+import java.util.List;
+
+import org.xwiki.rendering.syntax.Syntax;
+import org.xwiki.rendering.syntax.SyntaxType;
 import org.xwiki.stability.Unstable;
 
 /**
- * Get the configuration options concerning the OCR Importer Application.
+ * Declare a list of output syntaxes supported by Tesseract.
  *
  * @version $Id$
  * @since 1.0
  */
-@Role
 @Unstable
-public interface OCRConfiguration
+public final class TessSyntax
 {
     /**
-     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
+     * Plain text.
      */
-    String defaultLangage();
+    public static final Syntax PLAIN_1_0 = Syntax.PLAIN_1_0;
 
     /**
-     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
+     * hOCR markup.
      */
-    String dataPath();
+    public static final Syntax HOCR_1_2 = new Syntax(new SyntaxType("hocr", "hOCR"), "1.2");
+
+    /**
+     * Builds a new {@link TessSyntax}.
+     */
+    private TessSyntax()
+    {
+
+    }
+
+    /**
+     * @return a list of every supported syntax by Tesseract documents.
+     */
+    public static List<Syntax> getAllSupportedSyntaxes()
+    {
+        return Arrays.asList(PLAIN_1_0, HOCR_1_2);
+    }
 }

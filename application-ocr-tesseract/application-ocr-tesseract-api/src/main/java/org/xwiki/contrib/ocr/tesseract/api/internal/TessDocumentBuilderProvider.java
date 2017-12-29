@@ -17,51 +17,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.internal;
+package org.xwiki.contrib.ocr.tesseract.api.internal;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocr.api.OCRConfiguration;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.tesseract.TessBaseAPIProvider;
+import org.xwiki.contrib.ocr.tesseract.api.TessBaseAPIProvider;
+import org.xwiki.contrib.ocr.api.OCRDocumentBuilder;
+import org.xwiki.contrib.ocr.api.OCRDocumentBuilderProvider;
+import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 
 /**
- * This is the default implementation of {@link TessBaseAPIProvider}.
+ * This is the implementation of {@link OCRDocumentBuilderProvider} for the Tesseract OCR library.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
 @Singleton
-public class DefaultTessBaseAPIProvider implements TessBaseAPIProvider
+@Named("tesseract")
+public class TessDocumentBuilderProvider implements OCRDocumentBuilderProvider
 {
     @Inject
-    private OCRConfiguration ocrConfiguration;
+    private TessBaseAPIProvider provider;
+
+    @Inject
+    private TessConfiguration configuration;
 
     @Override
-    public TessBaseAPI get() throws OCRException
+    public OCRDocumentBuilder getBuilder(String language) throws OCRException
     {
-        return get(ocrConfiguration.defaultLangage(), ocrConfiguration.dataPath());
+        return new TessDocumentBuilder(provider.get(language));
     }
 
     @Override
-    public TessBaseAPI get(String language) throws OCRException
+    public OCRDocumentBuilder getBuilder() throws OCRException
     {
-        return get(language, ocrConfiguration.dataPath());
-    }
-
-    @Override
-    public TessBaseAPI get(String language, String dataPath) throws OCRException
-    {
-        TessBaseAPI api = new TessBaseAPI();
-
-        if (api.Init(dataPath, language) != 0) {
-            throw new OCRException("Unable to instantiate Tesseract API.");
-        }
-
-        return api;
+        return getBuilder(configuration.defaultLangage());
     }
 }

@@ -26,7 +26,7 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.tesseract.TessSyntax;
+import org.xwiki.contrib.ocr.tesseract.api.TessSyntax;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 

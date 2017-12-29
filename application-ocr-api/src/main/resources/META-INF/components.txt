@@ -1,1 +1,0 @@
-org.xwiki.contrib.ocr.api.internal.DefaultOCRConfiguration

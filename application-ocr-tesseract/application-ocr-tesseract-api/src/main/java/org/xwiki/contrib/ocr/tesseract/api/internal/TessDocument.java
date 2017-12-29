@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.internal;
+package org.xwiki.contrib.ocr.tesseract.api.internal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.function.BiFunction;
 
 import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRDocumentPage;
-import org.xwiki.contrib.ocr.tesseract.TessSyntax;
+import org.xwiki.contrib.ocr.tesseract.api.TessSyntax;
 import org.xwiki.rendering.syntax.Syntax;
 
 /**
