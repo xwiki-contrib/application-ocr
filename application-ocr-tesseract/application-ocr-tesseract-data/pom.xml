@@ -24,16 +24,25 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>application-ocr</artifactId>
+    <artifactId>application-ocr-tesseract</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>application-ocr-tesseract</artifactId>
+  <artifactId>application-ocr-tesseract-data</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - Tesseract - Parent POM</name>
-  <packaging>pom</packaging>
-  <description>Creates documents from images or scanned PDFs using optical character recognition</description>
-  <modules>
-    <module>application-ocr-tesseract-api</module>
-    <module>application-ocr-tesseract-data</module>
-  </modules>
+  <name>Optical Character Recognition Application - Tesseract - Data Files</name>
+  <packaging>jar</packaging>
+  <description>Data files management module for the Tesseract library</description>
+  <properties>
+    <xwiki.jacoco.instructionRatio>0.00</xwiki.jacoco.instructionRatio>
+  </properties>
+  <dependencies>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-tool-test-component</artifactId>
+      <version>${commons.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
