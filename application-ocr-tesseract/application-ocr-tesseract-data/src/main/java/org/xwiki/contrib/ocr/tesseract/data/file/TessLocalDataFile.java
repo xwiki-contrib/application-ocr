@@ -17,41 +17,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.api;
+package org.xwiki.contrib.ocr.tesseract.data.file;
 
-import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Get the configuration options concerning the OCR Importer Application.
+ * Represents a training file stored locally.
  *
  * @version $Id$
  * @since 1.0
  */
-@Role
 @Unstable
-public interface TessConfiguration
+public interface TessLocalDataFile extends TessDataFile
 {
     /**
-     * @return the default langage that should be used by the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI}
+     * @return the local path to the file
      */
-    String defaultLangage();
-
-    /**
-     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
-     */
-    String dataPath();
-
-    /**
-     * @return true if Tesseract data files should be automatically downloaded when performing an import.
-     *
-     * Note that if this option is disabled, the download of data files should still be possible in the
-     * administration section of the wiki.
-     */
-    boolean allowAutoDownload();
-
-    /**
-     * @return the URL to a list of downloadable training data files for the Tesseract library.
-     */
-    String trainingFilesURL();
+    String getFilePath();
 }

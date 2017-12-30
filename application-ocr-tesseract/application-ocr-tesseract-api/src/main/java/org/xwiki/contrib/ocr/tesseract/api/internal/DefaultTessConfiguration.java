@@ -58,4 +58,11 @@ public class DefaultTessConfiguration implements TessConfiguration
     {
         return configurationSource.getProperty(CONFIGURATION_PREFIX + "allowAutoDownload", true);
     }
+
+    @Override
+    public String trainingFilesURL()
+    {
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "trainingFilesURL",
+                "https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=3.04.00");
+    }
 }
