@@ -17,18 +17,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.data.job;
+package org.xwiki.contrib.ocr.tesseract.data.internal.file;
 
-import org.xwiki.job.AbstractRequest;
-import org.xwiki.stability.Unstable;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 
 /**
- * Define a file download job request.
+ * This is the default implementation of {@link TessLocalDataFile}.
  *
  * @version $Id$
  * @since 1.0
  */
-@Unstable
-public abstract class AbstractFileDownloadJobRequest extends AbstractRequest
+public class DefaultTessLocalDataFile implements TessLocalDataFile
 {
+    private String filePath;
+
+    private String lang;
+
+    /**
+     * Builds a new {@link DefaultTessLocalDataFile}.
+     *
+     * @param lang the file lang code
+     * @param filePath the path of the file on the local filesystem
+     */
+    public DefaultTessLocalDataFile(String lang, String filePath)
+    {
+        this.lang = lang;
+        this.filePath = filePath;
+    }
+
+    @Override
+    public String getFilePath()
+    {
+        return filePath;
+    }
+
+    @Override
+    public String getLanguage()
+    {
+        return lang;
+    }
 }

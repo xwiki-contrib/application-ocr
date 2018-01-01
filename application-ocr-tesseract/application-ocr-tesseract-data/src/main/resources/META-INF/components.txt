@@ -1,0 +1,2 @@
+org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataManager
+org.xwiki.contrib.ocr.tesseract.data.internal.job.DefaultTessTessFileDownloadJob

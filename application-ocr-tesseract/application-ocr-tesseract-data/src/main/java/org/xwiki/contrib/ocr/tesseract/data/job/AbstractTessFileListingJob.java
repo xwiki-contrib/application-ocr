@@ -20,6 +20,8 @@
 package org.xwiki.contrib.ocr.tesseract.data.job;
 
 import org.xwiki.job.AbstractJob;
+import org.xwiki.job.DefaultJobStatus;
+import org.xwiki.job.DefaultRequest;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -29,6 +31,6 @@ import org.xwiki.stability.Unstable;
  * @since 1.0
  */
 @Unstable
-public abstract class AbstractFileListingJob extends AbstractJob
+public abstract class AbstractTessFileListingJob extends AbstractJob<DefaultRequest, DefaultJobStatus<DefaultRequest>>
 {
 }

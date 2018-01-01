@@ -25,8 +25,8 @@ import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractFileDownloadJob;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractFileListingJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileListingJob;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -57,10 +57,10 @@ public interface TessDataManager
     /**
      * Asynchronously retrieves a list of remotely available data files.
      *
-     * @return the {@link AbstractFileListingJob} representing the job
+     * @return the {@link AbstractTessFileListingJob} representing the job
      * @throws OCRException if an error happened
      */
-    AbstractFileListingJob getAvailableFilesAsync() throws OCRException;
+    AbstractTessFileListingJob getAvailableFilesAsync() throws OCRException;
 
     /**
      * Get the {@link TessLocalDataFile} associated with the given language. If the configuration option
@@ -74,20 +74,11 @@ public interface TessDataManager
     TessLocalDataFile getFile(String lang) throws OCRException;
 
     /**
-     * Download and store the Tesseract data file corresponding to the given language code.
-     *
-     * @param lang the language to download
-     * @return a descriptor for the file download job
-     * @throws OCRException if an error happened
-     */
-    AbstractFileDownloadJob downloadFileAsync(String lang) throws OCRException;
-
-    /**
      * Download and store the Tesseract data file corresponding to the given {@link TessRemoteDataFile}.
      *
      * @param remoteDataFile the {@link TessRemoteDataFile} to download
      * @return a descriptor for the file download job
      * @throws OCRException if an error happened
      */
-    AbstractFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws OCRException;
+    AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws OCRException;
 }

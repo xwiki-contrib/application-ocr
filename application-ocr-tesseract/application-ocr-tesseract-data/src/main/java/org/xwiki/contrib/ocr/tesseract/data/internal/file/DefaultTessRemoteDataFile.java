@@ -17,20 +17,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.data.job;
+package org.xwiki.contrib.ocr.tesseract.data.internal.file;
 
-import org.xwiki.job.AbstractJob;
-import org.xwiki.job.DefaultJobStatus;
-import org.xwiki.stability.Unstable;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 
 /**
- * Describe a file download job.
+ * This is the default implementation of {@link TessRemoteDataFile}.
  *
  * @version $Id$
  * @since 1.0
  */
-@Unstable
-public abstract class AbstractFileDownloadJob extends
-        AbstractJob<AbstractFileDownloadJobRequest, DefaultJobStatus<AbstractFileDownloadJobRequest>>
+public class DefaultTessRemoteDataFile implements TessRemoteDataFile
 {
+    private String downloadURL;
+
+    private String lang;
+
+    /**
+     * Builds a new {@link DefaultTessRemoteDataFile}.
+     *
+     * @param lang the lang code of the file
+     * @param downloadURL the file raw download url
+     */
+    public DefaultTessRemoteDataFile(String lang, String downloadURL)
+    {
+        this.lang = lang;
+        this.downloadURL = downloadURL;
+    }
+
+    @Override
+    public String getDownloadURL()
+    {
+        return downloadURL;
+    }
+
+    @Override
+    public String getLanguage()
+    {
+        return lang;
+    }
 }
