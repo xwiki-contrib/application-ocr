@@ -53,6 +53,7 @@
   <modules>
     <module>application-ocr-api</module>
     <module>application-ocr-filter</module>
+    <module>application-ocr-script</module>
     <module>application-ocr-syntax</module>
     <module>application-ocr-tesseract</module>
   </modules>

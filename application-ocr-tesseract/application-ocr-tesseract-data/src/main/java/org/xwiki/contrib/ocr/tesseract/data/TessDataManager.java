@@ -22,7 +22,7 @@ package org.xwiki.contrib.ocr.tesseract.data;
 import java.util.List;
 
 import org.xwiki.component.annotation.Role;
-import org.xwiki.contrib.ocr.api.OCRException;
+import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
@@ -41,26 +41,26 @@ public interface TessDataManager
 {
     /**
      * @return a list of training data files stored locally
-     * @throws OCRException if an error happened
+     * @throws TessException if an error happened
      */
-    List<TessLocalDataFile> getLocalFiles() throws OCRException;
+    List<TessLocalDataFile> getLocalFiles() throws TessException;
 
     /**
      * Synchronous method that fetches a list of remotely available files.
      * To get the list of files asynchronously, see {@link #getAvailableFilesAsync()}.
      *
      * @return a list of training data files available remotely
-     * @throws OCRException if an error happened
+     * @throws TessException if an error happened
      */
-    List<TessRemoteDataFile> getAvailableFiles() throws OCRException;
+    List<TessRemoteDataFile> getAvailableFiles() throws TessException;
 
     /**
      * Asynchronously retrieves a list of remotely available data files.
      *
      * @return the {@link AbstractTessFileListingJob} representing the job
-     * @throws OCRException if an error happened
+     * @throws TessException if an error happened
      */
-    AbstractTessFileListingJob getAvailableFilesAsync() throws OCRException;
+    AbstractTessFileListingJob getAvailableFilesAsync() throws TessException;
 
     /**
      * Get the {@link TessLocalDataFile} associated with the given language. If the configuration option
@@ -69,16 +69,16 @@ public interface TessDataManager
      *
      * @param lang the lang of the file to get
      * @return the corresponding {@link TessLocalDataFile}
-     * @throws OCRException if an error happened
+     * @throws TessException if an error happened
      */
-    TessLocalDataFile getFile(String lang) throws OCRException;
+    TessLocalDataFile getFile(String lang) throws TessException;
 
     /**
      * Download and store the Tesseract data file corresponding to the given {@link TessRemoteDataFile}.
      *
      * @param remoteDataFile the {@link TessRemoteDataFile} to download
      * @return a descriptor for the file download job
-     * @throws OCRException if an error happened
+     * @throws TessException if an error happened
      */
-    AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws OCRException;
+    AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException;
 }

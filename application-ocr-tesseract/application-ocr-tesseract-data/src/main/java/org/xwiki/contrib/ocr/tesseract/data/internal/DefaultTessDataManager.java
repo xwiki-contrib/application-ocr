@@ -31,6 +31,7 @@ import org.codehaus.plexus.util.FileUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
+import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
@@ -52,7 +53,7 @@ public class DefaultTessDataManager implements TessDataManager
     private TessConfiguration tessConfiguration;
 
     @Override
-    public List<TessLocalDataFile> getLocalFiles() throws OCRException
+    public List<TessLocalDataFile> getLocalFiles() throws TessException
     {
         File localFolder = getLocalFolder();
         List<TessLocalDataFile> localDataFiles = new ArrayList<>();
@@ -71,25 +72,25 @@ public class DefaultTessDataManager implements TessDataManager
     }
 
     @Override
-    public List<TessRemoteDataFile> getAvailableFiles() throws OCRException
+    public List<TessRemoteDataFile> getAvailableFiles() throws TessException
     {
         return null;
     }
 
     @Override
-    public AbstractTessFileListingJob getAvailableFilesAsync() throws OCRException
+    public AbstractTessFileListingJob getAvailableFilesAsync() throws TessException
     {
         return null;
     }
 
     @Override
-    public TessLocalDataFile getFile(String lang) throws OCRException
+    public TessLocalDataFile getFile(String lang) throws TessException
     {
         return null;
     }
 
     @Override
-    public AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws OCRException
+    public AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException
     {
         return null;
     }
@@ -101,14 +102,14 @@ public class DefaultTessDataManager implements TessDataManager
      * @return the local folder
      * @throws OCRException if the folder could not be created
      */
-    private File getLocalFolder() throws OCRException
+    private File getLocalFolder() throws TessException
     {
         File localFolder = new File(tessConfiguration.dataPath());
 
         try {
             FileUtils.forceMkdir(localFolder);
         } catch (IOException e) {
-            throw new OCRException("Failed to create the local data folder.", e);
+            throw new TessException("Failed to create the local data folder.", e);
         }
 
         return localFolder;

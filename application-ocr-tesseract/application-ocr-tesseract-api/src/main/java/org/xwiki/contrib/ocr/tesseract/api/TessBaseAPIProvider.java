@@ -21,7 +21,6 @@ package org.xwiki.contrib.ocr.tesseract.api;
 
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
 import org.xwiki.component.annotation.Role;
-import org.xwiki.contrib.ocr.api.OCRException;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -38,18 +37,18 @@ public interface TessBaseAPIProvider
      * Get an instantiated {@link TessBaseAPI} using the default language and the default data path.
      *
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRException if the instantiation failed
+     * @throws TessException if the instantiation failed
      */
-    TessBaseAPI get() throws OCRException;
+    TessBaseAPI get() throws TessException;
 
     /**
      * Same as {@link #get()}, but with specifying the language that will be used by the {@link TessBaseAPI}.
      *
      * @param language the language that should be used by the {@link TessBaseAPI}
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRException if the instantiation failed
+     * @throws TessException if the instantiation failed
      */
-    TessBaseAPI get(String language) throws OCRException;
+    TessBaseAPI get(String language) throws TessException;
 
     /**
      * Same as {@link #get()}, but with specifying the language and the data path that will be used by the
@@ -58,7 +57,7 @@ public interface TessBaseAPIProvider
      * @param language the language that should be used by the {@link TessBaseAPI}
      * @param dataPath the path containing the {@link TessBaseAPI} data files
      * @return a new instance of {@link TessBaseAPI}
-     * @throws OCRException if the instantiation failed
+     * @throws TessException if the instantiation failed
      */
-    TessBaseAPI get(String language, String dataPath) throws OCRException;
+    TessBaseAPI get(String language, String dataPath) throws TessException;
 }

@@ -40,7 +40,6 @@ public class HOCRContentHandler extends AbstractContentHandler
 
     private HOCRParContentHandler parContentHandler;
 
-
     /**
      * Constructs a new {@link HOCRContentHandler}.
      *

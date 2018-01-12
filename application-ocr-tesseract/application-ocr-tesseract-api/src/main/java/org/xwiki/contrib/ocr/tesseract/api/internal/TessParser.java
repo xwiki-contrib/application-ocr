@@ -29,7 +29,7 @@ import javax.imageio.ImageIO;
 
 import org.bytedeco.javacpp.lept;
 import org.bytedeco.javacpp.tesseract.TessBaseAPI;
-import org.xwiki.contrib.ocr.api.OCRException;
+import org.xwiki.contrib.ocr.tesseract.api.TessException;
 
 import static org.bytedeco.javacpp.lept.pixDestroy;
 import static org.bytedeco.javacpp.lept.pixReadMem;
@@ -56,9 +56,9 @@ public final class TessParser
      * @param api the API to use
      * @param image the image to parse
      * @return the generated document
-     * @throws OCRException if an error occurs during the importation
+     * @throws TessException if an error occurs during the importation
      */
-    public static TessDocumentPage parseImage(TessBaseAPI api, byte[] image) throws OCRException
+    public static TessDocumentPage parseImage(TessBaseAPI api, byte[] image) throws TessException
     {
         lept.PIX leptImage = null;
 
@@ -78,9 +78,9 @@ public final class TessParser
      * @param api the API to use
      * @param image the image to parse
      * @return the generated document
-     * @throws OCRException if an error occurs during the importation
+     * @throws TessException if an error occurs during the importation
      */
-    public static TessDocumentPage parseImage(TessBaseAPI api, Image image) throws OCRException
+    public static TessDocumentPage parseImage(TessBaseAPI api, Image image) throws TessException
     {
         return parseImage(api, toByteArray(image));
     }
@@ -90,9 +90,9 @@ public final class TessParser
      *
      * @param image the image to convert
      * @return the associated byte array
-     * @throws OCRException if the conversion failed
+     * @throws TessException if the conversion failed
      */
-    private static byte[] toByteArray(Image image) throws OCRException
+    private static byte[] toByteArray(Image image) throws TessException
     {
         BufferedImage bufferedImage = toBufferedImage(image);
 
@@ -102,7 +102,7 @@ public final class TessParser
             ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
             byteArrayOutputStream.flush();
         } catch (IOException e) {
-            throw new OCRException("Failed to convert the given image to byte array.", e);
+            throw new TessException("Failed to convert the given image to byte array.", e);
         }
 
         return byteArrayOutputStream.toByteArray();
