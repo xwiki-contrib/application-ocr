@@ -34,19 +34,19 @@ import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
 import org.xwiki.job.DefaultRequest;
 
 /**
- * Tesseract oriented implementation of {@link AbstractTessFileDownloadJob}.
+ * Default implementation of {@link AbstractTessFileDownloadJob}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
-@Named(DefaultTessTessFileDownloadJob.JOBTYPE)
-public class DefaultTessTessFileDownloadJob extends AbstractTessFileDownloadJob
+@Named(DefaultTessFileDownloadJob.JOB_TYPE)
+public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
 {
     /**
      * The type of the job. Also used as a job identifier.
      */
-    public static final String JOBTYPE = "tesseractFileDownload";
+    public static final String JOB_TYPE = "tesseractFileDownload";
 
     @Inject
     private TessConfiguration tessConfiguration;
@@ -68,6 +68,6 @@ public class DefaultTessTessFileDownloadJob extends AbstractTessFileDownloadJob
     @Override
     public String getType()
     {
-        return JOBTYPE;
+        return JOB_TYPE;
     }
 }
