@@ -17,26 +17,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.data.file;
+package org.xwiki.contrib.ocr.tesseract.data.job;
 
+import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
+import org.xwiki.job.DefaultRequest;
 import org.xwiki.stability.Unstable;
 
 /**
- * Represents a remotely available training data file.
+ * {@link org.xwiki.job.Request} implementation for {@link AbstractTessFileDownloadJob}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public interface TessRemoteDataFile extends TessDataFile
+public class TessFileDownloadJobRequest extends DefaultRequest
 {
     /**
-     * @return the download URL of the raw file
+     * The name of the property used to get the {@link TessRemoteDataFile} to download in the job request.
      */
-    String getDownloadURL();
+    private static final String REMOTE_DATA_FILE_PROPERTY = "remoteDataFile";
 
     /**
-     * @return the file SHA1 control sum or null if no sum is available.
+     * Define the {@link TessRemoteDataFile} that should be downloaded.
+     *
+     * @param remoteDataFile the {@link TessRemoteDataFile}
      */
-    String sha1Digest();
+    public void setRemoteDataFile(TessRemoteDataFile remoteDataFile)
+    {
+        setProperty(REMOTE_DATA_FILE_PROPERTY, remoteDataFile);
+    }
+
+    /**
+     * @return the {@link TessRemoteDataFile} to download
+     */
+    public TessRemoteDataFile getRemoteDataFile()
+    {
+        return getProperty(REMOTE_DATA_FILE_PROPERTY);
+    }
 }

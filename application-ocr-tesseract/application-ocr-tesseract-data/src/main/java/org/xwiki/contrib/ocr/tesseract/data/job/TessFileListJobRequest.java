@@ -19,18 +19,39 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.job;
 
-import org.xwiki.job.AbstractJob;
-import org.xwiki.job.DefaultJobStatus;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.job.DefaultRequest;
 import org.xwiki.stability.Unstable;
 
 /**
- * Job for retrieving a remote list of files. Useful for listing available data files.
+ * {@link org.xwiki.job.Request} for {@link AbstractTessFileListJob}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public abstract class AbstractTessFileListingJob extends AbstractJob<DefaultRequest, DefaultJobStatus<DefaultRequest>>
+public class TessFileListJobRequest extends DefaultRequest
 {
+    /**
+     * The name of the property used to get a list of available {@link TessRemoteDataFile}.
+     */
+    private static final String TRAINING_FILES_URL_PROPERTY = "trainingFilesURL";
+
+    /**
+     * Set the URL that should be used in order to fetch the available Tesseract data files list.
+     *
+     * @param filesURL the URL
+     */
+    public void setFilesURL(String filesURL)
+    {
+        setProperty(TRAINING_FILES_URL_PROPERTY, filesURL);
+    }
+
+    /**
+     * @return the URL to get the file list from
+     */
+    public String getFilesURL()
+    {
+        return getProperty(TRAINING_FILES_URL_PROPERTY);
+    }
 }

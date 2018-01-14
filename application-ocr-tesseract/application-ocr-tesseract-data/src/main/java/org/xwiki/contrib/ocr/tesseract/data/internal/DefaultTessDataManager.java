@@ -22,7 +22,9 @@ package org.xwiki.contrib.ocr.tesseract.data.internal;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,7 +39,14 @@ import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.internal.file.DefaultTessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileListingJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileListJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.TessFileDownloadJobRequest;
+import org.xwiki.contrib.ocr.tesseract.data.job.TessFileListJobRequest;
+import org.xwiki.contrib.ocr.tesseract.data.job.TessFileListJobStatus;
+import org.xwiki.job.Job;
+import org.xwiki.job.JobException;
+import org.xwiki.job.JobExecutor;
+import org.xwiki.job.event.status.JobStatus;
 
 /**
  * This is the default implementation of {@link TessDataManager}.
@@ -49,8 +58,13 @@ import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileListingJob;
 @Singleton
 public class DefaultTessDataManager implements TessDataManager
 {
+    private static final String TRAINING_FILE_EXTENSION = ".traineddata";
+
     @Inject
     private TessConfiguration tessConfiguration;
+
+    @Inject
+    private JobExecutor jobExecutor;
 
     @Override
     public List<TessLocalDataFile> getLocalFiles() throws TessException
@@ -62,9 +76,11 @@ public class DefaultTessDataManager implements TessDataManager
 
         if (fileList != null) {
             for (File file : fileList) {
-                String fileLang = file.getName().split(".")[0];
+                if (file.getName().endsWith(TRAINING_FILE_EXTENSION)) {
+                    String fileLang = file.getName().split("\\.")[0];
 
-                localDataFiles.add(new DefaultTessLocalDataFile(fileLang, file.getPath()));
+                    localDataFiles.add(new DefaultTessLocalDataFile(fileLang, file.getPath()));
+                }
             }
         }
 
@@ -74,25 +90,79 @@ public class DefaultTessDataManager implements TessDataManager
     @Override
     public List<TessRemoteDataFile> getAvailableFiles() throws TessException
     {
-        return null;
+        Job job = startFileListingJob();
+
+        try {
+            job.join();
+            JobStatus jobStatus = job.getStatus();
+
+            if (jobStatus instanceof TessFileListJobStatus) {
+                return ((TessFileListJobStatus) jobStatus).getRemoteDataFiles();
+            } else {
+                throw new TessException("Invalid job status given by the file listing job.");
+            }
+        } catch (InterruptedException e) {
+            throw new TessException("Failed to wait for the end of the file listing job.", e);
+        }
+
     }
 
     @Override
-    public AbstractTessFileListingJob getAvailableFilesAsync() throws TessException
+    public TessFileListJobStatus getAvailableFilesAsync() throws TessException
     {
-        return null;
+        JobStatus jobStatus = startFileListingJob().getStatus();
+
+        if (jobStatus instanceof TessFileListJobStatus) {
+            return (TessFileListJobStatus) jobStatus;
+        } else {
+            throw new TessException("Invalid job status returned when starting the file listing job.");
+        }
     }
 
     @Override
     public TessLocalDataFile getFile(String lang) throws TessException
     {
-        return null;
+        String filePath = String.format("%s.%s", lang, TRAINING_FILE_EXTENSION);
+
+        if (FileUtils.fileExists(filePath)) {
+            return new DefaultTessLocalDataFile(lang, filePath);
+        } else {
+            // TODO: Download the file if possible
+            throw new TessException("Unable to find a training file corresponding to the given language.");
+        }
     }
 
     @Override
-    public AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException
+    public JobStatus downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException
     {
-        return null;
+        TessFileDownloadJobRequest jobRequest = new TessFileDownloadJobRequest();
+        jobRequest.setId(Arrays.asList(AbstractTessFileDownloadJob.JOB_TYPE, UUID.randomUUID().toString()));
+        jobRequest.setRemoteDataFile(remoteDataFile);
+
+        try {
+            return jobExecutor.execute(AbstractTessFileDownloadJob.JOB_TYPE, jobRequest).getStatus();
+        } catch (JobException e) {
+            throw new TessException("Failed to execute the download job.", e);
+        }
+    }
+
+    /**
+     * Instantiate and execute an {@link AbstractTessFileListJob} and returns the associated job.
+     *
+     * @return the started job
+     * @throws TessException if an error happens
+     */
+    private Job startFileListingJob() throws TessException
+    {
+        TessFileListJobRequest jobRequest = new TessFileListJobRequest();
+        jobRequest.setId(Arrays.asList(AbstractTessFileListJob.JOB_TYPE, UUID.randomUUID().toString()));
+        jobRequest.setFilesURL(tessConfiguration.trainingFilesURL());
+
+        try {
+            return jobExecutor.execute(AbstractTessFileListJob.JOB_TYPE, jobRequest);
+        } catch (JobException e) {
+            throw new TessException("Failed to execute the file listing job.", e);
+        }
     }
 
     /**
@@ -104,7 +174,7 @@ public class DefaultTessDataManager implements TessDataManager
      */
     private File getLocalFolder() throws TessException
     {
-        File localFolder = new File(tessConfiguration.dataPath());
+        File localFolder = new File(String.format("%s/tessdata", tessConfiguration.dataPath()));
 
         try {
             FileUtils.forceMkdir(localFolder);

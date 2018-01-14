@@ -19,16 +19,21 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.file;
 
+import java.io.Serializable;
+
 import org.xwiki.stability.Unstable;
 
 /**
  * Represents a training data file.
+ * Note that this interface extends {@link Serializable} as {@link TessDataFile} can be used in custom
+ * {@link org.xwiki.job.event.status.JobStatus}, which are serialized and stored in a file when the job they are linked
+ * to is finished.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public interface TessDataFile
+public interface TessDataFile extends Serializable
 {
     /**
      * @return the language of the file

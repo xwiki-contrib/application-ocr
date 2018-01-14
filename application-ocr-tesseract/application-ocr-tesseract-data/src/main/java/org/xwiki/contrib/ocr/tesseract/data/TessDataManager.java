@@ -25,8 +25,7 @@ import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileListingJob;
+import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -57,10 +56,10 @@ public interface TessDataManager
     /**
      * Asynchronously retrieves a list of remotely available data files.
      *
-     * @return the {@link AbstractTessFileListingJob} representing the job
+     * @return the {@link JobStatus} representing the job status
      * @throws TessException if an error happened
      */
-    AbstractTessFileListingJob getAvailableFilesAsync() throws TessException;
+    JobStatus getAvailableFilesAsync() throws TessException;
 
     /**
      * Get the {@link TessLocalDataFile} associated with the given language. If the configuration option
@@ -77,8 +76,8 @@ public interface TessDataManager
      * Download and store the Tesseract data file corresponding to the given {@link TessRemoteDataFile}.
      *
      * @param remoteDataFile the {@link TessRemoteDataFile} to download
-     * @return a descriptor for the file download job
+     * @return the file download job status
      * @throws TessException if an error happened
      */
-    AbstractTessFileDownloadJob downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException;
+    JobStatus downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException;
 }

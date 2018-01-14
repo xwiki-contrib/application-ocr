@@ -38,7 +38,8 @@ public interface TessConfiguration
     String defaultLangage();
 
     /**
-     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files
+     * @return the path to the {@link org.bytedeco.javacpp.tesseract.TessBaseAPI} data files. Note that Tesseract
+     * files will be effectively stored in <DATA_PATH>/tessdata.
      */
     String dataPath();
 

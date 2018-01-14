@@ -21,16 +21,26 @@ package org.xwiki.contrib.ocr.tesseract.data.job;
 
 import org.xwiki.job.AbstractJob;
 import org.xwiki.job.DefaultJobStatus;
-import org.xwiki.job.DefaultRequest;
 import org.xwiki.stability.Unstable;
 
 /**
- * Describe a file download job.
+ * {@link org.xwiki.job.Job} for downloading Tesseract training data files.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public abstract class AbstractTessFileDownloadJob extends AbstractJob<DefaultRequest, DefaultJobStatus<DefaultRequest>>
+public abstract class AbstractTessFileDownloadJob
+        extends AbstractJob<TessFileDownloadJobRequest, DefaultJobStatus<TessFileDownloadJobRequest>>
 {
+    /**
+     * The type of the job. Also used as a job identifier.
+     */
+    public static final String JOB_TYPE = "tesseractFileDownload";
+
+    @Override
+    public String getType()
+    {
+        return JOB_TYPE;
+    }
 }

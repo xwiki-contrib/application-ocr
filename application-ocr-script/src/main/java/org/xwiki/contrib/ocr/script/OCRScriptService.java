@@ -48,7 +48,6 @@ public class OCRScriptService implements ScriptService
     @Inject
     private ScriptServiceManager scriptServiceManager;
 
-
     /**
      * Get a sub script service related to wiki. (Note that we're voluntarily using an API name of "get" to make it
      * extra easy to access Script Services from Velocity (since in Velocity writing <code>$services.wiki.name</code> is

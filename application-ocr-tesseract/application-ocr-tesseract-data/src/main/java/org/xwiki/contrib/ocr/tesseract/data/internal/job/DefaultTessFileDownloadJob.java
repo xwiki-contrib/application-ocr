@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.internal.job;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -27,47 +28,46 @@ import java.nio.channels.ReadableByteChannel;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
+import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
-import org.xwiki.job.DefaultRequest;
 
 /**
- * Default implementation of {@link AbstractTessFileDownloadJob}.
+ * Job used to download Tesseract training data files.
  *
  * @version $Id$
  * @since 1.0
  */
 @Component
-@Named(DefaultTessFileDownloadJob.JOB_TYPE)
+@Named(AbstractTessFileDownloadJob.JOB_TYPE)
 public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
 {
-    /**
-     * The type of the job. Also used as a job identifier.
-     */
-    public static final String JOB_TYPE = "tesseractFileDownload";
-
     @Inject
     private TessConfiguration tessConfiguration;
 
     @Override
     protected void runInternal() throws Exception
     {
-        DefaultRequest request = getRequest();
-        TessRemoteDataFile remoteDataFile = request.getProperty("remoteFile");
-
+        logger.info("Retrieving file information ...");
+        TessRemoteDataFile remoteDataFile = request.getRemoteDataFile();
         URL downloadURL = new URL(remoteDataFile.getDownloadURL());
+        String filePath = String.format("%s/%s.traineddata",
+                tessConfiguration.dataPath(), remoteDataFile.getLanguage().replaceAll("/", "\\/"));
+
+        logger.info("Starting file download ...");
         ReadableByteChannel rbc = Channels.newChannel(downloadURL.openStream());
-        FileOutputStream fos = new FileOutputStream(String.format("{}/{}.traineddata",
-                tessConfiguration.dataPath(), remoteDataFile.getLanguage().replaceAll("/", "\\/")));
+        FileOutputStream fos = new FileOutputStream(filePath);
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         fos.close();
-    }
 
-    @Override
-    public String getType()
-    {
-        return JOB_TYPE;
+        String sha1Digest = DigestUtils.sha1Hex(new FileInputStream(filePath));
+        if (!sha1Digest.equals(remoteDataFile.sha1Digest())) {
+            throw new TessException(String.format("Failed to download file [%s]: invalid control sum.", filePath));
+        } else {
+            logger.info("Download complete!");
+        }
     }
 }

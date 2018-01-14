@@ -17,26 +17,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.data.file;
+package org.xwiki.contrib.ocr.tesseract.data.job;
 
+import org.xwiki.job.AbstractJob;
 import org.xwiki.stability.Unstable;
 
 /**
- * Represents a remotely available training data file.
+ * {@link org.xwiki.job.Job} for remotely retrieving a list of available Tesseract training data files.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public interface TessRemoteDataFile extends TessDataFile
+public abstract class AbstractTessFileListJob extends AbstractJob<TessFileListJobRequest, TessFileListJobStatus>
 {
     /**
-     * @return the download URL of the raw file
+     * The type of the job. Also used as a job identifier.
      */
-    String getDownloadURL();
+    public static final String JOB_TYPE = "tesseractFileList";
 
-    /**
-     * @return the file SHA1 control sum or null if no sum is available.
-     */
-    String sha1Digest();
+    @Override
+    public String getType()
+    {
+        return JOB_TYPE;
+    }
 }
