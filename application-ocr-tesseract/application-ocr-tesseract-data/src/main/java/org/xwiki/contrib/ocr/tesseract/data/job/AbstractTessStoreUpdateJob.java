@@ -20,21 +20,32 @@
 package org.xwiki.contrib.ocr.tesseract.data.job;
 
 import org.xwiki.job.AbstractJob;
+import org.xwiki.job.Job;
+import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.stability.Unstable;
 
 /**
- * {@link org.xwiki.job.Job} for remotely retrieving a list of available Tesseract training data files.
+ * {@link org.xwiki.job.Job} for getting a list of locally and remotely available Tesseract training data files.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public abstract class AbstractTessFileListJob extends AbstractJob<TessFileListJobRequest, TessFileListJobStatus>
+public abstract class AbstractTessStoreUpdateJob
+        extends AbstractJob<TessStoreUpdateJobRequest, TessStoreUpdateJobStatus>
 {
     /**
      * The type of the job. Also used as a job identifier.
      */
-    public static final String JOB_TYPE = "tesseractFileList";
+    public static final String JOB_TYPE = "tesseractStoreUpdate";
+
+    @Override
+    protected TessStoreUpdateJobStatus createNewStatus(TessStoreUpdateJobRequest request)
+    {
+        Job currentJob = this.jobContext.getCurrentJob();
+        JobStatus currentJobStatus = currentJob != null ? currentJob.getStatus() : null;
+        return new TessStoreUpdateJobStatus(request, currentJobStatus, this.observationManager, this.loggerManager);
+    }
 
     @Override
     public String getType()

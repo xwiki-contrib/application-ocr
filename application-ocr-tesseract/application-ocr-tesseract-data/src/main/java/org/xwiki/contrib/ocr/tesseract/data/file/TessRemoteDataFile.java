@@ -38,5 +38,5 @@ public interface TessRemoteDataFile extends TessDataFile
     /**
      * @return the file SHA1 control sum or null if no sum is available.
      */
-    String sha1Digest();
+    String getSHA1Digest();
 }

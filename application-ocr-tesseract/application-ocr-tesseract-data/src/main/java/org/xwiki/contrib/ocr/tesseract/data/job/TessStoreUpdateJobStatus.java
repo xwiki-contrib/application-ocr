@@ -21,35 +21,36 @@ package org.xwiki.contrib.ocr.tesseract.data.job;
 
 import java.util.List;
 
+import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.job.DefaultJobStatus;
-import org.xwiki.job.DefaultRequest;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.logging.LoggerManager;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.stability.Unstable;
 
 /**
- * {@link JobStatus} implementation for {@link AbstractTessFileListJob}. This custom job allows to store
- * the fetched {@link TessRemoteDataFile} during the job and access them afterwards using {@link #getRemoteDataFiles()}.
+ * {@link JobStatus} implementation for {@link AbstractTessStoreUpdateJob}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public class TessFileListJobStatus extends DefaultJobStatus<DefaultRequest>
+public class TessStoreUpdateJobStatus extends DefaultJobStatus<TessStoreUpdateJobRequest>
 {
     private List<TessRemoteDataFile> remoteDataFiles;
 
+    private List<TessLocalDataFile> localDataFiles;
+
     /**
-     * Builds a new {@link TessFileListJobStatus}.
+     * Builds a new {@link TessStoreUpdateJobStatus}.
      *
      * @param request the job request
      * @param parentJobStatus the parent job status
      * @param observationManager the observation manager
      * @param loggerManager the logger manager
      */
-    public TessFileListJobStatus(DefaultRequest request, JobStatus parentJobStatus,
+    public TessStoreUpdateJobStatus(TessStoreUpdateJobRequest request, JobStatus parentJobStatus,
             ObservationManager observationManager, LoggerManager loggerManager)
     {
         super(request, parentJobStatus, observationManager, loggerManager);
@@ -66,10 +67,28 @@ public class TessFileListJobStatus extends DefaultJobStatus<DefaultRequest>
     }
 
     /**
+     * Register a list of {@link TessLocalDataFile}.
+     *
+     * @param localDataFiles the list of files
+     */
+    public void setLocalDataFiles(List<TessLocalDataFile> localDataFiles)
+    {
+        this.localDataFiles = localDataFiles;
+    }
+
+    /**
      * @return the registered list of {@link TessRemoteDataFile}.
      */
     public List<TessRemoteDataFile> getRemoteDataFiles()
     {
         return remoteDataFiles;
+    }
+
+    /**
+     * @return the registered list of {@link TessLocalDataFile}.
+     */
+    public List<TessLocalDataFile> getLocalDataFiles()
+    {
+        return localDataFiles;
     }
 }

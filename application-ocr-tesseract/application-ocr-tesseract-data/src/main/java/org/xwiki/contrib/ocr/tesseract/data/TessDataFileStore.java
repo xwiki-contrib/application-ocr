@@ -17,53 +17,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.data.internal.file;
+package org.xwiki.contrib.ocr.tesseract.data;
 
+import java.util.List;
+
+import org.xwiki.component.annotation.Role;
+import org.xwiki.contrib.ocr.tesseract.api.TessException;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
+import org.xwiki.job.event.status.JobStatus;
 
 /**
- * This is the default implementation of {@link TessRemoteDataFile}.
+ * Acts as an in-memory store for locally and remotely available training data files.
  *
  * @version $Id$
  * @since 1.0
  */
-public class DefaultTessRemoteDataFile implements TessRemoteDataFile
+@Role
+public interface TessDataFileStore
 {
-    private String downloadURL;
-
-    private String lang;
-
-    private String sha1;
+    /**
+     * @return a list of local training data files currently found.
+     */
+    List<TessLocalDataFile> getLocalDataFiles();
 
     /**
-     * Builds a new {@link DefaultTessRemoteDataFile}.
-     *
-     * @param lang the lang code of the file
-     * @param downloadURL the file raw download url
-     * @param sha1 the SHA1 control sum of the file
+     * @return a list of remotely available training data files.
      */
-    public DefaultTessRemoteDataFile(String lang, String downloadURL, String sha1)
-    {
-        this.lang = lang;
-        this.downloadURL = downloadURL;
-        this.sha1 = sha1;
-    }
+    List<TessRemoteDataFile> getRemoteDataFiles();
 
-    @Override
-    public String getDownloadURL()
-    {
-        return downloadURL;
-    }
+    /**
+     * @return true if the file store needs to be updated in order to discover local files and remotely available files.
+     */
+    boolean needsUpdate();
 
-    @Override
-    public String getSHA1Digest()
-    {
-        return sha1;
-    }
-
-    @Override
-    public String getLanguage()
-    {
-        return lang;
-    }
+    /**
+     * Triggers a store update.
+     *
+     * @return the {@link JobStatus} used to update the store
+     * @throws TessException if an error happens
+     */
+    JobStatus updateStore() throws TessException;
 }

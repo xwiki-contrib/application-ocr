@@ -55,4 +55,9 @@ public interface TessConfiguration
      * @return the URL to a list of downloadable training data files for the Tesseract library.
      */
     String trainingFilesURL();
+
+    /**
+     * @return the number of seconds that should pass before needing to update the training files data store.
+     */
+    int dataStoreUpdateInterval();
 }

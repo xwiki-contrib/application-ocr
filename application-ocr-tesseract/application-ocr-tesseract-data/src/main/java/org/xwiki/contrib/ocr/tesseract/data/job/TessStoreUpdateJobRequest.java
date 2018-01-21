@@ -24,13 +24,13 @@ import org.xwiki.job.DefaultRequest;
 import org.xwiki.stability.Unstable;
 
 /**
- * {@link org.xwiki.job.Request} for {@link AbstractTessFileListJob}.
+ * {@link org.xwiki.job.Request} for {@link AbstractTessStoreUpdateJob}.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public class TessFileListJobRequest extends DefaultRequest
+public class TessStoreUpdateJobRequest extends DefaultRequest
 {
     /**
      * The name of the property used to get a list of available {@link TessRemoteDataFile}.

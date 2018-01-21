@@ -19,7 +19,7 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data;
 
-import java.util.List;
+import java.io.File;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
@@ -39,29 +39,6 @@ import org.xwiki.stability.Unstable;
 public interface TessDataManager
 {
     /**
-     * @return a list of training data files stored locally
-     * @throws TessException if an error happened
-     */
-    List<TessLocalDataFile> getLocalFiles() throws TessException;
-
-    /**
-     * Synchronous method that fetches a list of remotely available files.
-     * To get the list of files asynchronously, see {@link #getAvailableFilesAsync()}.
-     *
-     * @return a list of training data files available remotely
-     * @throws TessException if an error happened
-     */
-    List<TessRemoteDataFile> getAvailableFiles() throws TessException;
-
-    /**
-     * Asynchronously retrieves a list of remotely available data files.
-     *
-     * @return the {@link JobStatus} representing the job status
-     * @throws TessException if an error happened
-     */
-    JobStatus getAvailableFilesAsync() throws TessException;
-
-    /**
      * Get the {@link TessLocalDataFile} associated with the given language. If the configuration option
      * `tesseract.allowAutoDownload` is set to true, the file should be automatically downloaded if not already
      * present on the filesystem.
@@ -79,5 +56,14 @@ public interface TessDataManager
      * @return the file download job status
      * @throws TessException if an error happened
      */
-    JobStatus downloadFileAsync(TessRemoteDataFile remoteDataFile) throws TessException;
+    JobStatus downloadFile(TessRemoteDataFile remoteDataFile) throws TessException;
+
+    /**
+     * Get the local folder containing Tesseract data files using configuration variables. If the folder does not
+     * exists, it will be created.
+     *
+     * @return the local folder
+     * @throws TessException if the folder could not be created
+     */
+    File getLocalDataFolder() throws TessException;
 }

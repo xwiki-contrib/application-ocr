@@ -65,4 +65,10 @@ public class DefaultTessConfiguration implements TessConfiguration
         return configurationSource.getProperty(CONFIGURATION_PREFIX + "trainingFilesURL",
                 "https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=3.04.00");
     }
+
+    @Override
+    public int dataStoreUpdateInterval()
+    {
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataStoreUpdateInterval", 1800);
+    }
 }

@@ -33,6 +33,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
+import org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
 
 /**
@@ -54,8 +55,10 @@ public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
         logger.info("Retrieving file information ...");
         TessRemoteDataFile remoteDataFile = request.getRemoteDataFile();
         URL downloadURL = new URL(remoteDataFile.getDownloadURL());
-        String filePath = String.format("%s/%s.traineddata",
-                tessConfiguration.dataPath(), remoteDataFile.getLanguage().replaceAll("/", "\\/"));
+        String filePath = String.format("%s/%s%s",
+                tessConfiguration.dataPath(),
+                remoteDataFile.getLanguage().replaceAll("/", "\\/"),
+                DefaultTessDataManager.TRAINING_FILE_EXTENSION);
 
         logger.info("Starting file download ...");
         ReadableByteChannel rbc = Channels.newChannel(downloadURL.openStream());
@@ -64,7 +67,7 @@ public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
         fos.close();
 
         String sha1Digest = DigestUtils.sha1Hex(new FileInputStream(filePath));
-        if (!sha1Digest.equals(remoteDataFile.sha1Digest())) {
+        if (!sha1Digest.equals(remoteDataFile.getSHA1Digest())) {
             throw new TessException(String.format("Failed to download file [%s]: invalid control sum.", filePath));
         } else {
             logger.info("Download complete!");

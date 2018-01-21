@@ -28,8 +28,11 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.script.OCRScriptService;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
+import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
+import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.stability.Unstable;
 
@@ -51,6 +54,9 @@ public class TessScriptService implements ScriptService
     static final String ROLE_HINT = "tesseract";
 
     @Inject
+    private TessDataFileStore tessDataFileStore;
+
+    @Inject
     private TessDataManager tessDataManager;
 
     /**
@@ -59,6 +65,38 @@ public class TessScriptService implements ScriptService
      */
     public List<TessLocalDataFile> getLocalFiles() throws TessException
     {
-        return tessDataManager.getLocalFiles();
+        return tessDataFileStore.getLocalDataFiles();
+    }
+
+    /**
+     * @return a list of remotely available files.
+     * @throws TessException if an error occurred
+     */
+    public List<TessRemoteDataFile> getRemotelyAvailableFiles() throws TessException
+    {
+        return tessDataFileStore.getRemoteDataFiles();
+    }
+
+    /**
+     * Update the {@link TessDataFileStore}.
+     *
+     * @return the job status associated with the update job
+     * @throws TessException if an error happens
+     */
+    public JobStatus updateStore() throws TessException
+    {
+        return tessDataFileStore.updateStore();
+    }
+
+    /**
+     * Uses the given {@link TessRemoteDataFile} to download a training file on the sever.
+     *
+     * @param remoteDataFile the file to download
+     * @return a job status associated with the download job
+     * @throws TessException if an error happens
+     */
+    public JobStatus downloadDataFile(TessRemoteDataFile remoteDataFile) throws TessException
+    {
+        return tessDataManager.downloadFile(remoteDataFile);
     }
 }

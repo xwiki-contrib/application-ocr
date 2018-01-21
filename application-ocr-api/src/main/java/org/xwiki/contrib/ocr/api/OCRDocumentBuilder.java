@@ -21,7 +21,6 @@ package org.xwiki.contrib.ocr.api;
 
 import java.awt.Image;
 
-import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -30,7 +29,6 @@ import org.xwiki.stability.Unstable;
  * @version $Id$
  * @since 1.0
  */
-@Role
 @Unstable
 public interface OCRDocumentBuilder
 {
