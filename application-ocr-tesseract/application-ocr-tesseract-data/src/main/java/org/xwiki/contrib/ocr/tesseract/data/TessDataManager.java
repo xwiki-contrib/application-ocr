@@ -23,7 +23,6 @@ import java.io.File;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
-import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.stability.Unstable;
@@ -39,24 +38,13 @@ import org.xwiki.stability.Unstable;
 public interface TessDataManager
 {
     /**
-     * Get the {@link TessLocalDataFile} associated with the given language. If the configuration option
-     * `tesseract.allowAutoDownload` is set to true, the file should be automatically downloaded if not already
-     * present on the filesystem.
-     *
-     * @param lang the lang of the file to get
-     * @return the corresponding {@link TessLocalDataFile}
-     * @throws TessException if an error happened
-     */
-    TessLocalDataFile getFile(String lang) throws TessException;
-
-    /**
      * Download and store the Tesseract data file corresponding to the given {@link TessRemoteDataFile}.
      *
      * @param remoteDataFile the {@link TessRemoteDataFile} to download
      * @return the file download job status
      * @throws TessException if an error happened
      */
-    JobStatus downloadFile(TessRemoteDataFile remoteDataFile) throws TessException;
+    JobStatus downloadDataFile(TessRemoteDataFile remoteDataFile) throws TessException;
 
     /**
      * Get the local folder containing Tesseract data files using configuration variables. If the folder does not

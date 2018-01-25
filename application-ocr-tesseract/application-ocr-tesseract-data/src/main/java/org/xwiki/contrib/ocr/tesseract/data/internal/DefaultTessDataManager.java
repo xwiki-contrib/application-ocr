@@ -32,11 +32,9 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
-import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
-import org.xwiki.contrib.ocr.tesseract.data.internal.file.DefaultTessLocalDataFile;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
-import org.xwiki.contrib.ocr.tesseract.data.job.TessFileDownloadJobRequest;
+import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileDownloadJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.TessDataFileDownloadJobRequest;
 import org.xwiki.job.JobException;
 import org.xwiki.job.JobExecutor;
 import org.xwiki.job.event.status.JobStatus;
@@ -63,27 +61,14 @@ public class DefaultTessDataManager implements TessDataManager
     private JobExecutor jobExecutor;
 
     @Override
-    public TessLocalDataFile getFile(String lang) throws TessException
+    public JobStatus downloadDataFile(TessRemoteDataFile remoteDataFile) throws TessException
     {
-        String filePath = String.format("%s.%s", lang, TRAINING_FILE_EXTENSION);
-
-        if (FileUtils.fileExists(filePath)) {
-            return new DefaultTessLocalDataFile(lang, filePath);
-        } else {
-            // TODO: Download the file if possible
-            throw new TessException("Unable to find a training file corresponding to the given language.");
-        }
-    }
-
-    @Override
-    public JobStatus downloadFile(TessRemoteDataFile remoteDataFile) throws TessException
-    {
-        TessFileDownloadJobRequest jobRequest = new TessFileDownloadJobRequest();
-        jobRequest.setId(Arrays.asList(AbstractTessFileDownloadJob.JOB_TYPE, UUID.randomUUID().toString()));
+        TessDataFileDownloadJobRequest jobRequest = new TessDataFileDownloadJobRequest();
+        jobRequest.setId(Arrays.asList(AbstractTessDataFileDownloadJob.JOB_TYPE, UUID.randomUUID().toString()));
         jobRequest.setRemoteDataFile(remoteDataFile);
 
         try {
-            return jobExecutor.execute(AbstractTessFileDownloadJob.JOB_TYPE, jobRequest).getStatus();
+            return jobExecutor.execute(AbstractTessDataFileDownloadJob.JOB_TYPE, jobRequest).getStatus();
         } catch (JobException e) {
             throw new TessException("Failed to execute the download job.", e);
         }

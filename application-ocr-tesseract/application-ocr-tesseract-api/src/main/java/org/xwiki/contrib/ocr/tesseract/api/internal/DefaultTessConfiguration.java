@@ -50,7 +50,7 @@ public class DefaultTessConfiguration implements TessConfiguration
     @Override
     public String dataPath()
     {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", "./data/");
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataPath", "./data");
     }
 
     @Override

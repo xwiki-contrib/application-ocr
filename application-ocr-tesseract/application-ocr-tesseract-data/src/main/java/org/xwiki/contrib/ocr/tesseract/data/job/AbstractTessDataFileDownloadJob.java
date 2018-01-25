@@ -19,39 +19,28 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.job;
 
-import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
-import org.xwiki.job.DefaultRequest;
+import org.xwiki.job.AbstractJob;
+import org.xwiki.job.DefaultJobStatus;
 import org.xwiki.stability.Unstable;
 
 /**
- * {@link org.xwiki.job.Request} implementation for {@link AbstractTessFileDownloadJob}.
+ * {@link org.xwiki.job.Job} for downloading Tesseract training data files.
  *
  * @version $Id$
  * @since 1.0
  */
 @Unstable
-public class TessFileDownloadJobRequest extends DefaultRequest
+public abstract class AbstractTessDataFileDownloadJob
+        extends AbstractJob<TessDataFileDownloadJobRequest, DefaultJobStatus<TessDataFileDownloadJobRequest>>
 {
     /**
-     * The name of the property used to get the {@link TessRemoteDataFile} to download in the job request.
+     * The type of the job. Also used as a job identifier.
      */
-    private static final String REMOTE_DATA_FILE_PROPERTY = "remoteDataFile";
+    public static final String JOB_TYPE = "tesseractDataFileDownload";
 
-    /**
-     * Define the {@link TessRemoteDataFile} that should be downloaded.
-     *
-     * @param remoteDataFile the {@link TessRemoteDataFile}
-     */
-    public void setRemoteDataFile(TessRemoteDataFile remoteDataFile)
+    @Override
+    public String getType()
     {
-        setProperty(REMOTE_DATA_FILE_PROPERTY, remoteDataFile);
-    }
-
-    /**
-     * @return the {@link TessRemoteDataFile} to download
-     */
-    public TessRemoteDataFile getRemoteDataFile()
-    {
-        return getProperty(REMOTE_DATA_FILE_PROPERTY);
+        return JOB_TYPE;
     }
 }

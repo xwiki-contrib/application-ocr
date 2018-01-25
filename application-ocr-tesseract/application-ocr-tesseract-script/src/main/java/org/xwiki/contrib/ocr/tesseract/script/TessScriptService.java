@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.xwiki.bridge.DocumentAccessBridge;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.script.OCRScriptService;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
@@ -33,7 +34,12 @@ import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.job.event.status.JobStatus;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.WikiReference;
 import org.xwiki.script.service.ScriptService;
+import org.xwiki.security.authorization.AccessDeniedException;
+import org.xwiki.security.authorization.AuthorizationManager;
+import org.xwiki.security.authorization.Right;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -53,11 +59,23 @@ public class TessScriptService implements ScriptService
      */
     static final String ROLE_HINT = "tesseract";
 
+    private static final WikiReference MAIN_WIKI = new WikiReference("xwiki");
+
+    private JobStatus lastDataStoreUpdateStatus;
+
+    private JobStatus lastDataFileDownloadStatus;
+
     @Inject
     private TessDataFileStore tessDataFileStore;
 
     @Inject
     private TessDataManager tessDataManager;
+
+    @Inject
+    private DocumentAccessBridge documentAccessBridge;
+
+    @Inject
+    private AuthorizationManager authorizationManager;
 
     /**
      * @return a list of locally installed files.
@@ -78,18 +96,44 @@ public class TessScriptService implements ScriptService
     }
 
     /**
+     * @return true if the {@link TessDataFileStore} should be updated.
+     */
+    public boolean checkForStoreUpdate()
+    {
+        return tessDataFileStore.needsUpdate();
+    }
+
+    /**
      * Update the {@link TessDataFileStore}.
+     * Will check for admin rights before performing the update.
      *
      * @return the job status associated with the update job
      * @throws TessException if an error happens
      */
     public JobStatus updateStore() throws TessException
     {
-        return tessDataFileStore.updateStore();
+        DocumentReference currentUser = documentAccessBridge.getCurrentUserReference();
+
+        try {
+            authorizationManager.checkAccess(Right.ADMIN, currentUser, MAIN_WIKI);
+            lastDataStoreUpdateStatus = tessDataFileStore.updateStore();
+            return lastDataStoreUpdateStatus;
+        } catch (AccessDeniedException e) {
+            throw new TessException("Failed to update the file store.", e);
+        }
+    }
+
+    /**
+     * @return the last registered data store update job status. If no job has been triggered yet, returns null.
+     */
+    public JobStatus getCurrentDataStoreUpdateStatus()
+    {
+        return lastDataStoreUpdateStatus;
     }
 
     /**
      * Uses the given {@link TessRemoteDataFile} to download a training file on the sever.
+     * Will check for admin rights before performing the download.
      *
      * @param remoteDataFile the file to download
      * @return a job status associated with the download job
@@ -97,6 +141,35 @@ public class TessScriptService implements ScriptService
      */
     public JobStatus downloadDataFile(TessRemoteDataFile remoteDataFile) throws TessException
     {
-        return tessDataManager.downloadFile(remoteDataFile);
+        DocumentReference currentUser = documentAccessBridge.getCurrentUserReference();
+
+        try {
+            authorizationManager.checkAccess(Right.ADMIN, currentUser, MAIN_WIKI);
+            lastDataFileDownloadStatus = tessDataManager.downloadDataFile(remoteDataFile);
+            return lastDataFileDownloadStatus;
+        } catch (AccessDeniedException e) {
+            throw new TessException("Failed to download the data file.", e);
+        }
+    }
+
+    /**
+     * Does the same as {@link #downloadDataFile(TessRemoteDataFile)} but by taking the language of the file to
+     * download as a parameter.
+     *
+     * @param lang the language of the file to download
+     * @return a job status associated with the download job
+     * @throws TessException if an error happens
+     */
+    public JobStatus downloadDataFile(String lang) throws TessException
+    {
+        return downloadDataFile(tessDataFileStore.getRemoteFile(lang));
+    }
+
+    /**
+     * @return the last registered data file download job status. If no job has been triggered yet, returns null.
+     */
+    public JobStatus getCurrentDataFileDownloadStatus()
+    {
+        return this.lastDataFileDownloadStatus;
     }
 }

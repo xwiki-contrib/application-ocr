@@ -24,6 +24,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -89,6 +90,19 @@ public class DefaultTessDataFileStore implements TessDataFileStore
         return startStoreUpdateJob().getStatus();
     }
 
+    @Override
+    public TessRemoteDataFile getRemoteFile(String lang) throws TessException
+    {
+        Optional<TessRemoteDataFile> potentialFile = remoteDataFiles.stream().filter(x -> lang.equals(x.getLanguage()))
+                .findFirst();
+
+        if (potentialFile.isPresent()) {
+            return potentialFile.get();
+        } else {
+            throw new TessException(String.format("No remote file available for the language [%s].", lang));
+        }
+    }
+
     /**
      * Define a new set of locally available data files.
      *
@@ -119,6 +133,7 @@ public class DefaultTessDataFileStore implements TessDataFileStore
 
     /**
      * Instantiate and execute an {@link AbstractTessStoreUpdateJob} and returns the associated job.
+     * TODO: If a job is currently running, return it.
      *
      * @return the started job
      * @throws TessException if an error happens

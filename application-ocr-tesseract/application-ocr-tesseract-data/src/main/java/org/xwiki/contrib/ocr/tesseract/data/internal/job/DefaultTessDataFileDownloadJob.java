@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.internal.job;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -28,13 +27,12 @@ import java.nio.channels.ReadableByteChannel;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
-import org.xwiki.contrib.ocr.tesseract.api.TessException;
+import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataManager;
-import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
+import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileDownloadJob;
 
 /**
  * Job used to download Tesseract training data files.
@@ -43,11 +41,14 @@ import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessFileDownloadJob;
  * @since 1.0
  */
 @Component
-@Named(AbstractTessFileDownloadJob.JOB_TYPE)
-public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
+@Named(AbstractTessDataFileDownloadJob.JOB_TYPE)
+public class DefaultTessDataFileDownloadJob extends AbstractTessDataFileDownloadJob
 {
     @Inject
     private TessConfiguration tessConfiguration;
+
+    @Inject
+    private TessDataManager tessDataManager;
 
     @Override
     protected void runInternal() throws Exception
@@ -55,7 +56,11 @@ public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
         logger.info("Retrieving file information ...");
         TessRemoteDataFile remoteDataFile = request.getRemoteDataFile();
         URL downloadURL = new URL(remoteDataFile.getDownloadURL());
-        String filePath = String.format("%s/%s%s",
+
+        // Create the tessdata folder if not already present
+        tessDataManager.getLocalDataFolder();
+
+        String filePath = String.format("%s/tessdata/%s%s",
                 tessConfiguration.dataPath(),
                 remoteDataFile.getLanguage().replaceAll("/", "\\/"),
                 DefaultTessDataManager.TRAINING_FILE_EXTENSION);
@@ -66,11 +71,6 @@ public class DefaultTessFileDownloadJob extends AbstractTessFileDownloadJob
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         fos.close();
 
-        String sha1Digest = DigestUtils.sha1Hex(new FileInputStream(filePath));
-        if (!sha1Digest.equals(remoteDataFile.getSHA1Digest())) {
-            throw new TessException(String.format("Failed to download file [%s]: invalid control sum.", filePath));
-        } else {
-            logger.info("Download complete!");
-        }
+        logger.info("Download complete!");
     }
 }

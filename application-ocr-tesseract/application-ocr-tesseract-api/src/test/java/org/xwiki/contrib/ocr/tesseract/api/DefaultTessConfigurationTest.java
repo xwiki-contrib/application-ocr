@@ -60,7 +60,7 @@ public class DefaultTessConfigurationTest
     @Test
     public void dataPath() throws Exception
     {
-        when(configurationSource.getProperty("tesseract.dataPath", "./data/"))
+        when(configurationSource.getProperty("tesseract.dataPath", "./data"))
                 .thenReturn("myfolder");
         assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
     }

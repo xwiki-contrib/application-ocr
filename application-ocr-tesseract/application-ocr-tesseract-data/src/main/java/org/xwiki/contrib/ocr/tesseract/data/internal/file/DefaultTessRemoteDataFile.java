@@ -33,32 +33,22 @@ public class DefaultTessRemoteDataFile implements TessRemoteDataFile
 
     private String lang;
 
-    private String sha1;
-
     /**
      * Builds a new {@link DefaultTessRemoteDataFile}.
      *
      * @param lang the lang code of the file
      * @param downloadURL the file raw download url
-     * @param sha1 the SHA1 control sum of the file
      */
-    public DefaultTessRemoteDataFile(String lang, String downloadURL, String sha1)
+    public DefaultTessRemoteDataFile(String lang, String downloadURL)
     {
         this.lang = lang;
         this.downloadURL = downloadURL;
-        this.sha1 = sha1;
     }
 
     @Override
     public String getDownloadURL()
     {
         return downloadURL;
-    }
-
-    @Override
-    public String getSHA1Digest()
-    {
-        return sha1;
     }
 
     @Override

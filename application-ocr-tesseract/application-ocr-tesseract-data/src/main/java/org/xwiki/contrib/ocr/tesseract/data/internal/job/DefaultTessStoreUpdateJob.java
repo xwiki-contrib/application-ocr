@@ -61,9 +61,16 @@ public class DefaultTessStoreUpdateJob extends AbstractTessStoreUpdateJob
     @Override
     protected void runInternal() throws Exception
     {
-        status.setLocalDataFiles(listLocalFiles());
-        status.setRemoteDataFiles(listRemoteFiles());
-        logger.info("Done!");
+        try {
+            progressManager.pushLevelProgress(2, this);
+            progressManager.startStep(this);
+            status.setLocalDataFiles(listLocalFiles());
+            progressManager.startStep(this);
+            status.setRemoteDataFiles(listRemoteFiles());
+            logger.info("Done!");
+        } finally {
+            progressManager.popLevelProgress(this);
+        }
     }
 
     private List<TessLocalDataFile> listLocalFiles() throws TessException
@@ -101,8 +108,7 @@ public class DefaultTessStoreUpdateJob extends AbstractTessStoreUpdateJob
             if (fileDescriptor.getString(JSON_NAME_KEY).endsWith(DefaultTessDataManager.TRAINING_FILE_EXTENSION)) {
                 TessRemoteDataFile remoteDataFile = new DefaultTessRemoteDataFile(
                         fileDescriptor.getString(JSON_NAME_KEY).split(SPLIT_BY_POINT_REGEX)[0],
-                        fileDescriptor.getString("download_url"),
-                        fileDescriptor.getString("sha"));
+                        fileDescriptor.getString("download_url"));
                 remoteDataFiles.add(remoteDataFile);
             }
         }

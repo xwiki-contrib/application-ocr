@@ -34,9 +34,4 @@ public interface TessRemoteDataFile extends TessDataFile
      * @return the download URL of the raw file
      */
     String getDownloadURL();
-
-    /**
-     * @return the file SHA1 control sum or null if no sum is available.
-     */
-    String getSHA1Digest();
 }
