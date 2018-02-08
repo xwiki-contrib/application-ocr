@@ -24,14 +24,15 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>application-ocr</artifactId>
+    <artifactId>application-ocr-tesseract</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>application-ocr-filter</artifactId>
+  <artifactId>application-ocr-tesseract-filter</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Optical Character Recognition Application - Filters</name>
+  <name>Optical Character Recognition Application - Tesseract - Filters</name>
   <packaging>jar</packaging>
-  <description>Filter stream extension to parse a graphical file containing text</description>
+  <description>Filter stream extension to parse a graphical file containing text using the Tesseract library
+  </description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.00</xwiki.jacoco.instructionRatio>
   </properties>

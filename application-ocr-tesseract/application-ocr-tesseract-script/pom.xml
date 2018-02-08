@@ -43,12 +43,12 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-ocr-script</artifactId>
+      <artifactId>application-ocr-tesseract-filter</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-ocr-filter</artifactId>
+      <artifactId>application-ocr-script</artifactId>
       <version>${project.version}</version>
     </dependency>
 

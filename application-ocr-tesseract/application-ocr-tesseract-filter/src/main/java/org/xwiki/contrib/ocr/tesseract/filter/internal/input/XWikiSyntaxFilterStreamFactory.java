@@ -17,13 +17,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.filter.internal.input;
+package org.xwiki.contrib.ocr.tesseract.filter.internal.input;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
+import org.xwiki.contrib.ocr.tesseract.filter.OCRInputFilterProperties;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
 import org.xwiki.filter.type.FilterStreamType;

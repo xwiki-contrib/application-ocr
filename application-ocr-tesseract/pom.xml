@@ -35,6 +35,7 @@
   <modules>
     <module>application-ocr-tesseract-api</module>
     <module>application-ocr-tesseract-data</module>
+    <module>application-ocr-tesseract-filter</module>
     <module>application-ocr-tesseract-script</module>
     <module>application-ocr-tesseract-ui</module>
   </modules>

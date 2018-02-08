@@ -30,7 +30,7 @@ import javax.inject.Singleton;
 
 import org.xwiki.bridge.DocumentAccessBridge;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.ocr.filter.internal.input.XWikiSyntaxFilterStreamFactory;
+import org.xwiki.contrib.ocr.tesseract.filter.internal.input.XWikiSyntaxFilterStreamFactory;
 import org.xwiki.contrib.ocr.script.OCRScriptService;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;

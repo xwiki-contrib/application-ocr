@@ -1,0 +1,4 @@
+org.xwiki.contrib.ocr.tesseract.filter.internal.input.XWikiSyntaxFilterStream
+org.xwiki.contrib.ocr.tesseract.filter.internal.input.XWikiSyntaxFilterStreamFactory
+org.xwiki.contrib.ocr.tesseract.filter.internal.input.PlainFilterStream
+org.xwiki.contrib.ocr.tesseract.filter.internal.input.PlainFilterStreamFactory

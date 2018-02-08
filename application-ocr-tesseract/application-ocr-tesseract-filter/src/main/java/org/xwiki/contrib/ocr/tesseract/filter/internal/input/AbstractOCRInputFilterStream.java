@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.filter.internal.input;
+package org.xwiki.contrib.ocr.tesseract.filter.internal.input;
 
 import java.awt.Image;
 import java.io.FileInputStream;
@@ -33,10 +33,10 @@ import org.slf4j.Logger;
 import org.xwiki.contrib.ocr.api.OCRDocument;
 import org.xwiki.contrib.ocr.api.OCRDocumentBuilder;
 import org.xwiki.contrib.ocr.api.OCRDocumentBuilderProvider;
-import org.xwiki.contrib.ocr.filter.OCRInputFilterProperties;
-import org.xwiki.contrib.ocr.filter.internal.PDFToImageRenderer;
+import org.xwiki.contrib.ocr.tesseract.filter.OCRInputFilterProperties;
+import org.xwiki.contrib.ocr.tesseract.filter.internal.PDFToImageRenderer;
 import org.xwiki.contrib.ocr.api.OCRException;
-import org.xwiki.contrib.ocr.filter.internal.OCRMediaTypeChecker;
+import org.xwiki.contrib.ocr.tesseract.filter.internal.OCRMediaTypeChecker;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
