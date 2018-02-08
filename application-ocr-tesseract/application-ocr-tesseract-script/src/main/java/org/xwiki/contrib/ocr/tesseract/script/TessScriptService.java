@@ -19,7 +19,10 @@
  */
 package org.xwiki.contrib.ocr.tesseract.script;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,14 +30,21 @@ import javax.inject.Singleton;
 
 import org.xwiki.bridge.DocumentAccessBridge;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.ocr.filter.internal.input.XWikiSyntaxFilterStreamFactory;
 import org.xwiki.contrib.ocr.script.OCRScriptService;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
+import org.xwiki.filter.input.DefaultFileInputSource;
+import org.xwiki.filter.internal.job.FilterStreamConverterJob;
+import org.xwiki.filter.job.FilterStreamConverterJobRequest;
+import org.xwiki.filter.type.FilterStreamType;
+import org.xwiki.job.JobExecutor;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.security.authorization.AccessDeniedException;
@@ -65,6 +75,8 @@ public class TessScriptService implements ScriptService
 
     private JobStatus lastDataFileDownloadStatus;
 
+    private JobStatus lastImportStatus;
+
     @Inject
     private TessDataFileStore tessDataFileStore;
 
@@ -75,7 +87,13 @@ public class TessScriptService implements ScriptService
     private DocumentAccessBridge documentAccessBridge;
 
     @Inject
+    private DocumentReferenceResolver<String> documentReferenceResolver;
+
+    @Inject
     private AuthorizationManager authorizationManager;
+
+    @Inject
+    private JobExecutor jobExecutor;
 
     /**
      * @return a list of locally installed files.
@@ -171,5 +189,49 @@ public class TessScriptService implements ScriptService
     public JobStatus getCurrentDataFileDownloadStatus()
     {
         return this.lastDataFileDownloadStatus;
+    }
+
+    /**
+     * Import the given file using Tesseract.
+     *
+     * @param filePath the path to the file to import
+     * @param language the language of the file. This language should be contained in the Tesseract data store
+     * @param parentReference the reference to the parent document of the imported document
+     * @param documentName the document name
+     * @return the status of the conversion job
+     * @throws TessException if an error happened
+     */
+    public JobStatus importFile(String filePath, String language, String parentReference, String documentName)
+            throws TessException
+    {
+        Map<String, Object> outputProperties = new HashMap<>();
+        outputProperties.put("Default reference",
+                documentReferenceResolver.resolve(String.format("%s.%s", parentReference, documentName)));
+        outputProperties.put("Save author", documentAccessBridge.getCurrentUserReference());
+        outputProperties.put("Delete existing document", true);
+
+        try {
+            Map<String, Object> inputProperties = new HashMap<>();
+            inputProperties.put("Name", documentName);
+            inputProperties.put("Source", new DefaultFileInputSource(new File(filePath)));
+
+            FilterStreamConverterJobRequest request =
+                    new FilterStreamConverterJobRequest(
+                            XWikiSyntaxFilterStreamFactory.FILTER_STREAM_TYPE, inputProperties,
+                            FilterStreamType.XWIKI_INSTANCE, outputProperties);
+
+            this.lastImportStatus = this.jobExecutor.execute(FilterStreamConverterJob.JOBTYPE, request).getStatus();
+            return lastImportStatus;
+        } catch (Exception e) {
+            throw new TessException("Failed to start the file import.", e);
+        }
+    }
+
+    /**
+     * @return the last registered file import job status. If no job has been triggered yet, returns null.
+     */
+    public JobStatus getCurrentImportStatus()
+    {
+        return this.lastImportStatus;
     }
 }
