@@ -1,5 +1,6 @@
 org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataFileStore
 org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataManager
+org.xwiki.contrib.ocr.tesseract.data.internal.TessStoreInitializationEventListener
 org.xwiki.contrib.ocr.tesseract.data.internal.TessStoreUpdateEventListener
 org.xwiki.contrib.ocr.tesseract.data.internal.job.DefaultTessDataFileDownloadJob
 org.xwiki.contrib.ocr.tesseract.data.internal.job.DefaultTessStoreUpdateJob
