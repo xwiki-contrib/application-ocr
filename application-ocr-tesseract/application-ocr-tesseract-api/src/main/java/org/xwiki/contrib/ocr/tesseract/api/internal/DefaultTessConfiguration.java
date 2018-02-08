@@ -69,6 +69,7 @@ public class DefaultTessConfiguration implements TessConfiguration
     @Override
     public int dataStoreUpdateInterval()
     {
-        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataStoreUpdateInterval", 1800);
+        // Default to 10 days
+        return configurationSource.getProperty(CONFIGURATION_PREFIX + "dataStoreUpdateInterval", 864000);
     }
 }
