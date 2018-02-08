@@ -19,11 +19,19 @@
  */
 package org.xwiki.contrib.ocr.script;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.ocr.api.OCRException;
+import org.xwiki.resource.temporary.TemporaryResourceReference;
+import org.xwiki.resource.temporary.TemporaryResourceStore;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.script.service.ScriptServiceManager;
 import org.xwiki.stability.Unstable;
@@ -45,13 +53,24 @@ public class OCRScriptService implements ScriptService
      */
     public static final String ROLE_HINT = "ocr";
 
+    /**
+     * The module ID to use when storing temporary files that have been uploaded but not yet processed.
+     */
+    private static final String MODULE_ID = ROLE_HINT;
+
     @Inject
     private ScriptServiceManager scriptServiceManager;
 
     /**
-     * Get a sub script service related to wiki. (Note that we're voluntarily using an API name of "get" to make it
-     * extra easy to access Script Services from Velocity (since in Velocity writing <code>$services.wiki.name</code> is
-     * equivalent to writing <code>$services.wiki.get("name")</code>). It also makes it a short and easy API name for
+     * Used to create and access the temporary files.
+     */
+    @Inject
+    private TemporaryResourceStore temporaryResourceStore;
+
+    /**
+     * Get a sub script service related to ocr. (Note that we're voluntarily using an API name of "get" to make it
+     * extra easy to access Script Services from Velocity (since in Velocity writing <code>$services.ocr.name</code> is
+     * equivalent to writing <code>$services.ocr.get("name")</code>). It also makes it a short and easy API name for
      * other scripting languages.
      *
      * @param serviceName id of the script service
@@ -60,5 +79,37 @@ public class OCRScriptService implements ScriptService
     public ScriptService get(String serviceName)
     {
         return scriptServiceManager.get(ROLE_HINT + '.' + serviceName);
+    }
+
+    /**
+     * Save the given stream as a temporary file and returns its path.
+     *
+     * @param inputStream the stream to save
+     * @return the saved file temporary path
+     * @throws OCRException if an error happened
+     */
+    public String registerUploadedFile(InputStream inputStream) throws OCRException
+    {
+        String resourceName = UUID.randomUUID().toString();
+        TemporaryResourceReference resourceReference = new TemporaryResourceReference(MODULE_ID, resourceName);
+
+        try {
+            return temporaryResourceStore.createTemporaryFile(resourceReference, inputStream).getPath();
+        } catch (IOException e) {
+            throw new OCRException("Failed to register the uploaded file.", e);
+        }
+    }
+
+    /**
+     * Save the given file content as a temporary file and returns its path.
+     * Just as {@link #registerUploadedFile(byte[])} but with byte arrays.
+     *
+     * @param file the file to save
+     * @return the saved file temporary path
+     * @throws OCRException if an error happened
+     */
+    public String registerUploadedFile(byte[] file) throws OCRException
+    {
+        return registerUploadedFile(new ByteArrayInputStream(file));
     }
 }
