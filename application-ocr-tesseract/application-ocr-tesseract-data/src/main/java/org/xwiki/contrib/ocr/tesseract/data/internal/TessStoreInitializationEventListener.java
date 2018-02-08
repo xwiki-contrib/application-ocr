@@ -24,15 +24,15 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
-import org.xwiki.bridge.event.ApplicationReadyEvent;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;
 import org.xwiki.observation.AbstractEventListener;
+import org.xwiki.observation.event.ApplicationStartedEvent;
 import org.xwiki.observation.event.Event;
 
 /**
- * Listens to {@link ApplicationReadyEvent} and triggers a refresh of the {@link TessDataFileStore}.
+ * Listens to {@link ApplicationStartedEvent} and triggers a refresh of the {@link TessDataFileStore}.
  *
  * @version $Id$
  * @since 1.0
@@ -58,7 +58,7 @@ public class TessStoreInitializationEventListener extends AbstractEventListener
      */
     public TessStoreInitializationEventListener()
     {
-        super(LISTENER_NAME, new ApplicationReadyEvent());
+        super(LISTENER_NAME, new ApplicationStartedEvent());
     }
 
     @Override

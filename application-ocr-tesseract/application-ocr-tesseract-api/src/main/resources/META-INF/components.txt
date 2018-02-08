@@ -1,3 +1,2 @@
 org.xwiki.contrib.ocr.tesseract.api.internal.DefaultTessBaseAPIProvider
-org.xwiki.contrib.ocr.tesseract.api.internal.DefaultTessConfiguration
 org.xwiki.contrib.ocr.tesseract.api.internal.TessDocumentBuilderProvider

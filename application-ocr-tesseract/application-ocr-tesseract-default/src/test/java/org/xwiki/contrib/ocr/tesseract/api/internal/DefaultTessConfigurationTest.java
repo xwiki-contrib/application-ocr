@@ -17,13 +17,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.ocr.tesseract.api;
+package org.xwiki.contrib.ocr.tesseract.api.internal;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.xwiki.configuration.ConfigurationSource;
-import org.xwiki.contrib.ocr.tesseract.api.internal.DefaultTessConfiguration;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
 
 import static org.junit.Assert.assertEquals;
