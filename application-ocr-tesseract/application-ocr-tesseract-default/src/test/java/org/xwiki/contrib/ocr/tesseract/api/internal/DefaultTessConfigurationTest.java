@@ -19,14 +19,26 @@
  */
 package org.xwiki.contrib.ocr.tesseract.api.internal;
 
+import javax.inject.Provider;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
+
+import com.xpn.xwiki.XWiki;
+import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.objects.BaseObject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -43,10 +55,35 @@ public class DefaultTessConfigurationTest
 
     private ConfigurationSource configurationSource;
 
+    private XWikiContext xWikiContext;
+
+    private XWiki xwiki;
+
+    private XWikiDocument configurationDocument;
+
     @Before
     public void setUp() throws Exception
     {
         configurationSource = mocker.registerMockComponent(ConfigurationSource.class);
+        Provider<XWikiContext> xWikiContextProvider = mocker.getInstance(XWikiContext.TYPE_PROVIDER);
+
+        xWikiContext = mock(XWikiContext.class);
+        xwiki = mock(XWiki.class);
+        configurationDocument = mock(XWikiDocument.class);
+
+        when(xWikiContextProvider.get()).thenReturn(xWikiContext);
+        when(xWikiContext.getWiki()).thenReturn(xwiki);
+        when(xwiki.getDocument(any(DocumentReference.class), eq(xWikiContext))).thenReturn(configurationDocument);
+    }
+
+    /**
+     * Mock the configurationDocument to return a mocked BaseObject when searching for a configuration XObject.
+     */
+    private BaseObject mockDocumentBaseObject() throws Exception
+    {
+        BaseObject baseObject = mock(BaseObject.class);
+        when(configurationDocument.getXObject(any(EntityReference.class))).thenReturn(baseObject);
+        return baseObject;
     }
 
     @Test
