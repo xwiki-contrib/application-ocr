@@ -22,6 +22,7 @@ package org.xwiki.contrib.ocr.tesseract.filter;
 import org.xwiki.contrib.ocr.tesseract.filter.internal.input.AbstractOCRInputFilterStream;
 import org.xwiki.filter.FilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyName;
 import org.xwiki.stability.Unstable;
@@ -49,6 +50,16 @@ public class OCRInputFilterProperties implements FilterStreamProperties
      * @see #getName()
      */
     private String name;
+
+    /**
+     * @see #getTitle()
+     */
+    private String title;
+
+    /**
+     * @see #getLanguage()
+     */
+    private String language;
 
     @Override
     public boolean isVerbose()
@@ -96,5 +107,41 @@ public class OCRInputFilterProperties implements FilterStreamProperties
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    /**
+     * @return the title of the document that will be created
+     */
+    @PropertyName("Title")
+    @PropertyDescription("The title of the document that will be created")
+    public String getTitle()
+    {
+        return this.title;
+    }
+
+    /**
+     * @param title the title of the document that will be created
+     */
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    /**
+     * @return the language of the document
+     */
+    @PropertyName("Language")
+    @PropertyDescription("The language of the document")
+    public String getLanguage()
+    {
+        return this.language;
+    }
+
+    /**
+     * @param language the language of the document
+     */
+    public void setLanguage(String language)
+    {
+        this.language = language;
     }
 }

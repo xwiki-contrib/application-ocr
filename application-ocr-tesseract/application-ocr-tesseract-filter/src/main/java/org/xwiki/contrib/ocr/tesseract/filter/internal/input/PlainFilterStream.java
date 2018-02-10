@@ -46,6 +46,7 @@ public class PlainFilterStream extends AbstractOCRInputFilterStream
     protected FilterEventParameters generateEventParameters(OCRDocument document) throws OCRException
     {
         FilterEventParameters parameters = new FilterEventParameters();
+        parameters.put(WikiDocumentFilter.PARAMETER_TITLE, this.properties.getTitle());
         parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, document.getContentAs(TessSyntax.PLAIN_1_0));
         return parameters;
     }

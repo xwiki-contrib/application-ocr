@@ -64,6 +64,7 @@ public class XWikiSyntaxFilterStream extends AbstractOCRInputFilterStream
     protected FilterEventParameters generateEventParameters(OCRDocument document) throws OCRException
     {
         FilterEventParameters parameters = new FilterEventParameters();
+        parameters.put(WikiDocumentFilter.PARAMETER_TITLE, this.properties.getTitle());
         parameters.put(WikiDocumentFilter.PARAMETER_CONTENT, convertToWikiSyntax(document));
         return parameters;
     }

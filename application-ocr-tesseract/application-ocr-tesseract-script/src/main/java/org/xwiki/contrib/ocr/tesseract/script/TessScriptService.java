@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 
 import org.xwiki.bridge.DocumentAccessBridge;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 import org.xwiki.contrib.ocr.tesseract.filter.internal.input.XWikiSyntaxFilterStreamFactory;
 import org.xwiki.contrib.ocr.script.OCRScriptService;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
@@ -43,8 +44,10 @@ import org.xwiki.filter.job.FilterStreamConverterJobRequest;
 import org.xwiki.filter.type.FilterStreamType;
 import org.xwiki.job.JobExecutor;
 import org.xwiki.job.event.status.JobStatus;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.model.reference.DocumentReferenceResolver;
+import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.security.authorization.AccessDeniedException;
@@ -78,6 +81,9 @@ public class TessScriptService implements ScriptService
     private JobStatus lastImportStatus;
 
     @Inject
+    private TessConfiguration tessConfiguration;
+
+    @Inject
     private TessDataFileStore tessDataFileStore;
 
     @Inject
@@ -87,7 +93,7 @@ public class TessScriptService implements ScriptService
     private DocumentAccessBridge documentAccessBridge;
 
     @Inject
-    private DocumentReferenceResolver<String> documentReferenceResolver;
+    private EntityReferenceResolver<String> entityReferenceResolver;
 
     @Inject
     private AuthorizationManager authorizationManager;
@@ -197,23 +203,29 @@ public class TessScriptService implements ScriptService
      * @param filePath the path to the file to import
      * @param language the language of the file. This language should be contained in the Tesseract data store
      * @param parentReference the reference to the parent document of the imported document
-     * @param documentName the document name
+     * @param name the document name
+     * @param title the document title
      * @return the status of the conversion job
      * @throws TessException if an error happened
      */
-    public JobStatus importFile(String filePath, String language, String parentReference, String documentName)
+    public JobStatus importFile(String filePath, String language, String parentReference, String name, String title)
             throws TessException
     {
+        String documentLang = (language == null) ? tessConfiguration.defaultLangage() : language;
+        EntityReference spaceReference = entityReferenceResolver.resolve(parentReference, EntityType.SPACE);
+
         Map<String, Object> outputProperties = new HashMap<>();
-        outputProperties.put("Default reference",
-                documentReferenceResolver.resolve(String.format("%s.%s", parentReference, documentName)));
-        outputProperties.put("Save author", documentAccessBridge.getCurrentUserReference());
-        outputProperties.put("Delete existing document", true);
+        outputProperties.put("previousDeleted", true);
+        outputProperties.put("defaultReference", spaceReference);
+        outputProperties.put("isAuthorSet", true);
+        outputProperties.put("author", documentAccessBridge.getCurrentUserReference());
 
         try {
             Map<String, Object> inputProperties = new HashMap<>();
-            inputProperties.put("Name", documentName);
-            inputProperties.put("Source", new DefaultFileInputSource(new File(filePath)));
+            inputProperties.put("name", name);
+            inputProperties.put("title", title);
+            inputProperties.put("language", documentLang);
+            inputProperties.put("source", new DefaultFileInputSource(new File(filePath)));
 
             FilterStreamConverterJobRequest request =
                     new FilterStreamConverterJobRequest(
@@ -225,6 +237,23 @@ public class TessScriptService implements ScriptService
         } catch (Exception e) {
             throw new TessException("Failed to start the file import.", e);
         }
+    }
+
+    /**
+     * Import the given file using Tesseract. Same as {@link #importFile(String, String, String, String, String)} but
+     * using the default language as the file language.
+     *
+     * @param filePath the path to the file to import
+     * @param parentReference the reference to the parent document of the imported document
+     * @param name the document name
+     * @param title the document title
+     * @return the status of the conversion job
+     * @throws TessException if an error happened
+     */
+    public JobStatus importFile(String filePath, String parentReference, String name, String title)
+            throws TessException
+    {
+        return importFile(filePath, null, parentReference, name, title);
     }
 
     /**

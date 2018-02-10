@@ -44,6 +44,7 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStream;
 import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
  * Define generic methods for an OCR input filter stream. Input filter streams derived from this abstract are
@@ -60,6 +61,9 @@ public abstract class AbstractOCRInputFilterStream
     private OCRDocumentBuilderProvider builderProvider;
 
     @Inject
+    private EntityReferenceSerializer<String> entityReferenceSerializer;
+
+    @Inject
     private Logger logger;
 
     @Override
@@ -68,7 +72,7 @@ public abstract class AbstractOCRInputFilterStream
         OCRDocumentBuilder builder = null;
 
         try {
-            builder = builderProvider.getBuilder();
+            builder = builderProvider.getBuilder(this.properties.getLanguage());
 
             // TODO: Support multiple streams
             logVerbose("Extracting source ...");
@@ -99,6 +103,7 @@ public abstract class AbstractOCRInputFilterStream
             }
 
             // TODO: Support localized documents
+            // Compute the document reference
             String documentName = this.properties.getName();
             logVerbose("Saving document [{}] ...", documentName);
             proxyFilter.beginWikiDocument(documentName, generateEventParameters(builder.getDocument()));
