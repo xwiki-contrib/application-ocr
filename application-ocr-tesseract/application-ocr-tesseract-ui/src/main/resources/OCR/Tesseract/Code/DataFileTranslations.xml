@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="OCR.Tesseract.Code.DataFileTranslations" locale="">
+  <web>OCR.Tesseract.Code</web>
+  <name>DataFileTranslations</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1517174497000</creationDate>
+  <parent>OCR.Tesseract.Code.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1517174497000</date>
+  <contentUpdateDate>1517174497000</contentUpdateDate>
+  <version>1.1</version>
+  <title>DataFileTranslations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>
+ocr.tesseract.tessdata.afr=Afrikaans
+ocr.tesseract.tessdata.amh=Amharic
+ocr.tesseract.tessdata.ara=Arabic
+ocr.tesseract.tessdata.asm=Assamese
+ocr.tesseract.tessdata.aze=Azerbaijani
+ocr.tesseract.tessdata.aze_cyrl=Azerbaijani - Cyrillic
+ocr.tesseract.tessdata.bel=Belarusian
+ocr.tesseract.tessdata.ben=Bengali
+ocr.tesseract.tessdata.bod=Tibetan
+ocr.tesseract.tessdata.bos=Bosnian
+ocr.tesseract.tessdata.bul=Bulgarian
+ocr.tesseract.tessdata.cat=Catalan; Valencian
+ocr.tesseract.tessdata.ceb=Cebuano
+ocr.tesseract.tessdata.ces=Czech
+ocr.tesseract.tessdata.chi_sim=Chinese - Simplified
+ocr.tesseract.tessdata.chi_tra=Chinese - Traditional
+ocr.tesseract.tessdata.chr=Cherokee
+ocr.tesseract.tessdata.cym=Welsh
+ocr.tesseract.tessdata.dan=Danish
+ocr.tesseract.tessdata.deu=German
+ocr.tesseract.tessdata.dzo=Dzongkha
+ocr.tesseract.tessdata.ell=Greek, Modern (1453-)
+ocr.tesseract.tessdata.eng=English
+ocr.tesseract.tessdata.enm=English, Middle (1100-1500)
+ocr.tesseract.tessdata.epo=Esperanto
+ocr.tesseract.tessdata.est=Estonian
+ocr.tesseract.tessdata.eus=Basque
+ocr.tesseract.tessdata.fas=Persian
+ocr.tesseract.tessdata.fin=Finnish
+ocr.tesseract.tessdata.fra=French
+ocr.tesseract.tessdata.frk=Frankish
+ocr.tesseract.tessdata.frm=French, Middle (ca. 1400-1600)
+ocr.tesseract.tessdata.gle=Irish
+ocr.tesseract.tessdata.glg=Galician
+ocr.tesseract.tessdata.grc=Greek, Ancient (-1453)
+ocr.tesseract.tessdata.guj=Gujarati
+ocr.tesseract.tessdata.hat=Haitian; Haitian Creole
+ocr.tesseract.tessdata.heb=Hebrew
+ocr.tesseract.tessdata.hin=Hindi
+ocr.tesseract.tessdata.hrv=Croatian
+ocr.tesseract.tessdata.hun=Hungarian
+ocr.tesseract.tessdata.iku=Inuktitut
+ocr.tesseract.tessdata.ind=Indonesian
+ocr.tesseract.tessdata.isl=Icelandic
+ocr.tesseract.tessdata.ita=Italian
+ocr.tesseract.tessdata.ita_old=Italian - Old
+ocr.tesseract.tessdata.jav=Javanese
+ocr.tesseract.tessdata.jpn=Japanese
+ocr.tesseract.tessdata.kan=Kannada
+ocr.tesseract.tessdata.kat=Georgian
+ocr.tesseract.tessdata.kat_old=Georgian - Old
+ocr.tesseract.tessdata.kaz=Kazakh
+ocr.tesseract.tessdata.khm=Central Khmer
+ocr.tesseract.tessdata.kir=Kirghiz; Kyrgyz
+ocr.tesseract.tessdata.kor=Korean
+ocr.tesseract.tessdata.kur=Kurdish
+ocr.tesseract.tessdata.lao=Lao
+ocr.tesseract.tessdata.lat=Latin
+ocr.tesseract.tessdata.lav=Latvian
+ocr.tesseract.tessdata.lit=Lithuanian
+ocr.tesseract.tessdata.mal=Malayalam
+ocr.tesseract.tessdata.mar=Marathi
+ocr.tesseract.tessdata.mkd=Macedonian
+ocr.tesseract.tessdata.mlt=Maltese
+ocr.tesseract.tessdata.msa=Malay
+ocr.tesseract.tessdata.mya=Burmese
+ocr.tesseract.tessdata.nep=Nepali
+ocr.tesseract.tessdata.nld=Dutch; Flemish
+ocr.tesseract.tessdata.nor=Norwegian
+ocr.tesseract.tessdata.ori=Oriya
+ocr.tesseract.tessdata.pan=Panjabi; Punjabi
+ocr.tesseract.tessdata.pol=Polish
+ocr.tesseract.tessdata.por=Portuguese
+ocr.tesseract.tessdata.pus=Pushto; Pashto
+ocr.tesseract.tessdata.ron=Romanian; Moldavian; Moldovan
+ocr.tesseract.tessdata.rus=Russian
+ocr.tesseract.tessdata.san=Sanskrit
+ocr.tesseract.tessdata.sin=Sinhala; Sinhalese
+ocr.tesseract.tessdata.slk=Slovak
+ocr.tesseract.tessdata.slv=Slovenian
+ocr.tesseract.tessdata.spa=Spanish; Castilian
+ocr.tesseract.tessdata.spa_old=Spanish; Castilian - Old
+ocr.tesseract.tessdata.sqi=Albanian
+ocr.tesseract.tessdata.srp=Serbian
+ocr.tesseract.tessdata.srp_latn=Serbian - Latin
+ocr.tesseract.tessdata.swa=Swahili
+ocr.tesseract.tessdata.swe=Swedish
+ocr.tesseract.tessdata.syr=Syriac
+ocr.tesseract.tessdata.tam=Tamil
+ocr.tesseract.tessdata.tel=Telugu
+ocr.tesseract.tessdata.tgk=Tajik
+ocr.tesseract.tessdata.tgl=Tagalog
+ocr.tesseract.tessdata.tha=Thai
+ocr.tesseract.tessdata.tir=Tigrinya
+ocr.tesseract.tessdata.tur=Turkish
+ocr.tesseract.tessdata.uig=Uighur; Uyghur
+ocr.tesseract.tessdata.ukr=Ukrainian
+ocr.tesseract.tessdata.urd=Urdu
+ocr.tesseract.tessdata.uzb=Uzbek
+ocr.tesseract.tessdata.uzb_cyrl=Uzbek - Cyrillic
+ocr.tesseract.tessdata.vie=Vietnamese
+ocr.tesseract.tessdata.yid=Yiddish</content>
+  <object>
+    <name>OCR.Tesseract.Code.DataFileTranslations</name>
+    <number>0</number>
+    <className>XWiki.TranslationDocumentClass</className>
+    <guid>15df7fff-111d-40fa-936e-5d9c1517eabd</guid>
+    <class>
+      <name>XWiki.TranslationDocumentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>1</number>
+        <prettyName>Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <property>
+      <scope>GLOBAL</scope>
+    </property>
+  </object>
+</xwikidoc>
