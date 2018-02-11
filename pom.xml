@@ -55,5 +55,6 @@
     <module>application-ocr-script</module>
     <module>application-ocr-syntax</module>
     <module>application-ocr-tesseract</module>
+    <module>application-ocr-ui</module>
   </modules>
 </project>
