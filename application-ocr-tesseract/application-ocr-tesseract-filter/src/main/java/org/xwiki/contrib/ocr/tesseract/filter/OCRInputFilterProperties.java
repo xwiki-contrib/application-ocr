@@ -22,7 +22,6 @@ package org.xwiki.contrib.ocr.tesseract.filter;
 import org.xwiki.contrib.ocr.tesseract.filter.internal.input.AbstractOCRInputFilterStream;
 import org.xwiki.filter.FilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
-import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyName;
 import org.xwiki.stability.Unstable;

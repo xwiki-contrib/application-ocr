@@ -44,7 +44,6 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStream;
 import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
  * Define generic methods for an OCR input filter stream. Input filter streams derived from this abstract are
@@ -59,9 +58,6 @@ public abstract class AbstractOCRInputFilterStream
     @Inject
     @Named("tesseract")
     private OCRDocumentBuilderProvider builderProvider;
-
-    @Inject
-    private EntityReferenceSerializer<String> entityReferenceSerializer;
 
     @Inject
     private Logger logger;
