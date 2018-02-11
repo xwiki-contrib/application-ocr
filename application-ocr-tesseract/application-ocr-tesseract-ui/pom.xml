@@ -57,5 +57,12 @@
       <artifactId>application-ocr-tesseract-script</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-ocr-ui</artifactId>
+      <version>${project.version}</version>
+      <type>xar</type>
+    </dependency>
   </dependencies>
 </project>
