@@ -66,7 +66,7 @@ public class TessDocument implements OCRDocument
     @Override
     public List<Syntax> getSupportedSyntaxes()
     {
-        List<Syntax> supportedSyntaxes = TessSyntax.getAllSupportedSyntaxes();
+        List<Syntax> supportedSyntaxes = new ArrayList<>(TessSyntax.getAllSupportedSyntaxes());
 
         for (OCRDocumentPage page : pages) {
             supportedSyntaxes.retainAll(page.getSupportedSyntaxes());

@@ -68,4 +68,14 @@ public class DefaultTessBaseAPIProviderTest
         assertEquals("./target/tessdata/", api.GetDatapath().getString());
         assertEquals("eng", api.GetInitLanguagesAsString().getString());
     }
+
+    @Test
+    public void getWithLanguageAndDataPath() throws Exception
+    {
+        when(tessConfiguration.dataPath()).thenReturn("./another/target/");
+        TessBaseAPI api = mocker.getComponentUnderTest().get("eng", "./target");
+
+        assertEquals("./target/tessdata/", api.GetDatapath().getString());
+        assertEquals("eng", api.GetInitLanguagesAsString().getString());
+    }
 }
