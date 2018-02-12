@@ -36,6 +36,7 @@ import com.xpn.xwiki.objects.BaseObject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -82,29 +83,93 @@ public class DefaultTessConfigurationTest
     private BaseObject mockDocumentBaseObject() throws Exception
     {
         BaseObject baseObject = mock(BaseObject.class);
-        when(configurationDocument.getXObject(any(EntityReference.class))).thenReturn(baseObject);
+        when(configurationDocument.getXObject(any(DocumentReference.class))).thenReturn(baseObject);
         return baseObject;
     }
 
     @Test
-    public void defaultLangage() throws Exception
+    public void languageWithConfigSource() throws Exception
     {
-        when(configurationSource.getProperty("tesseract.defaultLangage", "eng")).thenReturn("ron");
+        when(configurationSource.getProperty("tesseract.defaultLanguage", "eng")).thenReturn("ron");
+
         assertEquals("ron", mocker.getComponentUnderTest().defaultLangage());
     }
 
     @Test
-    public void dataPath() throws Exception
+    public void languageWithAdminConfig() throws Exception
     {
-        when(configurationSource.getProperty("tesseract.dataPath", "./data"))
-                .thenReturn("myfolder");
+        when(configurationSource.getProperty("tesseract.defaultLanguage", "eng")).thenReturn("fail");
+        BaseObject configObject = mockDocumentBaseObject();
+        when(configObject.getStringValue("defaultLanguage")).thenReturn("ok");
+
+        assertEquals("ok", mocker.getComponentUnderTest().defaultLangage());
+    }
+
+    @Test
+    public void dataPathWithConfigSource() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.dataPath", "./data")).thenReturn("myfolder");
         assertEquals("myfolder", mocker.getComponentUnderTest().dataPath());
     }
 
     @Test
-    public void allowAutoDownload() throws Exception
+    public void dataPathWithAdminConfig() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.dataPath", "./data")).thenReturn("fail");
+        BaseObject configObject = mockDocumentBaseObject();
+        when(configObject.getStringValue("dataPath")).thenReturn("ok");
+
+        assertEquals("ok", mocker.getComponentUnderTest().dataPath());
+    }
+
+    @Test
+    public void allowAutoDownloadWithConfigSource() throws Exception
     {
         when(configurationSource.getProperty("tesseract.allowAutoDownload", true)).thenReturn(false);
         assertFalse(mocker.getComponentUnderTest().allowAutoDownload());
+    }
+
+    @Test
+    public void allowAutoDownloadWithAdminConfig() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.allowAutoDownload", true)).thenReturn(false);
+        BaseObject configObject = mockDocumentBaseObject();
+        when(configObject.getIntValue("allowAutoDownload", 0)).thenReturn(1);
+
+        assertTrue(mocker.getComponentUnderTest().allowAutoDownload());
+    }
+
+    @Test
+    public void trainingFilesURLWithConfigSource() throws Exception
+    {
+        when(configurationSource.getProperty(eq("tesseract.trainingFilesURL"), any(String.class))).thenReturn("myURL");
+        assertEquals("myURL", mocker.getComponentUnderTest().trainingFilesURL());
+    }
+
+    @Test
+    public void trainingFilesURLWithAdminConfig() throws Exception
+    {
+        when(configurationSource.getProperty(eq("tesseract.trainingFilesURL"), any(String.class))).thenReturn("fail");
+        BaseObject configObject = mockDocumentBaseObject();
+        when(configObject.getStringValue("trainingFilesURL")).thenReturn("ok");
+
+        assertEquals("ok", mocker.getComponentUnderTest().trainingFilesURL());
+    }
+
+    @Test
+    public void dataStoreUpdateIntervalWithConfigSource() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.dataStoreUpdateInterval", 864000)).thenReturn(42);
+        assertEquals(42, mocker.getComponentUnderTest().dataStoreUpdateInterval());
+    }
+
+    @Test
+    public void dataStoreUpdateIntervalWithAdminConfig() throws Exception
+    {
+        when(configurationSource.getProperty("tesseract.dataStoreUpdateInterval", 864000)).thenReturn(24);
+        BaseObject configObject = mockDocumentBaseObject();
+        when(configObject.getIntValue("dataStoreUpdateInterval", 24)).thenReturn(42);
+
+        assertEquals(42, mocker.getComponentUnderTest().dataStoreUpdateInterval());
     }
 }

@@ -51,7 +51,7 @@ public class DefaultTessConfiguration implements TessConfiguration
 {
     private static final String CONFIGURATION_PREFIX = "tesseract.";
 
-    private static final String DEFAULT_LANGUAGE = "defaultLangage";
+    private static final String DEFAULT_LANGUAGE = "defaultLanguage";
 
     private static final String DATA_PATH = "dataPath";
 
