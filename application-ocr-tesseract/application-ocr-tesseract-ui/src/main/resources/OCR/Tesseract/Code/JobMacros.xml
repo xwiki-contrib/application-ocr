@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -46,7 +45,7 @@
 ## $success: The message when the job has successfully finished
 ## $error: The message when the job has encountered an error
 ## $showProgressBar: Wether to call #displayJobProgressBar or not if the job is not finished
-#macro(dataStoreJobMessage $jobStatus $success $error $showProgressBar)
+#macro(displayJobHeaderMessage $jobStatus $success $error $showProgressBar)
   #set($finished = $jobStatus.state.name() == 'FINISHED')
   #if(!$finished &amp;&amp; $showProgressBar)
     #displayJobProgressBar($jobStatus)
@@ -69,7 +68,7 @@
 ## $jobStatusDocument: a path to the wiki document used to update the job status
 ## $onFinished: the text to display if the job finished successfully
 ## $onError: the text to display if the job finished with an error
-#macro (displayJobStatus $blockId $jobStatus, $jobStatusDocument, $onFinished, $onError)
+#macro (displayJobStatus $blockId $jobStatus $jobStatusDocument $onFinished $onError)
   #set ($discard = $xwiki.jsfx.use('uicomponents/job/job.js', true))
   {{html clean="false"}}
     &lt;div id="$blockId"&gt;
@@ -78,7 +77,7 @@
           'outputSyntax': 'plain'
         })))
         &lt;div class="xcontent job-status" data-url="$jobStatusURL"&gt;
-          #dataStoreJobMessage($jobStatus $onFinished $onError 1)
+          #displayJobHeaderMessage($jobStatus $onFinished $onError 1)
           #displayJobStatusLog($jobStatus true)
         &lt;/div&gt;
       #end

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -49,12 +48,17 @@ ocr.tesseract.gotoAdmin=Go to the administration in order to manage the applicat
 ## Tesseract Import wizard
 #########################
 
-ocr.tesseract.import = Import
-
 ocr.tesseract.importForm.fileUploadLabel=File to import
+ocr.tesseract.importForm.fileUploadHint=This file should either be a PDF or an image.
 ocr.tesseract.importForm.fileLanguageLabel=File language
+ocr.tesseract.importForm.fileLanguageHint=Selecting the correct file language will ease the importation and improve the quality of the imported document.
 ocr.tesseract.importForm.submit=Submit
-ocr.tesseract.import.error.noFileGiven=Unable to perform the import: no file given.
+ocr.tesseract.import.finished=File successfully imported.
+ocr.tesseract.import.error=An error happened during the conversion. Please check the logs for details.
+ocr.tesseract.import.error.concurrentImport=You cannot send two files for importation at the same time, please wait for the last import to finish.
+
+ocr.tesseract.currentImportStatus=Current import status
+ocr.tesseract.importNewFile=Import a new file
 
 ## TesseractConfigurationClass
 OCR.Tesseract.Code.TesseractConfigurationClass_defaultLanguage=Default language
@@ -84,7 +88,8 @@ ocr.tesseract.store.language=Language
 ocr.tesseract.store.localPath=Local path
 ocr.tesseract.store.actions=Actions
 ocr.tesseract.store.actions.remove=Remove
-ocr.tesseract.store.actions.download=Download</content>
+ocr.tesseract.store.actions.download=Download
+</content>
   <object>
     <name>OCR.Tesseract.Code.Translations</name>
     <number>0</number>

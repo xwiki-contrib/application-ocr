@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -39,8 +38,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>
-ocr.tesseract.tessdata.afr=Afrikaans
+  <content>ocr.tesseract.tessdata.afr=Afrikaans
 ocr.tesseract.tessdata.amh=Amharic
 ocr.tesseract.tessdata.ara=Arabic
 ocr.tesseract.tessdata.asm=Assamese

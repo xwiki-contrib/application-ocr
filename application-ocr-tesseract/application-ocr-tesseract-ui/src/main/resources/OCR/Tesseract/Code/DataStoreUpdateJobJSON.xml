@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -45,7 +44,7 @@
 #if ($xcontext.action == 'get')
   #set($jobStatus = $services.ocr.tesseract.getCurrentDataStoreUpdateStatus())
   #getJobStatusJSON($jobStatus $json)
-  #set ($json.message = "#dataStoreJobMessage($jobStatus $services.localization.render('ocr.tesseract.store.updateFinished') $services.localization.render('ocr.tesseract.store.updateError'))")
+  #set ($json.message = "#displayJobHeaderMessage($jobStatus $services.localization.render('ocr.tesseract.store.updateFinished') $services.localization.render('ocr.tesseract.store.updateError'))")
   $response.setContentType('application/json')
   $jsontool.serialize($json)
 #end
