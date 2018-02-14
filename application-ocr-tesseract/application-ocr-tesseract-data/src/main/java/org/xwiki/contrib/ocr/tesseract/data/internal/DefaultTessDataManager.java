@@ -32,9 +32,11 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileDownloadJob;
 import org.xwiki.contrib.ocr.tesseract.data.job.TessDataFileDownloadJobRequest;
+import org.xwiki.contrib.ocr.tesseract.data.job.TessDataFileRemovalJobRequest;
 import org.xwiki.job.JobException;
 import org.xwiki.job.JobExecutor;
 import org.xwiki.job.event.status.JobStatus;
@@ -71,6 +73,20 @@ public class DefaultTessDataManager implements TessDataManager
             return jobExecutor.execute(AbstractTessDataFileDownloadJob.JOB_TYPE, jobRequest).getStatus();
         } catch (JobException e) {
             throw new TessException("Failed to execute the download job.", e);
+        }
+    }
+
+    @Override
+    public JobStatus removeDataFile(TessLocalDataFile localDataFile) throws TessException
+    {
+        TessDataFileRemovalJobRequest jobRequest = new TessDataFileRemovalJobRequest();
+        jobRequest.setId(Arrays.asList(AbstractTessDataFileDownloadJob.JOB_TYPE, UUID.randomUUID().toString()));
+        jobRequest.setLocalDataFile(localDataFile);
+
+        try {
+            return jobExecutor.execute(AbstractTessDataFileDownloadJob.JOB_TYPE, jobRequest).getStatus();
+        } catch (JobException e) {
+            throw new TessException("Failed to execute the removal job.", e);
         }
     }
 

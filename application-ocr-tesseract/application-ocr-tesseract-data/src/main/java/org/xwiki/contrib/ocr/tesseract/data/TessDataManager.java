@@ -23,6 +23,7 @@ import java.io.File;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.ocr.tesseract.api.TessException;
+import org.xwiki.contrib.ocr.tesseract.data.file.TessLocalDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.stability.Unstable;
@@ -45,6 +46,15 @@ public interface TessDataManager
      * @throws TessException if an error happened
      */
     JobStatus downloadDataFile(TessRemoteDataFile remoteDataFile) throws TessException;
+
+    /**
+     * Remove the locally stored Tesseract data file corresponding to the given {@link TessLocalDataFile}.
+     *
+     * @param localDataFile the {@link TessLocalDataFile} to remove
+     * @return the file removal job status
+     * @throws TessException if an error happened
+     */
+    JobStatus removeDataFile(TessLocalDataFile localDataFile) throws TessException;
 
     /**
      * Get the local folder containing Tesseract data files using configuration variables. If the folder does not
