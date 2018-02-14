@@ -29,10 +29,13 @@ import javax.inject.Named;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
+import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;
 import org.xwiki.contrib.ocr.tesseract.data.TessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.file.TessRemoteDataFile;
 import org.xwiki.contrib.ocr.tesseract.data.internal.DefaultTessDataManager;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileDownloadJob;
+import org.xwiki.job.Job;
+import org.xwiki.job.JobExecutor;
 
 /**
  * Job used to download Tesseract training data files.
@@ -49,6 +52,12 @@ public class DefaultTessDataFileDownloadJob extends AbstractTessDataFileDownload
 
     @Inject
     private TessDataManager tessDataManager;
+
+    @Inject
+    private TessDataFileStore tessDataFileStore;
+
+    @Inject
+    private JobExecutor jobExecutor;
 
     @Override
     protected void runInternal() throws Exception
@@ -70,7 +79,10 @@ public class DefaultTessDataFileDownloadJob extends AbstractTessDataFileDownload
         FileOutputStream fos = new FileOutputStream(filePath);
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         fos.close();
-
         logger.info("Download complete!");
+
+        logger.info("Triggering store update ...");
+        Job updateJob = jobExecutor.getJob(tessDataFileStore.updateStore().getRequest().getId());
+        updateJob.join();
     }
 }

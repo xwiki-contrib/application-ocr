@@ -19,12 +19,17 @@
  */
 package org.xwiki.contrib.ocr.tesseract.data.internal.job;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.ocr.tesseract.data.TessDataFileStore;
 import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileRemovalJob;
+import org.xwiki.job.Job;
+import org.xwiki.job.JobExecutor;
 
 /**
  * Job used to remove locally stored Tesseract training data files.
@@ -36,17 +41,21 @@ import org.xwiki.contrib.ocr.tesseract.data.job.AbstractTessDataFileRemovalJob;
 @Named(AbstractTessDataFileRemovalJob.JOB_TYPE)
 public class DefaultTessDataFileRemovalJob extends AbstractTessDataFileRemovalJob
 {
+    @Inject
+    private TessDataFileStore tessDataFileStore;
+
+    @Inject
+    private JobExecutor jobExecutor;
+
     @Override
     protected void runInternal() throws Exception
     {
         logger.info("Retrieving file information ...");
-        File localDataFile = new File(request.getLocalDataFile().getFilePath());
-        boolean deletionSucceeded = localDataFile.delete();
+        Files.deleteIfExists(Paths.get(request.getLocalDataFile().getFilePath()));
+        logger.info("Removal complete!");
 
-        if (deletionSucceeded) {
-            logger.info("Removal complete!");
-        } else {
-            logger.error("Failed to remove the data file.");
-        }
+        logger.info("Triggering store update ...");
+        Job updateJob = jobExecutor.getJob(tessDataFileStore.updateStore().getRequest().getId());
+        updateJob.join();
     }
 }
