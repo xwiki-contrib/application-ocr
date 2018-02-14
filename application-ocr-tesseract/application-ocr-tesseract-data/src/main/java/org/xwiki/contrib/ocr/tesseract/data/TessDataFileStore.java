@@ -65,4 +65,11 @@ public interface TessDataFileStore
      * @throws TessException if the file could not be found in the store
      */
     TessRemoteDataFile getRemoteFile(String lang) throws TessException;
+
+    /**
+     * @param lang the language of the file to retrieve
+     * @return the {@link TessLocalDataFile} corresponding to the given language
+     * @throws TessException if the file could not be found in the store
+     */
+    TessLocalDataFile getLocalFile(String lang) throws TessException;
 }

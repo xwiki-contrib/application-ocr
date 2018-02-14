@@ -103,6 +103,19 @@ public class DefaultTessDataFileStore implements TessDataFileStore
         }
     }
 
+    @Override
+    public TessLocalDataFile getLocalFile(String lang) throws TessException
+    {
+        Optional<TessLocalDataFile> potentialFile = localDataFiles.stream().filter(x -> lang.equals(x.getLanguage()))
+                .findFirst();
+
+        if (potentialFile.isPresent()) {
+            return potentialFile.get();
+        } else {
+            throw new TessException(String.format("No local file available for the language [%s].", lang));
+        }
+    }
+
     /**
      * Define a new set of locally available data files.
      *
