@@ -45,7 +45,7 @@
     </developer>
   </developers>
   <properties>
-    <xwiki.extension.category>api</xwiki.extension.category>
+    <xwiki.extension.category>application</xwiki.extension.category>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
     <xwiki.issueManagement.url>https://jira.xwiki.org/browse/OCR</xwiki.issueManagement.url>

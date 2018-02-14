@@ -34,8 +34,15 @@
   <dependencies>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-ocr-api</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-ocr-script</artifactId>
       <version>${project.version}</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 </project>
