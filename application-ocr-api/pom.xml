@@ -34,7 +34,6 @@
   <description>API module for the OCR Application</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.65</xwiki.jacoco.instructionRatio>
-    <xwiki.extension.features>org.xwiki.contrib:application-ocr</xwiki.extension.features>
   </properties>
   <dependencies>
     <!-- XWiki dependencies -->
