@@ -71,7 +71,7 @@ OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=Data stor
 ## Data store translations
 #########################
 
-ocr.tesseract.store.status=Status
+ocr.tesseract.store.status=Status and current operations
 
 ## Data Files
 ocr.tesseract.localDataFiles=Locally available data files
@@ -83,12 +83,22 @@ ocr.tesseract.noRemoteDataFiles=No remote data files found.
 ocr.tesseract.store.noUpdateNeeded=The store is up to date!
 ocr.tesseract.store.updateNeeded=The store needs to be updated.
 ocr.tesseract.store.updateNow=Update now.
-ocr.tesseract.store.updateFinished=Update finished!
+
 ocr.tesseract.store.language=Language
 ocr.tesseract.store.localPath=Local path
 ocr.tesseract.store.actions=Actions
 ocr.tesseract.store.actions.remove=Remove
 ocr.tesseract.store.actions.download=Download
+
+## Job messages
+ocr.tesseract.store.storeUpdate.finished=Update finished!
+ocr.tesseract.store.storeUpdate.error=An error has happened during the update. Please check the logs for more information.
+
+ocr.tesseract.store.dataFileDownload.finished=Download finished!
+ocr.tesseract.store.dataFileDownload.error=An error has happened during the download. Please check the logs for more information.
+
+ocr.tesseract.store.dataFileRemoval.finished=File removed!
+ocr.tesseract.store.dataFileRemoval.error=An error has happened during the removal. Please check the logs for more information.
 </content>
   <object>
     <name>OCR.Tesseract.Code.Translations</name>

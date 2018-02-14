@@ -38,14 +38,13 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="OCR.Tesseract.Code.JobMacros"/}}
-{{velocity output="false"}}
+  <content>{{velocity}}{{include reference="OCR.Tesseract.Code.JobMacros"/}}{{/velocity}}{{velocity output="false"}}
 #macro(displayImportJob)
   ## First, try to get file informations
   #set($file = $xwiki.fileupload.getFileItemData('file'))
   #set($jobStatus = $services.ocr.tesseract.getCurrentImportStatus())
   #set($hasUploadedFile = "$!file" != '')
-  #set($isLastJobInProgress = $!jobStatus.getState() != 'FINISHED')
+  #set($isLastJobInProgress = ($jobStatus != $NULL &amp;&amp; $!jobStatus.getState() != 'FINISHED'))
   ## If the user just sent another file for import while a previous is still in progress, display an error message
   #if ($hasUploadedFile &amp;&amp; $isLastJobInProgress)
 
@@ -90,7 +89,7 @@
         &lt;/dt&gt;
         &lt;dd&gt;
           &lt;select id="fileLanguageInput" name="fileLanguage"&gt;
-            #set($dataFiles = $services.ocr.tesseract.getLocalFiles())
+            #set($dataFiles = $services.ocr.tesseract.dataStore.getLocalFiles())
             #foreach($dataFile in $dataFiles)
               &lt;option value="$!dataFile.getLanguage()"&gt;$services.localization.render("ocr.tesseract.tessdata.${dataFile.getLanguage()}")&lt;/option&gt;
             #end
@@ -131,12 +130,11 @@
     &lt;/form&gt;
   {{/html}}
 #end
-{{/velocity}}
-{{velocity}}
+{{/velocity}}{{velocity}}
 ## Disable UI components
-#set($displayDocExtra = false)
-#set($displayContentFooter = false)
-#set($displayShortcuts = false)
+#set($displayDocExtra = false)##
+#set($displayContentFooter = false)##
+#set($displayShortcuts = false)##
 $services.localization.render('ocr.tesseract.description')
 #displayImportJob()
 #displayImportForm()

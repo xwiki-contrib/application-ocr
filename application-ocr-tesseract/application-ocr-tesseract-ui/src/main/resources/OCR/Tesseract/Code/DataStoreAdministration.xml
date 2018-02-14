@@ -38,15 +38,14 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="OCR.Tesseract.Code.DataStoreAdministrationMacros"/}}
-{{include reference="OCR.Tesseract.Code.DataStoreAdministrationFileMacros"/}}
-
-{{velocity}}
-#startUpdateJobIfNeeded()
-#startDataFileDownloadJobIfNeeded()
+  <content>{{velocity}}##
+  {{include reference="OCR.Tesseract.Code.DataStoreAdministrationMacros"/}}##
+  {{include reference="OCR.Tesseract.Code.DataStoreAdministrationFileMacros"/}}##
+{{/velocity}}{{velocity}}
+#startUpdateJobIfNeeded()##
+#startDataFileDownloadJobIfNeeded()##
 === $services.localization.render('ocr.tesseract.store.status') ===
 #displayDataStoreStatus()
-#displayDataFileDownloadStatus()
 
 === $services.localization.render('ocr.tesseract.localDataFiles') ===
 #displayLocalFiles()

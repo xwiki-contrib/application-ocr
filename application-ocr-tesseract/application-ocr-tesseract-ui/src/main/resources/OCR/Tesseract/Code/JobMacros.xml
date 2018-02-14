@@ -38,9 +38,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{template name="job_macros.vm"/}}
-
-{{velocity output="false"}}
+  <content>{{template name="job_macros.vm"/}}{{velocity output="false"}}
 ## Returns a message according to the state of the given $jobStatus
 ## $success: The message when the job has successfully finished
 ## $error: The message when the job has encountered an error

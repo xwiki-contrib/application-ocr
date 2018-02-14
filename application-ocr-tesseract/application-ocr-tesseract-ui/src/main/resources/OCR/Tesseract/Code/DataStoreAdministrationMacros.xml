@@ -41,13 +41,13 @@
   <content>{{velocity output="false"}}
 #macro(startUpdateJobIfNeeded)
   #if ("$!request.action" == 'startUpdate')
-    #set($discard = $services.ocr.tesseract.updateStore())
+    #set($discard = $services.ocr.tesseract.dataStore.updateStore())
   #end
 #end
 
 #macro(startDataFileDownloadJobIfNeeded)
   #if ("$!request.action" == 'startDownload')
-    #set($discard = $services.ocr.tesseract.downloadDataFile("$!request.dataFile"))
+    #set($discard = $services.ocr.tesseract.dataStore.downloadDataFile("$!request.dataFile"))
   #end
 #end
 
@@ -56,8 +56,8 @@
 #end
 
 #macro(displayDataStoreStatus)
-  #set($needsUpdate = $services.ocr.tesseract.checkForStoreUpdate())
-  #set($jobStatus = $services.ocr.tesseract.getCurrentDataStoreUpdateStatus())
+  #set($needsUpdate = $services.ocr.tesseract.dataStore.checkForStoreUpdate())
+  #set($jobStatus = $services.ocr.tesseract.dataStore.getCurrentDataStoreJobStatus())
 
   {{html clean="false"}}
     &lt;form method="post" id="dataStoreUpdateForm" action="#"&gt;
@@ -65,7 +65,7 @@
   {{/html}}
 
   #if ($jobStatus &amp;&amp; $jobStatus.state.name() != 'FINISHED')
-    {{include reference="OCR.Tesseract.Code.DataStoreUpdateJob"/}}
+    {{include reference="OCR.Tesseract.Code.DataStoreJob"/}}
   #elseif ($needsUpdate)
     {{warning}}
       $services.localization.render('ocr.tesseract.store.updateNeeded') #displayDataStoreUpdateButton()
@@ -79,14 +79,6 @@
   {{html clean="false"}}
     &lt;/form&gt;
   {{/html}}
-#end
-
-#macro(displayDataFileDownloadStatus)
-  #set($jobStatus = $services.ocr.tesseract.getCurrentDataFileDownloadStatus())
-
-  #if ($jobStatus &amp;&amp; $jobStatus.state.name() != 'FINISHED')
-    {{include reference="OCR.Tesseract.Code.DataFileDownloadJob"/}}
-  #end
 #end
 {{/velocity}}</content>
 </xwikidoc>

@@ -46,11 +46,13 @@
 #end
 
 #if("$!request.action" == 'listLocalDataFiles')
-  #set($dataFiles = $services.ocr.tesseract.getLocalFiles())
+  #set($dataFiles = $services.ocr.tesseract.dataStore.getLocalFiles())
 #elseif("$!request.action" == 'listRemoteDataFiles')
-  #set($dataFiles = $services.ocr.tesseract.getRemotelyAvailableFiles())
+  #set($dataFiles = $services.ocr.tesseract.dataStore.getRemotelyAvailableFiles())
 #elseif("$!request.action" == 'downloadDataFile' &amp;&amp; "$!request.language" != '')
-  #set($discard = $services.ocr.tesseract.downloadDataFile($!request.language))
+  #set($discard = $services.ocr.tesseract.dataStore.downloadDataFile($!request.language))
+#elseif("$!request.action" == 'removeDataFile' &amp;&amp; "$!request.language" != '')
+  #set($discard = $services.ocr.tesseract.dataStore.removeDataFile($!request.language))
 #end
 
 #foreach($dataFile in $dataFiles)
