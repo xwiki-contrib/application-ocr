@@ -1,1 +1,2 @@
+org.xwiki.contrib.ocr.tesseract.script.TessDataStoreScriptService
 org.xwiki.contrib.ocr.tesseract.script.TessScriptService
