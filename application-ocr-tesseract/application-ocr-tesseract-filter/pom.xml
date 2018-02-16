@@ -25,10 +25,10 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-ocr-tesseract</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
   <artifactId>application-ocr-tesseract-filter</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>Optical Character Recognition Application - Tesseract - Filters</name>
   <packaging>jar</packaging>
   <description>Filter stream extension to parse a graphical file containing text using the Tesseract library
