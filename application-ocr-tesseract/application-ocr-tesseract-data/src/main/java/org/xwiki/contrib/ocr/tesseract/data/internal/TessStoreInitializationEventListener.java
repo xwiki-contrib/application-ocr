@@ -65,8 +65,10 @@ public class TessStoreInitializationEventListener extends AbstractEventListener
     public void onEvent(Event event, Object source, Object data)
     {
         try {
-            logger.info("Automatically updating the Tesseract data store...");
-            tessDataFileStore.updateStore();
+            if (tessDataFileStore.needsUpdate()) {
+                logger.info("Automatically updating the Tesseract data store...");
+                tessDataFileStore.updateStore();
+            }
         } catch (TessException e) {
             logger.error("Failed to to initialize the Tesseract data store.", e);
         }

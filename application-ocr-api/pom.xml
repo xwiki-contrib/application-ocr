@@ -32,6 +32,9 @@
   <name>Optical Character Recognition Application - API</name>
   <packaging>jar</packaging>
   <description>API module for the OCR Application</description>
+  <scm>
+    <url>https://github.com/xwiki-contrib/application-ocr</url>
+  </scm>
   <properties>
     <xwiki.jacoco.instructionRatio>0.65</xwiki.jacoco.instructionRatio>
   </properties>
