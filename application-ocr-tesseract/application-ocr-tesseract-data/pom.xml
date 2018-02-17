@@ -47,6 +47,14 @@
       <version>${project.version}</version>
     </dependency>
 
+    <!-- We need this dependency at runtime in order to initialize the Tesseract data store -->
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-ocr-tesseract-default</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-component-api</artifactId>
