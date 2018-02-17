@@ -32,7 +32,7 @@
   <packaging>xar</packaging>
   <description>Application for managing document import with OCR and the Tesseract library</description>
   <properties>
-    <xwiki.extension.name>OCR Application</xwiki.extension.name>
+    <xwiki.extension.name>Tesseract OCR Application</xwiki.extension.name>
   </properties>
   <dependencies>
     <dependency>
