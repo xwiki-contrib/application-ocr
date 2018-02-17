@@ -47,7 +47,7 @@
   #set($jobIdentifier = $jobIdentifier.substring(0, 1).toLowerCase() + $jobIdentifier.substring(1))
 
   #set($onSuccess = $services.localization.render("ocr.tesseract.store.${jobIdentifier}.finished"))
-  #set($onError = $services.localization.render("ocr.tesseract.store.${jobIdentifier}.errror"))
+  #set($onError = $services.localization.render("ocr.tesseract.store.${jobIdentifier}.error"))
 #end
 {{/velocity}}</content>
 </xwikidoc>
