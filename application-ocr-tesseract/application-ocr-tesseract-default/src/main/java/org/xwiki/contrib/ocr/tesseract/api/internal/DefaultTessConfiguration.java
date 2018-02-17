@@ -29,6 +29,7 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.contrib.ocr.tesseract.api.TessConfiguration;
+import org.xwiki.environment.Environment;
 import org.xwiki.model.reference.DocumentReference;
 
 import com.xpn.xwiki.XWiki;
@@ -71,6 +72,9 @@ public class DefaultTessConfiguration implements TessConfiguration
     @Inject
     private Provider<XWikiContext> xWikiContextProvider;
 
+    @Inject
+    private Environment environment;
+
     @Override
     public String defaultLangage()
     {
@@ -82,7 +86,8 @@ public class DefaultTessConfiguration implements TessConfiguration
     @Override
     public String dataPath()
     {
-        String defaultValue = configurationSource.getProperty(CONFIGURATION_PREFIX + DATA_PATH, "./data");
+        String defaultValue = configurationSource.getProperty(CONFIGURATION_PREFIX + DATA_PATH,
+                environment.getPermanentDirectory().getPath());
 
         return getConfigStringOrDefault(DATA_PATH, defaultValue);
     }

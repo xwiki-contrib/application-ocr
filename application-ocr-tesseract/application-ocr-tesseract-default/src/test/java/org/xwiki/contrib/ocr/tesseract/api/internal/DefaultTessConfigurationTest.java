@@ -19,12 +19,15 @@
  */
 package org.xwiki.contrib.ocr.tesseract.api.internal;
 
+import java.io.File;
+
 import javax.inject.Provider;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.environment.Environment;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.test.mockito.MockitoComponentMockingRule;
@@ -62,6 +65,8 @@ public class DefaultTessConfigurationTest
 
     private XWikiDocument configurationDocument;
 
+    private Environment environment;
+
     @Before
     public void setUp() throws Exception
     {
@@ -71,6 +76,11 @@ public class DefaultTessConfigurationTest
         xWikiContext = mock(XWikiContext.class);
         xwiki = mock(XWiki.class);
         configurationDocument = mock(XWikiDocument.class);
+
+        environment = mocker.registerMockComponent(Environment.class);
+        File permanentDirectory = mock(File.class);
+        when(permanentDirectory.getPath()).thenReturn("./data");
+        when(environment.getPermanentDirectory()).thenReturn(permanentDirectory);
 
         when(xWikiContextProvider.get()).thenReturn(xWikiContext);
         when(xWikiContext.getWiki()).thenReturn(xwiki);
