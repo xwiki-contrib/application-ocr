@@ -4,7 +4,8 @@ Creates Wiki documents from images or scanned PDFs using optical character recog
 
 * Project Leads:
   * [Clément Aubin](http://www.xwiki.org/xwiki/bin/view/XWiki/caubin)
-* [Documentation & Download](http://extensions.xwiki.org/xwiki/bin/view/Extension/OCR/)
+* Documentation & Download:
+  * [Tesseract OCR Application](http://extensions.xwiki.org/xwiki/bin/view/Extension/Tesseract%20OCR%20Application/)
 * [Issue Tracker](http://jira.xwiki.org/browse/OCR)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
