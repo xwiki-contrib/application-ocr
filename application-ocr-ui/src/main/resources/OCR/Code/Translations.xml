@@ -39,10 +39,10 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>admin.ocr=OCR
-    admin.ocr.description=Manage document operations using optical character recognition
+### Missing: admin.ocr.description=Manage document operations using optical character recognition
     
-    ocr.title=OCR Application
-    ocr.info.gotToAdmin=This page and its children contain internal content used by the OCR application for its own use. You can administer it through the {0}.</content>
+### Missing: ocr.title=OCR Application
+### Missing: ocr.info.gotToAdmin=This page and its children contain internal content used by the OCR application for its own use. You can administer it through the {0}.</content>
   <object>
     <name>OCR.Code.Translations</name>
     <number>0</number>
