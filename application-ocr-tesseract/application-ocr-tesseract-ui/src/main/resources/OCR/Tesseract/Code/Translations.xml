@@ -98,8 +98,7 @@ ocr.tesseract.store.dataFileDownload.finished=Download finished!
 ocr.tesseract.store.dataFileDownload.error=An error has happened during the download. Please check the logs for more information.
 
 ocr.tesseract.store.dataFileRemoval.finished=File removed!
-ocr.tesseract.store.dataFileRemoval.error=An error has happened during the removal. Please check the logs for more information.
-</content>
+ocr.tesseract.store.dataFileRemoval.error=An error has happened during the removal. Please check the logs for more information.</content>
   <object>
     <name>OCR.Tesseract.Code.Translations</name>
     <number>0</number>
