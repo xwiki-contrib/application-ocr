@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="OCR.Tesseract.Code.Translations" locale="es">
+  <web>OCR.Tesseract.Code</web>
+  <name>Translations</name>
+  <language>es</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1516570559000</creationDate>
+  <parent>OCR.Tesseract.Code.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1518347322000</date>
+  <contentUpdateDate>1518347322000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>ocr.tesseract=Tesseract
+ocr.tesseract.configuration=Configuración
+ocr.tesseract.application.label=Importador de Tesseract
+ocr.tesseract.description=Esta aplicación te permite importar documentos de imágenes o PDFs escaneados en páginas wikis usando reconocimiento óptico de caracteres.
+ocr.tesseract.gotoAdmin=Ve a la administración para gestionar los parámetros de la aplicación.
+
+#########################
+## Tesseract Import wizard
+#########################
+
+ocr.tesseract.importForm.fileUploadLabel=Fichero a importar
+ocr.tesseract.importForm.fileUploadHint=El fichero debe ser o un PDF o una imagen.
+ocr.tesseract.importForm.fileLanguageLabel=Idioma del fichero
+ocr.tesseract.importForm.fileLanguageHint=Escoger el idioma de fichero correcto facilitará la importación y mejorará la calidad del documento importado.
+ocr.tesseract.importForm.submit=Enviar
+ocr.tesseract.import.finished=Fichero importado exitosamente.
+ocr.tesseract.import.error=Se produjo un error durante la conversión. Por favor, comprueba los logs para más detalle.
+ocr.tesseract.import.error.concurrentImport=No puedes enviar dos ficheros a importar a la vez, por favor, espera que finalice la importación anterior.
+
+ocr.tesseract.currentImportStatus=Situación de la importación actual
+ocr.tesseract.importNewFile=Importar un fichero nuevo
+
+## TesseractConfigurationClass
+OCR.Tesseract.Code.TesseractConfigurationClass_defaultLanguage=Idioma predeterminado
+OCR.Tesseract.Code.TesseractConfigurationClass_dataPath=Ruta de datos
+OCR.Tesseract.Code.TesseractConfigurationClass_allowAutoDownload=Permitir descargas automáticas
+OCR.Tesseract.Code.TesseractConfigurationClass_trainingFilesURL=URL de ficheros de entrenamiento
+OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=Intervalo de actualización del almacenamiento de datos
+
+#########################
+## Data store translations
+#########################
+
+ocr.tesseract.store.status=Situación y operaciones en curso
+
+## Data Files
+ocr.tesseract.localDataFiles=Ficheros de datos disponibles localmente
+ocr.tesseract.noLocalDataFiles=No se ha encontrado ficheros de datos locales.
+ocr.tesseract.remoteDataFiles=Ficheros de datos disponibles en remoto
+ocr.tesseract.noRemoteDataFiles=No se han encontrado ficheros de datos en remoto.
+
+## Store status and updates
+ocr.tesseract.store.noUpdateNeeded=¡El almacenamiento está actualizado!
+ocr.tesseract.store.updateNeeded=Se necesita actualizar el almacenamiento.
+ocr.tesseract.store.updateNow=Actualizar ahora.
+
+ocr.tesseract.store.language=Idioma
+ocr.tesseract.store.localPath=Ruta local
+ocr.tesseract.store.actions=Acciones
+ocr.tesseract.store.actions.remove=Eliminar
+ocr.tesseract.store.actions.download=Descargar
+
+## Job messages
+ocr.tesseract.store.storeUpdate.finished=¡Actualización finalizada!
+ocr.tesseract.store.storeUpdate.error=Se ha producido un error durante la actualización. Por favor, comprueba los logs para más detalle.
+
+ocr.tesseract.store.dataFileDownload.finished=¡Descarga finalizada!
+ocr.tesseract.store.dataFileDownload.error=Se produjo un error durante la descarga. Por favor, comprueba los logs para más detalle.
+
+ocr.tesseract.store.dataFileRemoval.finished=¡Fichero eliminado!
+ocr.tesseract.store.dataFileRemoval.error=Se produjo un error al eliminar. Por favor, comprueba los logs para más detalle.</content>
+  
+</xwikidoc>
