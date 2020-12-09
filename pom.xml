@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>8.4-8</version>
+    <version>8.4-11</version>
   </parent>
   <artifactId>application-ocr</artifactId>
   <version>1.2-SNAPSHOT</version>
@@ -47,8 +47,7 @@
   <properties>
     <xwiki.extension.category>application</xwiki.extension.category>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
-    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
-    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/OCR</xwiki.issueManagement.url>
+    <xwiki.issueManagement.jira.id>OCR</xwiki.issueManagement.jira.id>
   </properties>
   <modules>
     <module>application-ocr-api</module>
