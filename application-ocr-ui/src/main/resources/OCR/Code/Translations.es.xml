@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content>admin.ocr=OCR
 admin.ocr.description=Administra operaciones de documentos utilizando reconocimiento óptico de caracteres
-### Missing: ocr.title=OCR Application
+ocr.title=Aplicación OCR
 ocr.info.gotToAdmin=Esta página y sus hijos contienen contenido interno utilizado por la aplicación de OCR para su propio uso. Puedes administrala con el {0}.
 </content>
   
