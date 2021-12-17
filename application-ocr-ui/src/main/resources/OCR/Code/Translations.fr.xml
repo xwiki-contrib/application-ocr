@@ -20,10 +20,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="OCR.Code.Translations" locale="es">
+<xwikidoc version="1.3" reference="OCR.Code.Translations" locale="fr">
   <web>OCR.Code</web>
   <name>Translations</name>
-  <language>es</language>
+  <language>fr</language>
   <defaultLanguage>en</defaultLanguage>
   <translation>1</translation>
   <creator>xwiki:XWiki.Admin</creator>
@@ -40,9 +40,8 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>admin.ocr=OCR
-admin.ocr.description=Administra operaciones de documentos utilizando reconocimiento óptico de caracteres
-ocr.title=Aplicación OCR
-ocr.info.gotToAdmin=Esta página y sus hijos contienen contenido interno utilizado por la aplicación de OCR para su propio uso. Puedes administrala con el {0}.
+admin.ocr.description=Gérer les opérations sur des documents en utilisant la reconnaissance automatique de caractères
+ocr.title=Application OCR
+ocr.info.gotToAdmin=Cette page et ses sous-pages contiennent des éléments internes nécessaires à l''Application OCR. Vous pouvez les administrer depuis {0}.
 </content>
-  
-</xwikidoc>
+  </xwikidoc>
