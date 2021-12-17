@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -44,4 +44,4 @@ admin.ocr.description=Gérer les opérations sur des documents en utilisant la r
 ocr.title=Application OCR
 ocr.info.gotToAdmin=Cette page et ses sous-pages contiennent des éléments internes nécessaires à l''Application OCR. Vous pouvez les administrer depuis {0}.
 </content>
-  </xwikidoc>
+</xwikidoc>
