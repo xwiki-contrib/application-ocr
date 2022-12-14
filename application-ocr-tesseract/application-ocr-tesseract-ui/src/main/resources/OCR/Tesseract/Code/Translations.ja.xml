@@ -65,24 +65,24 @@ OCR.Tesseract.Code.TesseractConfigurationClass_defaultLanguage=既定の言語
 OCR.Tesseract.Code.TesseractConfigurationClass_dataPath=データのパス
 OCR.Tesseract.Code.TesseractConfigurationClass_allowAutoDownload=自動ダウンロードを許可
 OCR.Tesseract.Code.TesseractConfigurationClass_trainingFilesURL=学習用のファイルのURL
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=Data store update interval
+OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=データの保存に関する更新の間隔
 
 #########################
 ## Data store translations
 #########################
 
-### Missing: ocr.tesseract.store.status=Status and current operations
+ocr.tesseract.store.status=現在の状態
 
 ## Data Files
-### Missing: ocr.tesseract.localDataFiles=Locally available data files
-### Missing: ocr.tesseract.noLocalDataFiles=No local data files found.
-### Missing: ocr.tesseract.remoteDataFiles=Remotely available data files
-### Missing: ocr.tesseract.noRemoteDataFiles=No remote data files found.
+ocr.tesseract.localDataFiles=ローカルで利用可能なデータファイル
+ocr.tesseract.noLocalDataFiles=ローカルのデータファイルが見つかりません。
+ocr.tesseract.remoteDataFiles=遠隔で利用可能なデータファイル
+ocr.tesseract.noRemoteDataFiles=遠隔のデータファイルが見つかりません。
 
 ## Store status and updates
-### Missing: ocr.tesseract.store.noUpdateNeeded=The store is up to date!
-### Missing: ocr.tesseract.store.updateNeeded=The store needs to be updated.
-### Missing: ocr.tesseract.store.updateNow=Update now.
+ocr.tesseract.store.noUpdateNeeded=データは最新です！
+ocr.tesseract.store.updateNeeded=データを更新する必要があります。
+ocr.tesseract.store.updateNow=更新。
 ocr.tesseract.store.language=言語
 ocr.tesseract.store.localPath=ローカルパス
 ocr.tesseract.store.actions=アクション
@@ -90,8 +90,8 @@ ocr.tesseract.store.actions.remove=削除
 ocr.tesseract.store.actions.download=ダウンロード
 
 ## Job messages
-ocr.tesseract.store.storeUpdate.finished=アップデートが完了しました！
-ocr.tesseract.store.storeUpdate.error=アップデート中にエラーが発生しました。詳細はログを確認してください。
+ocr.tesseract.store.storeUpdate.finished=更新が完了しました！
+ocr.tesseract.store.storeUpdate.error=更新中にエラーが発生しました。詳細はログを確認してください。
 ocr.tesseract.store.dataFileDownload.finished=ダウンロードが完了しました！
 ocr.tesseract.store.dataFileDownload.error=ダウンロード中にエラーが発生しました。詳細はログを確認してください。
 ocr.tesseract.store.dataFileRemoval.finished=ファイルを削除しました！
