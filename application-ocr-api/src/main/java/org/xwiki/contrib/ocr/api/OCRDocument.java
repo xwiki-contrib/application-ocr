@@ -57,7 +57,7 @@ public interface OCRDocument
      * pages in the document.
      * If no separator is given (null), it will be ignored.
      *
-     * Example: <pre>(pageNbr, total) -> String.format("End of page {} out of {}.\n", pageNbr, total)</pre>
+     * Example: {@code (pageNbr, total) -> String.format("End of page {} out of {}.\n", pageNbr, total)}
      *
      * @param syntax the syntax that should be used to export the document content
      * @param separator the separator to use
