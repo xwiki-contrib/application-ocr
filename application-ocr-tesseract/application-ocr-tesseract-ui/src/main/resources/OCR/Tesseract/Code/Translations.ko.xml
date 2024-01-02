@@ -53,7 +53,7 @@ ocr.tesseract.importForm.fileUploadLabel=가져올 파일
 ocr.tesseract.importForm.fileUploadHint=이 파일은 PDF 또는 이미지여야 합니다.
 ocr.tesseract.importForm.fileLanguageLabel=파일 언어
 ocr.tesseract.importForm.fileLanguageHint=올바른 파일 언어를 선택하면 가져오기가 쉬워지고 가져온 문서의 품질이 향상됩니다.
-ocr.tesseract.importForm.submit=회의의 달력 보기를 표시하려면 이 위키에 전체 달력 매크로를 설치해야 합니다.
+ocr.tesseract.importForm.submit=제출하다
 ocr.tesseract.import.finished=파일을 성공적으로 가져왔습니다.
 ocr.tesseract.import.error=변환 중에 오류가 발생했습니다. 자세한 내용은 로그를 확인하세요.
 ocr.tesseract.import.error.concurrentImport=가져올 두 개의 파일을 동시에 보낼 수 없습니다. 마지막 가져오기가 완료될 때까지 기다리십시오.
@@ -83,18 +83,18 @@ ocr.tesseract.noRemoteDataFiles=원격 데이터 파일을 찾을 수 없습니�
 ocr.tesseract.store.noUpdateNeeded=매장이 최신이네요!
 ocr.tesseract.store.updateNeeded=상점을 업데이트해야 합니다.
 ocr.tesseract.store.updateNow=지금 업데이트하세요.
-ocr.tesseract.store.language=삭제 진행 중...
-ocr.tesseract.store.localPath=삭제 진행 중...
-ocr.tesseract.store.actions=삭제 진행 중...
-ocr.tesseract.store.actions.remove=삭제 진행 중...
-ocr.tesseract.store.actions.download=삭제 진행 중...
+ocr.tesseract.store.language=언어
+ocr.tesseract.store.localPath=로컬 경로
+ocr.tesseract.store.actions=행위
+ocr.tesseract.store.actions.remove=제거하다
+ocr.tesseract.store.actions.download=다운로드
 
 ## Job messages
-ocr.tesseract.store.storeUpdate.finished=삭제 진행 중...
-ocr.tesseract.store.storeUpdate.error=삭제 진행 중...
-ocr.tesseract.store.dataFileDownload.finished=삭제 진행 중...
-ocr.tesseract.store.dataFileDownload.error=삭제 진행 중...
-ocr.tesseract.store.dataFileRemoval.finished=삭제 진행 중...
-ocr.tesseract.store.dataFileRemoval.error=삭제 진행 중...
+ocr.tesseract.store.storeUpdate.finished=업데이트 완료!
+ocr.tesseract.store.storeUpdate.error=업데이트 중 오류가 발생했습니다. 자세한 내용은 로그를 확인하세요.
+ocr.tesseract.store.dataFileDownload.finished=다운로드 완료!
+ocr.tesseract.store.dataFileDownload.error=다운로드하는 동안 오류가 발생했습니다. 자세한 내용은 로그를 확인하세요.
+ocr.tesseract.store.dataFileRemoval.finished=파일이 삭제되었습니다!
+ocr.tesseract.store.dataFileRemoval.error=제거하는 동안 오류가 발생했습니다. 자세한 내용은 로그를 확인하세요.
 </content>
   </xwikidoc>
