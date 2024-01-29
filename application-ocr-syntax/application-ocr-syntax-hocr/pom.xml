@@ -25,10 +25,10 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-ocr-syntax</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6-SNAPSHOT</version>
   </parent>
   <artifactId>application-ocr-syntax-hocr</artifactId>
-  <version>1.1.5</version>
+  <version>1.1.6-SNAPSHOT</version>
   <name>Optical Character Recognition Application - Syntax - hOCR</name>
   <packaging>jar</packaging>
   <dependencies>
