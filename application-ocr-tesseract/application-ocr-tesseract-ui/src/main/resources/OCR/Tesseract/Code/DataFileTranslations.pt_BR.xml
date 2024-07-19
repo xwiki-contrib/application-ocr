@@ -1,0 +1,145 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="OCR.Tesseract.Code.DataFileTranslations" locale="pt_BR">
+  <web>OCR.Tesseract.Code</web>
+  <name>DataFileTranslations</name>
+  <language>pt_BR</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1517174497000</creationDate>
+  <parent>OCR.Tesseract.Code.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1517174497000</date>
+  <contentUpdateDate>1517174497000</contentUpdateDate>
+  <version>1.1</version>
+  <title>DataFileTranslations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>ocr.tesseract.tessdata.afr=Africâner
+ocr.tesseract.tessdata.amh=Amárico
+ocr.tesseract.tessdata.ara=Árabe
+ocr.tesseract.tessdata.asm=Assamês
+ocr.tesseract.tessdata.aze=Azerbaijano
+ocr.tesseract.tessdata.aze_cyrl=Azerbaijano - Cirílico
+ocr.tesseract.tessdata.bel=Bielorrusso
+ocr.tesseract.tessdata.ben=Bengali
+ocr.tesseract.tessdata.bod=Tibetano
+ocr.tesseract.tessdata.bos=Bósnio
+ocr.tesseract.tessdata.bul=Búlgaro
+ocr.tesseract.tessdata.cat=Catalão; Valenciano
+ocr.tesseract.tessdata.ceb=Cebuano
+ocr.tesseract.tessdata.ces=Tcheco
+ocr.tesseract.tessdata.chi_sim=Chinês simplificad
+ocr.tesseract.tessdata.chi_tra=Chinês tradicional
+ocr.tesseract.tessdata.chr=Cherokee
+ocr.tesseract.tessdata.cym=Galês
+ocr.tesseract.tessdata.dan=Dinamarquês
+ocr.tesseract.tessdata.deu=Alemão
+ocr.tesseract.tessdata.dzo=Butanês
+ocr.tesseract.tessdata.ell=Grego, Moderno (1453-)
+ocr.tesseract.tessdata.eng=Inglês
+ocr.tesseract.tessdata.enm=Inglês, Médio (1100-1500)
+ocr.tesseract.tessdata.epo=Esperanto
+ocr.tesseract.tessdata.est=Estoniano
+ocr.tesseract.tessdata.eus=Basco
+ocr.tesseract.tessdata.fas=Persa
+ocr.tesseract.tessdata.fin=Finlandês
+ocr.tesseract.tessdata.fra=Francês
+ocr.tesseract.tessdata.frk=Franco
+ocr.tesseract.tessdata.frm=Francês, Médio (ca. 1400-1600)
+ocr.tesseract.tessdata.gle=Irlandês
+ocr.tesseract.tessdata.glg=Galego
+ocr.tesseract.tessdata.grc=Grego, Antigo (-1453)
+ocr.tesseract.tessdata.guj=Guzerate
+ocr.tesseract.tessdata.hat=Haitiano; crioulo haitiano
+ocr.tesseract.tessdata.heb=Hebraico
+ocr.tesseract.tessdata.hin=Hindi
+ocr.tesseract.tessdata.hrv=Croata
+ocr.tesseract.tessdata.hun=Húngaro
+ocr.tesseract.tessdata.iku=Inuktitut
+ocr.tesseract.tessdata.ind=Indonésio
+ocr.tesseract.tessdata.isl=Islandês
+ocr.tesseract.tessdata.ita=Italiano
+ocr.tesseract.tessdata.ita_old=Italiano - Antigo
+ocr.tesseract.tessdata.jav=Javanês
+ocr.tesseract.tessdata.jpn=Japonês
+ocr.tesseract.tessdata.kan=Canarim
+ocr.tesseract.tessdata.kat=Georgiano
+ocr.tesseract.tessdata.kat_old=Georgiano - Antigo
+### Missing: ocr.tesseract.tessdata.kaz=Kazakh
+### Missing: ocr.tesseract.tessdata.khm=Central Khmer
+### Missing: ocr.tesseract.tessdata.kir=Kirghiz; Kyrgyz
+### Missing: ocr.tesseract.tessdata.kor=Korean
+### Missing: ocr.tesseract.tessdata.kur=Kurdish
+### Missing: ocr.tesseract.tessdata.lao=Lao
+### Missing: ocr.tesseract.tessdata.lat=Latin
+### Missing: ocr.tesseract.tessdata.lav=Latvian
+### Missing: ocr.tesseract.tessdata.lit=Lithuanian
+### Missing: ocr.tesseract.tessdata.mal=Malayalam
+### Missing: ocr.tesseract.tessdata.mar=Marathi
+### Missing: ocr.tesseract.tessdata.mkd=Macedonian
+### Missing: ocr.tesseract.tessdata.mlt=Maltese
+### Missing: ocr.tesseract.tessdata.msa=Malay
+### Missing: ocr.tesseract.tessdata.mya=Burmese
+### Missing: ocr.tesseract.tessdata.nep=Nepali
+### Missing: ocr.tesseract.tessdata.nld=Dutch; Flemish
+### Missing: ocr.tesseract.tessdata.nor=Norwegian
+### Missing: ocr.tesseract.tessdata.ori=Oriya
+### Missing: ocr.tesseract.tessdata.pan=Panjabi; Punjabi
+### Missing: ocr.tesseract.tessdata.pol=Polish
+### Missing: ocr.tesseract.tessdata.por=Portuguese
+### Missing: ocr.tesseract.tessdata.pus=Pushto; Pashto
+### Missing: ocr.tesseract.tessdata.ron=Romanian; Moldavian; Moldovan
+### Missing: ocr.tesseract.tessdata.rus=Russian
+### Missing: ocr.tesseract.tessdata.san=Sanskrit
+### Missing: ocr.tesseract.tessdata.sin=Sinhala; Sinhalese
+### Missing: ocr.tesseract.tessdata.slk=Slovak
+### Missing: ocr.tesseract.tessdata.slv=Slovenian
+### Missing: ocr.tesseract.tessdata.spa=Spanish; Castilian
+### Missing: ocr.tesseract.tessdata.spa_old=Spanish; Castilian - Old
+### Missing: ocr.tesseract.tessdata.sqi=Albanian
+### Missing: ocr.tesseract.tessdata.srp=Serbian
+### Missing: ocr.tesseract.tessdata.srp_latn=Serbian - Latin
+### Missing: ocr.tesseract.tessdata.swa=Swahili
+### Missing: ocr.tesseract.tessdata.swe=Swedish
+### Missing: ocr.tesseract.tessdata.syr=Syriac
+### Missing: ocr.tesseract.tessdata.tam=Tamil
+### Missing: ocr.tesseract.tessdata.tel=Telugu
+### Missing: ocr.tesseract.tessdata.tgk=Tajik
+### Missing: ocr.tesseract.tessdata.tgl=Tagalog
+### Missing: ocr.tesseract.tessdata.tha=Thai
+### Missing: ocr.tesseract.tessdata.tir=Tigrinya
+### Missing: ocr.tesseract.tessdata.tur=Turkish
+### Missing: ocr.tesseract.tessdata.uig=Uighur; Uyghur
+### Missing: ocr.tesseract.tessdata.ukr=Ukrainian
+### Missing: ocr.tesseract.tessdata.urd=Urdu
+### Missing: ocr.tesseract.tessdata.uzb=Uzbek
+### Missing: ocr.tesseract.tessdata.uzb_cyrl=Uzbek - Cyrillic
+### Missing: ocr.tesseract.tessdata.vie=Vietnamese
+### Missing: ocr.tesseract.tessdata.yid=Yiddish
+</content>
+  </xwikidoc>
