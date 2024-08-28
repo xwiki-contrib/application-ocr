@@ -25,16 +25,16 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-ocr</artifactId>
-    <version>1.1.6-SNAPSHOT</version>
+    <version>1.1.6</version>
   </parent>
   <artifactId>application-ocr-api</artifactId>
-  <version>1.1.6-SNAPSHOT</version>
+  <version>1.1.6</version>
   <name>Optical Character Recognition Application - API</name>
   <packaging>jar</packaging>
   <description>API module for the OCR Application</description>
   <scm>
     <url>https://github.com/xwiki-contrib/application-ocr</url>
-    <tag>HEAD</tag>
+    <tag>application-ocr-1.1.6</tag>
   </scm>
   <properties>
     <xwiki.jacoco.instructionRatio>0.65</xwiki.jacoco.instructionRatio>
