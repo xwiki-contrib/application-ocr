@@ -84,7 +84,6 @@ public class TessScriptService implements ScriptService
 
     /**
      * Get a sub script service related to the Tesseract script service.
-     * {@see OCRScriptService#get(serviceName)}
      *
      * @param serviceName id of the script service
      * @return the service asked or null if none could be found
