@@ -30,7 +30,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.xwiki.contrib.ocr.api.OCRException;
-
+import org.apache.pdfbox.Loader;
 /**
  * Uses Apache PDFBox in order to render documents in a specific format into a {@link Image}.
  *
@@ -55,19 +55,16 @@ public final class PDFToImageRenderer
     {
         List<Image> images = new ArrayList<>();
         int dpi = (resolution == null) ? 300 : resolution;
-
-        try {
-            PDDocument document = PDDocument.load(file);
-
+    
+        try (PDDocument document = Loader.loadPDF(file.readAllBytes())) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             int pageCounter = 0;
+    
             for (PDPage page : document.getPages()) {
                 images.add(pdfRenderer.renderImageWithDPI(pageCounter, dpi, ImageType.RGB));
                 pageCounter++;
             }
-
-            document.close();
-
+    
             return images;
         } catch (IOException e) {
             throw new OCRException("Unable to render the file as images.", e);
