@@ -39,62 +39,62 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>### Missing: ocr.tesseract=
-### Missing: ocr.tesseract.configuration=
-### Missing: ocr.tesseract.application.label=
-### Missing: ocr.tesseract.description=
-### Missing: ocr.tesseract.gotoAdmin=
+  <content>ocr.tesseract=Tesseract
+ocr.tesseract.configuration=Konfiguration
+ocr.tesseract.application.label=Tesseract-import
+ocr.tesseract.description=Med dette program kan du importere dokumenter fra billeder eller scannede PDF-filer til wikisider ved hjælp af optisk tegngenkendelse.
+ocr.tesseract.gotoAdmin=Gå til administrationen for at administrere programmets parametre.
 
 #########################
 ## Tesseract Import wizard
 #########################
 
-### Missing: ocr.tesseract.importForm.fileUploadLabel=
-### Missing: ocr.tesseract.importForm.fileUploadHint=
-### Missing: ocr.tesseract.importForm.fileLanguageLabel=
-### Missing: ocr.tesseract.importForm.fileLanguageHint=
-### Missing: ocr.tesseract.importForm.submit=
-### Missing: ocr.tesseract.import.finished=
-### Missing: ocr.tesseract.import.error=
-### Missing: ocr.tesseract.import.error.concurrentImport=
-### Missing: ocr.tesseract.currentImportStatus=
-### Missing: ocr.tesseract.importNewFile=
+ocr.tesseract.importForm.fileUploadLabel=Fil, der skal importeres
+ocr.tesseract.importForm.fileUploadHint=Filen skal være en PDF-fil eller et billede.
+ocr.tesseract.importForm.fileLanguageLabel=Filens sprog
+ocr.tesseract.importForm.fileLanguageHint=Når du vælger det rigtige sprog for filen, bliver importen lettere, og det importerede dokuments kvalitet bliver bedre.
+ocr.tesseract.importForm.submit=Send
+ocr.tesseract.import.finished=Filen er importeret.
+ocr.tesseract.import.error=Der opstod en fejl under konverteringen. Se logfilerne for detaljer.
+ocr.tesseract.import.error.concurrentImport=Du kan ikke sende to filer til import på samme tid. Vent, til den seneste import er færdig.
+ocr.tesseract.currentImportStatus=Importens aktuelle status
+ocr.tesseract.importNewFile=Importér en ny fil
 
 ## TesseractConfigurationClass
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_defaultLanguage=
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_dataPath=
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_allowAutoDownload=
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_trainingFilesURL=
-### Missing: OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=
+OCR.Tesseract.Code.TesseractConfigurationClass_defaultLanguage=Standardsprog
+OCR.Tesseract.Code.TesseractConfigurationClass_dataPath=Datasti
+OCR.Tesseract.Code.TesseractConfigurationClass_allowAutoDownload=Tillad automatisk download
+OCR.Tesseract.Code.TesseractConfigurationClass_trainingFilesURL=URL til træningsfiler
+OCR.Tesseract.Code.TesseractConfigurationClass_dataStoreUpdateInterval=Interval for opdatering af datalageret
 
 #########################
 ## Data store translations
 #########################
 
-### Missing: ocr.tesseract.store.status=
+ocr.tesseract.store.status=Status og aktuelle handlinger
 
 ## Data Files
-### Missing: ocr.tesseract.localDataFiles=
-### Missing: ocr.tesseract.noLocalDataFiles=
-### Missing: ocr.tesseract.remoteDataFiles=
-### Missing: ocr.tesseract.noRemoteDataFiles=
+ocr.tesseract.localDataFiles=Lokalt tilgængelige datafiler
+ocr.tesseract.noLocalDataFiles=Der blev ikke fundet nogen lokale datafiler.
+ocr.tesseract.remoteDataFiles=Eksternt tilgængelige datafiler
+ocr.tesseract.noRemoteDataFiles=Der blev ikke fundet nogen eksterne datafiler.
 
 ## Store status and updates
-### Missing: ocr.tesseract.store.noUpdateNeeded=
-### Missing: ocr.tesseract.store.updateNeeded=
-### Missing: ocr.tesseract.store.updateNow=
-### Missing: ocr.tesseract.store.language=
-### Missing: ocr.tesseract.store.localPath=
-### Missing: ocr.tesseract.store.actions=
-### Missing: ocr.tesseract.store.actions.remove=
-### Missing: ocr.tesseract.store.actions.download=
+ocr.tesseract.store.noUpdateNeeded=Lageret er opdateret!
+ocr.tesseract.store.updateNeeded=Lageret skal opdateres.
+ocr.tesseract.store.updateNow=Opdater nu.
+ocr.tesseract.store.language=Sprog
+ocr.tesseract.store.localPath=Lokal sti
+ocr.tesseract.store.actions=Handlinger
+ocr.tesseract.store.actions.remove=Fjern
+ocr.tesseract.store.actions.download=Download
 
 ## Job messages
-### Missing: ocr.tesseract.store.storeUpdate.finished=
-### Missing: ocr.tesseract.store.storeUpdate.error=
-### Missing: ocr.tesseract.store.dataFileDownload.finished=
-### Missing: ocr.tesseract.store.dataFileDownload.error=
-### Missing: ocr.tesseract.store.dataFileRemoval.finished=
-### Missing: ocr.tesseract.store.dataFileRemoval.error=
+ocr.tesseract.store.storeUpdate.finished=Opdateringen er færdig!
+ocr.tesseract.store.storeUpdate.error=Der opstod en fejl under opdateringen. Se logfilerne for flere oplysninger.
+ocr.tesseract.store.dataFileDownload.finished=Downloadet er færdigt!
+ocr.tesseract.store.dataFileDownload.error=Der opstod en fejl under downloadet. Se logfilerne for flere oplysninger.
+ocr.tesseract.store.dataFileRemoval.finished=Filen er fjernet!
+ocr.tesseract.store.dataFileRemoval.error=Der opstod en fejl under fjernelsen. Se logfilerne for flere oplysninger.
 </content>
 </xwikidoc>
