@@ -39,9 +39,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>### Missing: admin.ocr=
-### Missing: admin.ocr.description=
-### Missing: ocr.title=
-### Missing: ocr.info.gotToAdmin=
+  <content>admin.ocr=OCR
+admin.ocr.description=Administrer dokumenthandlinger med optisk tegngenkendelse
+ocr.title=OCR-programmet
+ocr.info.gotToAdmin=Denne side og dens undersider indeholder internt indhold, som OCR-programmet bruger. Du kan administrere det via {0}.
 </content>
 </xwikidoc>
