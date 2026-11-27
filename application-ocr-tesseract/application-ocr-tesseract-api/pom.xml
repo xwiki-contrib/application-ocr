@@ -34,7 +34,7 @@
   <description>Tesseract specific APIs</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.63</xwiki.jacoco.instructionRatio>
-    <tesseract.version>3.04.01-1.3</tesseract.version>
+    <tesseract.version>4.0.0-1.4.4</tesseract.version>
   </properties>
   <dependencies>
     <dependency>
